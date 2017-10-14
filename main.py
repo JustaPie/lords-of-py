@@ -98,7 +98,7 @@ def trial2():
 
         screen.blit(walkCycle[cycle % 4], (xpos, ypos))
 
-        pygame.time.Clock.tick(60)
+        #pygame.time.Clock.tick(60)
         pygame.display.update()
 
 
