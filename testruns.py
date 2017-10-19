@@ -60,12 +60,16 @@ def buildRoom(mapCode):
     # plus, I figure it might be faster to render, because the room will be broken into layers, so if we
     #only need to change a thing on one layer, we can alter that and keep the others constant.
     for y in range(0,coY):
-        row = list(mapCode[y])
+        row = mapCode[y]
         for x in range(0, coX):
             space = row[x]
-            floorSurf.blit(tileSet[space], (x *100,y *100))
+            if space=='<':
 
-    wallSurf.blit(floorSurf, (0,0))
+                floorSurf.blit(tileSet[space], (x * 100, y * 100))
+            else:
+                floorSurf.blit(tileSet[space], (x *100,y *100))
+
+    #wallSurf.blit(floorSurf, (0,0))
     for i in range(0, sizeX , 100):
         wallSurf.blit(tileSet['tw'], (i, 0))
 
@@ -83,6 +87,8 @@ def buildRoom(mapCode):
     wallSurf.blit(tileSet['brc'], (sizeX -100, sizeY -100))
     wallSurf.blit(tileSet['trc'], (sizeX -100, 0))
 
+    wallSurf.set_colorkey((0,0,0))
+    floorSurf.blit(wallSurf, (0,0))
 
     running = True
     while (running):
@@ -97,7 +103,12 @@ def buildRoom(mapCode):
 #this is the mapCode I was talking about. in this incarnation, walls are implicitly placed around the rectangle defined by the room
 # but that need not necessarily be the case. we can handle them any numbers of ways, It mostly comes down to how we want to
 # format our mapCode.
-room = ['fffff', 'fffff', 'fffff']
+import pygame
+pygame.init()
+room = ['ffffffffffff', 'ffffffffffff', 'ffffffffffff']
 
+finalSurf = pygame.display.set_mode((1280,768))
+lftWall = pygame.image.load('lft_stn_wallT.png').convert_alpha()
+print(pygame.Surface.get_rect(lftWall))
 
 buildRoom(room)
