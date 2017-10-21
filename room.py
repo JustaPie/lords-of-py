@@ -30,8 +30,8 @@ class room():
         self.sizeY = len(self.mapCode)
         self.outerBounds = ((0, self.xbound), (0, self.ybound))
 
-    #parses the mapcode, assembles the various layers of the visual surface of the room,
-    #and saves any special char/script sequences to the internal lists for those things
+        #parses the mapcode, assembles the various layers of the visual surface of the room,
+        #and saves any special char/script sequences to the internal lists for those things
         self.floorSurf = pygame.Surface((self.xbound, self.ybound))
         self.floorCos = pygame.Surface((self.xbound, self.ybound))
         self.wallSurf = pygame.Surface((self.xbound, self.ybound))
@@ -44,12 +44,10 @@ class room():
             row = mapcode[y]
             for x in range(0, int(self.sizeX)):
                 space = row[x]
-                print(space)
                 if space == '<':
 
                     self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
                 else:
-                    print(space)
                     self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
 
         for i in range(0, self.xbound, 100):
@@ -75,10 +73,11 @@ class room():
         self.fSurf.blit(self.wallSurf, (0,0))
 
 
-
+    #update the stationary images
     def draw(self, disp):
         pass
 
+    #create the list of sprites for the first time
     def populate(self):
         pass
 
