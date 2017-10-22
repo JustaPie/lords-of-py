@@ -35,7 +35,7 @@ while (running):
             running = False
 
     disp.blit(testRoom.fSurf, (0,0))
-    disp.blit(pc.portrait, pc.move())
+    disp.blit(pc.image, pc.move())
     #disp.blit(npc.portrait, npc.move())
     allSprites.draw(disp)
     badguys.draw(disp)
