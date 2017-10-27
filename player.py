@@ -21,26 +21,29 @@ class player(pygame.sprite.Sprite):
         key = pygame.key.get_pressed()
         if key[pygame.K_w]:
             self.image = self.up
-            self.yPos-=1
-            self.rect = self.rect.move(0, -1)
+            self.yPos-=2
+            self.rect.move_ip(0, -2)
 
         if key[pygame.K_a]:
             self.image = self.left
-            self.xPos-=1
-            self.rect = self.rect.move(-1, 0)
+            self.xPos-=2
+            self.rect.move_ip(-2, 0)
 
         if key[pygame.K_s]:
             self.image = self.down
-            self.yPos+=1
-            self.rect = self.rect.move(0, 1)
+            self.yPos+=2
+            self.rect.move_ip(0, 2)
 
         if key[pygame.K_d]:
             self.image = self.right
-            self.xPos+=1
-            self.rect = self.rect.move(1, 0)
+            self.xPos+=2
+            self.rect.move_ip(2, 0)
 
-        print(self.rect)
-        return (self.xPos,self.yPos)
+        if key[pygame.K_f]:
+            if self.image == self.left:
+                pass
+
+        return None
 
 
 class baddy(pygame.sprite.Sprite):
@@ -56,3 +59,16 @@ class baddy(pygame.sprite.Sprite):
 
     def move(self):
         return (self.xPos, self.yPos)
+
+
+class bullet(pygame.sprite.Sprite):
+    def __init__(self, pos, vel):
+        super().__init__()
+
+        self.image = pygame.image.load('bullet.png').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.velocity = vel
+        self.rect.move_ip(pos)
+
+    def draw(self, surf):
+        disp.blit

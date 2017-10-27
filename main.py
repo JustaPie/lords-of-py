@@ -6,7 +6,7 @@ pygame.init()
 
 #the actual layout of each room is encoded as a list of strings, where each char represents a tile
 # these will be looked up in the tileset
-testMapCode = ['fffffffffffffff', 'fffffffffffffff', 'fffffffffffffff', 'fffffffffffffff', 'fffffffffffffff', 'fffffffffffffff', 'fffffffffffffff']
+testMapCode = ['ffffffffffffffffffff', 'ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff','ffffffffffffffffffff']
 outerBounds = ((0, len(testMapCode[0])), (0, len(testMapCode)))
 print(outerBounds)
 
@@ -35,10 +35,17 @@ while (running):
             running = False
 
     disp.blit(testRoom.fSurf, (0,0))
-    disp.blit(pc.image, pc.move())
+    #disp.blit(pc.image, pc.move())
+    pc.move()
     #disp.blit(npc.portrait, npc.move())
     allSprites.draw(disp)
     badguys.draw(disp)
+
+    #if pc.xPos >= 1560/2:
+        #disp.scroll(-1, 1)
+
+    clock = pygame.time.Clock()
+    msElapsed = clock.tick(60)
 
 
     pygame.display.update()

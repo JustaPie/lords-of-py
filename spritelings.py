@@ -23,10 +23,10 @@ class entity(pygame.sprite.Sprite):
         self.pos = pos
         self.xpos = pos[0]
         self.ypos = pos[1]
-        self.portrait = img
+        self.image = img
 
 
-#after entity, it branches into actors and interactors.
+#after entity, it branches into actors and reactors.
 
 #actors move, animate, and act on things.
 #this will include basically all of our 'living' things, such as:
@@ -45,29 +45,44 @@ class actor(entity):
     def anim(self, cycle):
         pass
 
-    #defines what the actor does upon collision
+    #defines what the actor does to other entites upon collision upon collision
     def act(self):
         pass
 
 
 class player(actor):
+    pass
+
 
 class enemy(actor):
+    pass
+
 
 class npc(actor):
+    pass
+
 
 class missile(actor):
+    pass
 
 
-#interactors are mostly stationary, non-living things that only effect things they come into contact with
+#reactors are mostly stationary, non-living things that only effect things they come into contact with
 #they are passive in that things act upon them (that is, things meet their conditions) to cause stuff to happen
-class interactor(entity):
+class reactor(entity):
+    pass
 
 
-class hazard(interactor):
+class hazard(reactor):
+    pass
 
-class obstacle(interactor):
 
-class trap(interactor):
+class obstacle(reactor):
+    pass
 
-class shiny(interactor):
+
+class trigger(reactor):
+    pass
+
+
+class shiny(reactor):
+    pass
