@@ -15,8 +15,8 @@ but it does help me personally concepualize everything
 import pygame
 import sys
 
-#the first, most basic level of sprite, and entity
-#entities have a position, a portrait, and
+#the first, most basic level of sprite: an entity
+#entities have a position, an image, and a rectangle
 class entity(pygame.sprite.Sprite):
     def __init__(self, pos, img):
         super().__init__()
@@ -24,6 +24,7 @@ class entity(pygame.sprite.Sprite):
         self.xpos = pos[0]
         self.ypos = pos[1]
         self.image = img
+        self.rect = img.get_rect().move(self.xpos, self.ypos)
 
 
 #after entity, it branches into actors and reactors.
@@ -35,7 +36,10 @@ class actor(entity):
     #from entity, it will add move, anim, and react
     def __init__(self, pos, img, size):
         #calls parent constructor, note that 'size' is a tuple representing the dimensions of the object
-        super().__init__(pos, img.subsurface((0,0), size))
+        super().__init__(pos, img.subsurface((0,0)), size)
+
+        self.velocity = (0, 0)
+
 
     #defines how the actor moves
     def move(self):
@@ -50,8 +54,10 @@ class actor(entity):
         pass
 
 
+#the player character; I want to make it so that an existing Player object or an npc object can be used to create/convert a new player
 class player(actor):
-    pass
+    def __init__(self, person):
+        super().__init__(person.pos, person.img, person.size)
 
 
 class enemy(actor):
