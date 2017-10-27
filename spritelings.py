@@ -28,6 +28,10 @@ class entity(pygame.sprite.Sprite):
 
 
 #after entity, it branches into actors and reactors.
+#both have 4 key methods: act, react, draw, and update.
+#the key difference between the two: actors can die, reactors cannot.
+#reactors are (more or less) consistent across their entire existence, and so do not need to be preserved
+#actors have a great many different internal states, and need to be tracked even when not in use.
 
 #actors move, animate, and act on things.
 #this will include basically all of our 'living' things, such as:
@@ -36,21 +40,22 @@ class actor(entity):
     #from entity, it will add move, anim, and react
     def __init__(self, pos, img, size):
         #calls parent constructor, note that 'size' is a tuple representing the dimensions of the object
-        super().__init__(pos, img.subsurface((0,0)), size)
+        super().__init__(pos, img.subsurface((0,0), size))
 
         self.velocity = (0, 0)
 
-
-    #defines how the actor moves
-    def move(self):
+    def update(self):
         pass
 
-    #defines how the actor is animated
-    def anim(self, cycle):
+    def draw(self):
         pass
 
-    #defines what the actor does to other entites upon collision upon collision
+    #defines what the actor does to other entites upon collision
     def act(self):
+        pass
+
+    #defines how this actor responds to collision
+    def react(self):
         pass
 
 
@@ -68,6 +73,11 @@ class npc(actor):
     pass
 
 
+#launched projectile. has many subtypes and attributes
+#element: fire, ice, kinetic, disruptive, electric, sonic
+#delivery/shape: beam, bolt, burst, blast, bubble, barrier, blade
+#trigger: charge, pulse, continuous
+#modifier: ray, wave, disc, stream,
 class missile(actor):
     pass
 
@@ -78,17 +88,31 @@ class reactor(entity):
     pass
 
 
+#an area of space that applies a constant, passive effect to actors that traverse/collide with it
+#spikes, slow traps, but also buff pads. really anything that continues to react as long as you touch it
 class hazard(reactor):
     pass
 
 
-class obstacle(reactor):
+#square or rectangular block (occlusion perimeter) of non-repeating images assembled in a particular order
+#this is how we will make irregularly shaped rooms
+class block(reactor):
     pass
 
 
+#a linear barrier composed of a repeating tile pattern
+#actual fences, thin walls,
+class fence(reactor):
+    pass
+
+
+#a stationary object with a transparent radius that does something upon collision/action w/(i) said radius
+#levers, doors, buttons, certain traps
 class trigger(reactor):
     pass
 
 
+#a stationary, animated object
+#includes flickering torches, running water, sparkling treasure
 class shiny(reactor):
     pass
