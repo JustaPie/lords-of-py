@@ -25,8 +25,9 @@ npc4 = player.baddy((589,251))
 npc5 = player.baddy((123,97))
 
 
-allSprites = pygame.sprite.Group(pc, npc1)
+playerChar = pygame.sprite.Group(pc)
 badguys = pygame.sprite.Group(npc1, npc2, npc3, npc4, npc5)
+projectiles = pygame.sprite.Group()
 
 running = True
 while (running):
@@ -35,11 +36,15 @@ while (running):
             running = False
 
     disp.blit(testRoom.fSurf, (0,0))
-    #disp.blit(pc.image, pc.move())
-    pc.move()
-    #disp.blit(npc.portrait, npc.move())
-    allSprites.draw(disp)
+    pc.control(projectiles)
+    playerChar.update()
+    playerChar.draw(disp)
     badguys.draw(disp)
+    projectiles.update()
+    projectiles.draw(disp)
+
+    hitList = pygame.sprite.groupcollide(badguys, projectiles, 1, 1)
+
 
     #if pc.xPos >= 1560/2:
         #disp.scroll(-1, 1)
