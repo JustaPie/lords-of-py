@@ -8,9 +8,9 @@ class player(pygame.sprite.Sprite):
         self.name = 'PC'
 
         self.image = pygame.image.load('p_arr_up.png').convert_alpha()
-        self.right = pygame.transform.rotate( self.image, 90)
+        self.left = pygame.transform.rotate( self.image, 90)
         self.down = pygame.transform.rotate( self.right, 90)
-        self.left = pygame.transform.rotate( self.down, 90)
+        self.right = pygame.transform.rotate( self.down, 90)
         self.up = pygame.transform.rotate(self.left, 90)
         self.rect = self.image.get_rect()
         print(self.rect)

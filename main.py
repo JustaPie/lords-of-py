@@ -29,6 +29,8 @@ playerChar = pygame.sprite.Group(pc)
 badguys = pygame.sprite.Group(npc1, npc2, npc3, npc4, npc5)
 projectiles = pygame.sprite.Group()
 
+
+
 running = True
 while (running):
     for event in pygame.event.get():
@@ -44,6 +46,8 @@ while (running):
     projectiles.draw(disp)
 
     hitList = pygame.sprite.groupcollide(badguys, projectiles, 1, 1)
+
+
 
 
     #if pc.xPos >= 1560/2:
