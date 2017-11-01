@@ -2,6 +2,8 @@
 import pygame
 import sys
 
+icespin = pygame.image.load('icespin.png').convert_alpha()
+
 class player(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
@@ -9,7 +11,7 @@ class player(pygame.sprite.Sprite):
 
         self.image = pygame.image.load('p_arr_up.png').convert_alpha()
         self.left = pygame.transform.rotate( self.image, 90)
-        self.down = pygame.transform.rotate( self.right, 90)
+        self.down = pygame.transform.rotate( self.left, 90)
         self.right = pygame.transform.rotate( self.down, 90)
         self.up = pygame.transform.rotate(self.left, 90)
         self.rect = self.image.get_rect()
@@ -91,6 +93,8 @@ class baddy(pygame.sprite.Sprite):
         self.yPos = pos[1]
         self.image = self.image
         self.rect = self.rect.move(self.xPos,self.yPos)
+        self.mask = pygame.mask.from_surface(self.image)
+
 
 
     def move(self):
@@ -135,15 +139,17 @@ class firespin(pygame.sprite.Sprite):
     def update(self):
         self.rect.move_ip(self.velocity)
 
+icespinimg = pygame.image.load('icespin.png').convert_alpha()
 
 class icespin(pygame.sprite.Sprite):
     def __init__(self, gunman, vel):
         super().__init__()
 
-        self.image = pygame.image.load('icespin.png').convert_alpha()
+        self.image = icespinimg
         self.rect = self.image.get_rect()
         self.velocity = vel
         self.rect.move_ip(gunman.pos)
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self.rect.move_ip(self.velocity)

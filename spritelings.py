@@ -65,7 +65,26 @@ class player(actor):
         super().__init__(person.pos, person.img, person.size)
 
 
+
+
 class enemy(actor):
+    pass
+
+
+#basic enemy with a simple shape (that is, one that can be reasonably approximated into a (single) recatngle
+class simple(enemy):
+    pass
+
+
+class bitmasked(enemy):
+    pass
+
+
+class multi(enemy):
+    pass
+
+
+class segment(enemy):
     pass
 
 

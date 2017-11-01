@@ -45,7 +45,9 @@ while (running):
     projectiles.update()
     projectiles.draw(disp)
 
-    hitList = pygame.sprite.groupcollide(badguys, projectiles, 1, 1)
+    hitList = pygame.sprite.groupcollide(badguys, projectiles, 0, 0, pygame.sprite.collide_mask)
+    if hitList:
+        print(hitList)
 
 
 
