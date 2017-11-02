@@ -1,0 +1,1 @@
+def keybrd_ctrl(player)

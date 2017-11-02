@@ -16,15 +16,24 @@ import pygame
 import sys
 
 #the first, most basic level of sprite: an entity
-#entities have a position, an image, and a rectangle
+#entities have an image and a rectangle
 class entity(pygame.sprite.Sprite):
-    def __init__(self, pos, img):
-        super().__init__()
-        self.pos = pos
-        self.xpos = pos[0]
-        self.ypos = pos[1]
-        self.image = img
-        self.rect = img.get_rect().move(self.xpos, self.ypos)
+   def __init__(self, img, pos):
+       super().__init__()
+
+       self.image = img
+       self.rect = img.get_rect()
+       self.pos = pos
+       self.rect.move_ip(pos)
+
+   def get_pos(self, center):
+       if not center:
+           return self.pos
+       xC = self.rect.width/2
+       yC = self.rect.height/2
+       x = self.pos[0]
+       y = self.pos[1]
+       return (x+xC, y+yC)
 
 
 #after entity, it branches into actors and reactors.
@@ -37,38 +46,19 @@ class entity(pygame.sprite.Sprite):
 #this will include basically all of our 'living' things, such as:
 #player character, npcs, enemies, and (potentially) wildlife
 class actor(entity):
-    #from entity, it will add move, anim, and react
-    def __init__(self, pos, img, size):
-        #calls parent constructor, note that 'size' is a tuple representing the dimensions of the object
-        super().__init__(pos, img.subsurface((0,0), size))
-
-        self.velocity = (0, 0)
-
-    def update(self):
-        pass
-
-    def draw(self):
-        pass
-
-    #defines what the actor does to other entites upon collision
-    def act(self):
-        pass
-
-    #defines how this actor responds to collision
-    def react(self):
-        pass
+    def __init__(self, img, pos):
+        super().__init__(img, pos)
+        self.mask = pygame.mask.from_surface(self.image)
 
 
 #the player character; I want to make it so that an existing Player object or an npc object can be used to create/convert a new player
 class player(actor):
-    def __init__(self, person):
-        super().__init__(person.pos, person.img, person.size)
-
-
+    pass
 
 
 class enemy(actor):
-    pass
+    def __init__(self, img, pos):
+        super().__init__(img, pos)
 
 
 #basic enemy with a simple shape (that is, one that can be reasonably approximated into a (single) recatngle
