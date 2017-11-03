@@ -36,7 +36,10 @@ class kinetic_bolt(bolt):
         xVel = vel[0] *14
         yVel = vel[1] *14
         self.velocity = (xVel, yVel)
-        self.cooldown = 15
+        caster.cooldown += 15
+        xk = self.velocity[0]/7
+        yk = self.velocity[1]/7
+        self.knockback = (xk, yk)
 
     def update(self):
         self.rect.move_ip(self.velocity)

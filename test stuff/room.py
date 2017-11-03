@@ -27,6 +27,7 @@ class room():
         self.sizeX = len(self.mapCode[0])
         self.sizeY = len(self.mapCode)
         self.outerBounds = ((0, self.xbound), (0, self.ybound))
+        #self.rect = pygame.Rect.get_rect(self.outerBounds)
 
         #parses the mapcode, assembles the various layers of the visual surface of the room,
         #and saves any special char/script sequences to the internal lists for those things
@@ -86,19 +87,35 @@ class room():
     def cleanup(self):
         for x in self.allProjectiles:
             if not self.rect.contains(x.rect):
-                print('deleted a spell')
+                #print('deleted a spell')
                 x.kill()
                 x = None
-                if x:
-                    print('OB spell:', x)
+                #if x:
+                    #print('OB spell:', x)
 
 
     def addPlayer(self, player):
         self.allSprites.add(player)
         self.player.add(player)
 
+    #supposed to be one of the primary interface methods between sprites/room and level. currently it only adds
+    #stuff to allSprites
     def update(self):
         self.allSprites.add(self.enemies, self.player)
         self.allProjectiles.add(self.playerProjectiles, self.enemyProjectiles)
         self.cleanup()
+        self.check_collision()
 
+    def check_collision(self):
+        player_hitlist_proj = pygame.sprite.groupcollide(self.player, self.enemyProjectiles, 0, 0, pygame.sprite.collide_mask)
+        if player_hitlist_proj:
+            print(player_hitlist_proj)
+
+        player_hitlist_nme = pygame.sprite.groupcollide(self.player, self.enemies, 0, 0,
+                                                    pygame.sprite.collide_mask)
+        if player_hitlist_nme:
+            print(player_hitlist_nme)
+
+        enemy_hitlist = pygame.sprite.groupcollide(self.enemies, self.playerProjectiles, 0, 0, pygame.sprite.collide_mask)
+        if enemy_hitlist:
+            print(enemy_hitlist)
