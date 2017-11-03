@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="more structure work">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test stuff/controller.py" />
+    <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="Now into the second generation of testing,">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test stuff/keyboard.py" afterPath="$PROJECT_DIR$/test stuff/keyboard.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test stuff/missiles.py" afterPath="$PROJECT_DIR$/test stuff/missiles.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test stuff/player.py" afterPath="$PROJECT_DIR$/test stuff/player.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test stuff/room.py" afterPath="$PROJECT_DIR$/test stuff/room.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -467,14 +462,20 @@
       <option name="project" value="LOCAL" />
       <updated>1509599133007</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Now into the second generation of testing,">
+      <created>1509730177990</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1509730177990</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="1176" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.145625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.145625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -564,7 +565,8 @@
     <MESSAGE value="Figured out how controllers work. also messed around with organization" />
     <MESSAGE value="update for stuff" />
     <MESSAGE value="more structure work" />
-    <option name="LAST_COMMIT_MESSAGE" value="more structure work" />
+    <MESSAGE value="Now into the second generation of testing," />
+    <option name="LAST_COMMIT_MESSAGE" value="Now into the second generation of testing," />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
