@@ -83,8 +83,11 @@ class keyboard(object):
                 print('prev spell')
                 self.current_spell += 1
             player.spell = player.spellbook[self.current_spell]
-            player.cooldown = 16
+            #player.cooldown = 16
 
+
+    #this determines in which direction the player faces, and therefore which directional image to use. This should be eventually combined
+    #with the cast function, since they overlap in function.
     def face(self, player):
         x = player.velocity[0]
         y = player.velocity[1]

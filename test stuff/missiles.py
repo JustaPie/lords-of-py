@@ -19,6 +19,10 @@ ice_disc_s = pygame.transform.scale(ice_disc_l, (32, 32))
 kin_bolt = pygame.image.load('projectiles\kin_bolt.png').convert_alpha()
 kin_bolt = pygame.transform.scale(kin_bolt, (32, 32))
 
+heat_wave = pygame.image.load('projectiles\heatwave.png').convert()
+heat_wave.set_colorkey(0, 0, 0)
+
+
 '''
 class actor(entity):
 def __init__(self, pos, img, size):

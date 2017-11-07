@@ -8,8 +8,10 @@ below presumes the existence of spritesheets for animation purposes
 
 
 '''
-confession: I'm not too great with python-based OOP, so I'm not sure if this level of division/inheritance is strictly necessary, 
-but it does help me personally concepualize everything
+this details the basic structure of inheritance for every type of sprite we'll be using, and holds all the generic methods that we intend to 
+pass downwards via inheritance to more specialized classes. basically, if you plan to use a particular method many times for many different sprites,
+find the common ancestor of all the sprites that you want to have access to the method, and define it for the ancestor.
+ex: entity is the common ancestor of all our sprite(s/classes), so to give all sprites access to a method, simply define it for the entity class
 '''
 
 import pygame
