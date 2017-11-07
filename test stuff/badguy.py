@@ -36,7 +36,7 @@ class mask_of_death(spritelings.enemy):
     def look(self, room):
         for x in room.allSprites :
             if not x == self:
-
+                pass
 
 
     def react(self, weapon):
