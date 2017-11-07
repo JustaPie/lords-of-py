@@ -25,6 +25,15 @@ class entity(pygame.sprite.Sprite):
        self.rect = img.get_rect()
        self.pos = pos
        self.rect.move_ip(pos)
+       self.velocity = (0, 0)
+
+#here, act and react are basically get out attribute fuckup free cards.ssss
+   def react(self, thing):
+        pass
+
+   def act(self, thing):
+       pass
+
 
    def get_pos(self, center):
        if not center:

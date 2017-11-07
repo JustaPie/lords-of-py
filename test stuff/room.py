@@ -76,7 +76,7 @@ class room():
         self.allSprites = pygame.sprite.Group()
         self.allProjectiles = pygame.sprite.Group()
 
-        self.player = pygame.sprite.Group()
+        self.player = pygame.sprite.GroupSingle()
         self.playerProjectiles = pygame.sprite.Group()
 
         self.enemies = pygame.sprite.Group()
@@ -111,11 +111,15 @@ class room():
         if player_hitlist_proj:
             print(player_hitlist_proj)
 
-        player_hitlist_nme = pygame.sprite.groupcollide(self.player, self.enemies, 0, 0,
-                                                    pygame.sprite.collide_mask)
+        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0,
+                                                        pygame.sprite.collide_mask)
         if player_hitlist_nme:
             print(player_hitlist_nme)
+            for nme in player_hitlist_nme:
+                nme.act(player_hitlist_nme[nme])
 
-        enemy_hitlist = pygame.sprite.groupcollide(self.enemies, self.playerProjectiles, 0, 0, pygame.sprite.collide_mask)
+        enemy_hitlist = pygame.sprite.groupcollide(self.playerProjectiles, self.enemies, 0, 0, pygame.sprite.collide_mask)
         if enemy_hitlist:
             print(enemy_hitlist)
+            for nme in enemy_hitlist:
+                nme.act(enemy_hitlist[nme])

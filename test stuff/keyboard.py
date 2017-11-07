@@ -18,6 +18,7 @@ class keyboard(object):
     def __init__(self, player):
         self.key = pygame.key.get_pressed()
         self.subject = player
+        self.current_spell = 1
 
     def update(self):
         self.key = pygame.key.get_pressed()
@@ -69,11 +70,20 @@ class keyboard(object):
             xFace = -1
 
         if xFace or yFace:
-            print('spell should cast')
-
-            return player.spell(player, (xFace, yFace))
+           return player.spell(player, (xFace, yFace))
         else:
             return None
+
+    def cycle_spell(self, player):
+        if player.cooldown ==  0 :
+            if self.key[pygame.K_q] and self.current_spell>1:
+                print('next spell')
+                self.current_spell -= 1
+            elif self.key[pygame.K_e] and self.current_spell<4:
+                print('prev spell')
+                self.current_spell += 1
+            player.spell = player.spellbook[self.current_spell]
+            player.cooldown = 16
 
     def face(self, player):
         x = player.velocity[0]
