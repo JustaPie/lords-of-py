@@ -91,6 +91,7 @@ class keyboard(object):
             pass
         elif squid[1] or squid[2]:
             pass
+
         else:
             return None
 

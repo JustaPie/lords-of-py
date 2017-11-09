@@ -96,6 +96,12 @@ class enemy(actor):
         pos_vector = (x - i, y - j)
         return pos_vector
 
+    def get_vel_vector(self):
+        pass
+
+    def get_acc_vector(self):
+        pass
+
 
     #most basic movement function; just go in a straight line towards a
     #destination point

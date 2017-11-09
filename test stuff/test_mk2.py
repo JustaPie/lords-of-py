@@ -7,8 +7,8 @@ green = (0, 255, 0)
 
 plyr_loc = (100, 100)
 nme1_loc = (500, 500)
-screen_size = (1560, 1000)
 fps = 128
+screen_size = (1500, 1200)
 
 pygame.init()
 
