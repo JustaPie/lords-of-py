@@ -20,31 +20,63 @@ class keyboard(object):
         self.subject = player
         self.current_spell = 1
 
-    def update(self):
+    def update(self, room):
         self.key = pygame.key.get_pressed()
-        self.move(self.subject)
-        self.face(self.subject)
+        mov_up = self.key[pygame.K_w]
+        mov_dn = self.key[pygame.K_s]
+        mov_lt = self.key[pygame.K_a]
+        mov_rt = self.key[pygame.K_d]
+        move = (mov_up, mov_dn, mov_lt, mov_rt)
+
+        locked = self.key[pygame.KMOD_SHIFT]
+
+        lk_up = self.key[pygame.K_UP]
+        lk_dn = self.key[pygame.K_DOWN]
+        lk_lt = self.key[pygame.K_LEFT]
+        lk_rt = self.key[pygame.K_RIGHT]
+        look = (lk_up, lk_dn, lk_lt, lk_rt)
+
+        facing = self.face(self.subject, look)
+        if not facing:
+            facing = self.move(self.subject, move)
+        else:
+            self.move(self.subject, move)
+
+        if not locked and facing:
+            player.facing = facing
+
+        fire = self.key[pygame.K_SPACE]
+        nxt = self.key[pygame.K_e]
+        prv = self.key[pygame.K_q]
+        squid = (fire, nxt, prv)
+        self.magic(player, room, squid)
 
 
-    def move(self, player):
+
+    def move(self, player, move):
         yVel = 0
         xVel = 0
-        if self.key[pygame.K_w]:
-            player.image = player.dirct['up']
+        xdir = 0
+        ydir = 0
+        if move[0]:
             yVel = -speed
-        if self.key[pygame.K_s]:
-            player.image = player.dirct['down']
+            ydir -= 1
+        if move[1]:
             yVel = speed
+            ydir += 1
 
-        if self.key[pygame.K_a]:
+        if move[2]:
             xVel = -speed
-        if self.key[pygame.K_d]:
+            xdir -= 1
+        if move[3]:
             xVel = speed
+            xdir += 1
 
         player.velocity = (xVel, yVel)
         xPos = player.pos[0]
         yPos = player.pos[1]
         player.pos = (xPos + xVel, yPos + yVel)
+        return (xdir, ydir)
 
 
 
@@ -54,85 +86,38 @@ class keyboard(object):
 #the arrow keys only control which direction the player is facing. There's prbly some fancy way to handle this with decorators
 #and/or encapsulators,
 #'''
-
-    def cast(self, player):
-        xFace = 0
-        yFace = 0
-
-        if self.key[pygame.K_UP]:
-            yFace = -1
-        elif self.key[pygame.K_DOWN]:
-            yFace = 1
-
-        if self.key[pygame.K_RIGHT]:
-            xFace = 1
-        elif self.key[pygame.K_LEFT]:
-            xFace = -1
-
-        if xFace or yFace:
-           return player.spell(player, (xFace, yFace))
+    def magic(self, player, room, squid):
+        if squid[0]:
+            pass
+        elif squid[1] or squid[2]:
+            pass
         else:
             return None
 
+    def cast(self, player):
+
     def cycle_spell(self, player):
-        if player.cooldown ==  0 :
-            if self.key[pygame.K_q]:
-                print('next spell')
-                self.current_spell = 1
-            elif self.key[pygame.K_e]:
-                print('prev spell')
-                self.current_spell = 2
-            player.spell = player.spellbook[self.current_spell]
-            #player.cooldown = 16
+        for event in pygame.event.get():
+            if
+
 
 
     #this determines in which direction the player faces, and therefore which directional image to use. This should be eventually combined
     #with the cast function, since they overlap in function.
-    def face(self, player):
-        x = player.velocity[0]
-        y = player.velocity[1]
+    def face(self, player, look):
+        xface = 0
+        yface = 0
+        if look[0]:
+            yface = -1
+        elif look[1]:
+            yface = 1
 
-        xFace = 0
-        yFace = 0
+        if look[2]:
+            xface = -1
+        elif look[3]:
+            xface = 1
 
-        if x > 0:
-            xFace = 1
-            player.image = player.dirct['right']
-            i = player.pos[0]+player.rect.width
-            j = player.pos[1] + 32
-            player.cast_from = (i, j)
-            if y > 0:
-                yFace = 1
-                player.image = player.dirct['dn_rt']
-            elif y < 0:
-                yFace = -1
-                player.image = player.dirct['up_rt']
-        elif x < 0:
-            xFace = -1
-            player.image = player.dirct['left']
-            if y > 0:
-                yFace = 1
-                player.image = player.dirct['dn_lt']
-            elif y < 0:
-                yFace = -1
-                player.image = player.dirct['up_lt']
-
-        if self.key[pygame.K_UP]:
-            player.image = player.dirct['up']
-            if self.key[pygame.K_RIGHT]:
-                player.image = player.dirct['up_rt']
-            elif self.key[pygame.K_LEFT]:
-                player.image = player.dirct['up_lt']
-
-        elif self.key[pygame.K_DOWN]:
-            player.image = player.dirct['down']
-            if self.key[pygame.K_RIGHT]:
-                player.image = player.dirct['dn_rt']
-            elif self.key[pygame.K_LEFT]:
-                player.image = player.dirct['dn_lt']
-
-        elif self.key[pygame.K_LEFT]:
-            player.image = player.dirct['left']
-
-        elif self.key[pygame.K_RIGHT]:
-            player.image = player.dirct['right']
+        if xface or yface:
+            return player.facing
+        else:
+            return None

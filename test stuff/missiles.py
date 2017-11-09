@@ -27,12 +27,19 @@ kin_bolt = pygame.transform.scale(kin_bolt, (32, 32))
 #START beams
 
 beam_delay = 10
+kin_beam = pygame.image.load('projectiles\kin_beam_full.png').convert_alpha()
+kin_beam_origin = kin_beam.subsurface((45, 235), (42, 20))
+kin_beam_body = kin_beam.subsurface((45, 55), (42, 181))
+kin_beam_rings = kin_beam.subsurface((45, 15), (42, 42))
+kin_beam_impact = kin_beam.subsurface((45, 0), (42, 15))
+
+#END beams
 
 #START rays
 
 #constants
-v0_scalar = 1.5
-accel_scalar = 1.8
+v0_scalar = 2
+accel_scalar = 1.15
 
 single_growth_delay = 8
 s_grwth_fctr_y = 4
@@ -68,7 +75,7 @@ to create new spells on the fly/custom build your ideal spell in the hub room
 
 class missile(spritelings.actor):
     def __init__(self, caster, img):
-        super().__init__(img, caster.get_pos())
+        super().__init__(img, caster.get_pos(1))
 
         self.damage = 0
         self.temp = 0
@@ -158,10 +165,18 @@ class beam(missile):
     def __init__(self, caster, img):
         super().__init__(caster, img)
         self.delay = beam_delay
+        self.caster = caster
 
 
     def update(self):
-        pass
+        if self.delay > 0:
+            self.delay -= 1
+            self.rect.move_ip(self.caster.velocity)
+            #charging cycle
+
+        else:
+            pass
+
 
 class kinetic_beam(beam):
     def __init__(self, caster, vel):
@@ -174,6 +189,7 @@ class kinetic_beam(beam):
         xk = self.velocity[0] / 7
         yk = self.velocity[1] / 7
         self.knockback = (xk, yk)
+
 
 #rays are a subclass of beams that can be heat or freeze. basically a coninuous stream of
 #(purely) elemental damage
@@ -201,8 +217,10 @@ class ray(beam):
         #giving the appearance of a widening cone of heat, and they should accelerate as they travel,
         #to minimize overlap between each projectile. not sure how to handle this tho.
         #so far, i think this works well. It does appear to be VERY processor intensive
-        #
-        if(self.timer%8 == single_growth_delay):
+        #it may be worth it to add in a special sprite group JUST for handling rays, as they seem to slow down the game
+        #all by themselves, so I shudder to think of what happens when we have them + anything else
+        if(self.timer%single_growth_delay == 0):
+            #I'm pretty sure its this part (the image scaling) thats causing the slow-downs. Let's consider pre-loading some or all of this
             self.set_image(pygame.transform.scale(self.image, (self.rect.width + s_grwth_fctr_x, self.rect.height + s_grwth_fctr_y)))
             self.rect.move_ip(0,-(s_grwth_fctr_y/2))
             xVel = self.velocity[0] * accel_scalar
@@ -210,7 +228,7 @@ class ray(beam):
             self.velocity = (xVel, yVel)
         if (self.timer % double_growth_delay == 0):
             self.set_image(pygame.transform.scale(self.image, (self.rect.width + d_grwth_fctr_x, self.rect.height + d_grwth_fctr_y)))
-            self.rect.move_ip(0, -3)
+            self.rect.move_ip(0, -(d_grwth_fctr_y/2))
 
 
     def act(self, target):
