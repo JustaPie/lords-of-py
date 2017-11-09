@@ -5,6 +5,14 @@ import missiles
 face = pygame.image.load("baddies\mask.png").convert_alpha()
 eyes = pygame.image.load("baddies\eyes.png").convert_alpha()
 
+xvf = 10
+yxf = 10
+accel = 2
+
+cooling = 1
+heating = 1
+
+
 
 class mask_of_death(spritelings.enemy):
     def __init__(self, pos):

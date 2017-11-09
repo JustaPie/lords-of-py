@@ -7,6 +7,8 @@ import keyboard
 pc_pict = pygame.image.load('people\grn_plyr_arw.png').convert_alpha()
 speed = 4
 red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
 
 
 class player(spritelings.actor):
@@ -24,6 +26,7 @@ class player(spritelings.actor):
                       'up_rt':  pc_pict.subsurface(192, 64, 64, 64), 'up_lt':  pc_pict.subsurface(128, 64, 64, 64)}
 
         self.pos = pos
+        self.cast_from = self.pos
 
         #hp, focus, etc will go here
         self.cooldown = 0
@@ -39,10 +42,7 @@ class player(spritelings.actor):
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
-        self.spellbook = {1: missiles.kinetic_bolt, 'kinetic_bolt': missiles.kinetic_bolt,
-                          2: missiles.fire_bolt, 'fire_bolt': missiles.fire_bolt,
-                          3: missiles.ice_bolt, 'ice_bolt': missiles.ice_bolt,
-                          4: missiles.acid_bolt, 'acid_bolt': missiles.acid_bolt}
+        self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray}
         self.spell = self.spellbook[1]
 
 

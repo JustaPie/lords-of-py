@@ -1,12 +1,18 @@
 import pygame
 
+#this first bit is just useful constants
 red = (255, 0, 0)
 blue = (0, 0, 255)
 green = (0, 255, 0)
 
+plyr_loc = (100, 100)
+nme1_loc = (500, 500)
+screen_size = (1560, 1000)
+fps = 128
+
 pygame.init()
 
-disp = pygame.display.set_mode((1560, 1000))
+disp = pygame.display.set_mode(screen_size)
 
 import player
 import room
@@ -18,11 +24,11 @@ test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff','ff
 
 test_room = room.room(test_room_code)
 
-pc = player.player((100, 100))
+pc = player.player(plyr_loc)
 
 test_room.addPlayer(pc)
 
-maskPos = (300, 300)
+maskPos = (nme1_loc)
 mask1 = badguy.mask_of_death(maskPos)
 #mask2 = badguy.mask_of_death(maskPos)
 test_room.enemies.add(mask1)
@@ -50,14 +56,13 @@ while (running):
     for y in test_room.enemies:
         pygame.draw.rect(disp, blue, y.rect, 4)
 
-    for z in test_room.allProjectiles:
-        pygame.draw.rect(disp, green, z.rect, 4)
-
+    #for z in test_room.allProjectiles:
+    #    pygame.draw.rect(disp, green, z.rect, 4)
 
     test_room.update()
 
 
     clock = pygame.time.Clock()
-    msElapsed = clock.tick(128)
+    msElapsed = clock.tick(fps)
 
     pygame.display.update()

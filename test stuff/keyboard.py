@@ -76,12 +76,12 @@ class keyboard(object):
 
     def cycle_spell(self, player):
         if player.cooldown ==  0 :
-            if self.key[pygame.K_q] and self.current_spell>1:
+            if self.key[pygame.K_q]:
                 print('next spell')
-                self.current_spell -= 1
-            elif self.key[pygame.K_e] and self.current_spell<4:
+                self.current_spell = 1
+            elif self.key[pygame.K_e]:
                 print('prev spell')
-                self.current_spell += 1
+                self.current_spell = 2
             player.spell = player.spellbook[self.current_spell]
             #player.cooldown = 16
 
@@ -98,6 +98,9 @@ class keyboard(object):
         if x > 0:
             xFace = 1
             player.image = player.dirct['right']
+            i = player.pos[0]+player.rect.width
+            j = player.pos[1] + 32
+            player.cast_from = (i, j)
             if y > 0:
                 yFace = 1
                 player.image = player.dirct['dn_rt']

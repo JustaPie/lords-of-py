@@ -28,6 +28,7 @@ class entity(pygame.sprite.Sprite):
        self.pos = pos
        self.rect.move_ip(pos)
        self.velocity = (0, 0)
+       self.mask = pygame.mask.from_surface(self.image)
 
 #here, act and react are basically get out attribute fuckup free cards.ssss
    def react(self, thing):
@@ -37,7 +38,7 @@ class entity(pygame.sprite.Sprite):
        pass
 
 
-   def get_pos(self, center):
+   def get_pos(self, center = 0):
        if not center:
            return self.pos
        xC = self.rect.width/2
@@ -45,6 +46,12 @@ class entity(pygame.sprite.Sprite):
        x = self.pos[0]
        y = self.pos[1]
        return (x+xC, y+yC)
+
+   def set_image(self, new_image):
+       self.image = new_image
+       self.rect = self.image.get_rect()
+       self.mask = pygame.mask.from_surface(self.image)
+       self.rect.move_ip(self.pos)
 
 
 #after entity, it branches into actors and reactors.
@@ -59,7 +66,7 @@ class entity(pygame.sprite.Sprite):
 class actor(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
-        self.mask = pygame.mask.from_surface(self.image)
+
 
 
 #the player character; I want to make it so that an existing Player object or an npc object can be used to create/convert a new player

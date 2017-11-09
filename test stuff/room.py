@@ -3,6 +3,8 @@ import pygame
 import os
 import player
 
+tile_scalar = 100
+
 class room():
     '''this stuff is supposed to be present in all instances of rooms in the current level; it will be passed in by the level'''
     '''all of this is the set of all possible things that can be created in this room, and then the associated lookups for keyying them to the mapCode'''
@@ -22,8 +24,8 @@ class room():
 
     def __init__(self, mapcode):
         self.mapCode = mapcode
-        self.xbound = len(self.mapCode[0])*100
-        self.ybound = len(self.mapCode)*100
+        self.xbound = len(self.mapCode[0])*tile_scalar
+        self.ybound = len(self.mapCode)*tile_scalar
         self.sizeX = len(self.mapCode[0])
         self.sizeY = len(self.mapCode)
         self.outerBounds = ((0, self.xbound), (0, self.ybound))
@@ -45,26 +47,26 @@ class room():
                 space = row[x]
                 if space == '<':
 
-                    self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
+                    self.floorSurf.blit(self.dicTile[space], (x * tile_scalar, y * tile_scalar))
                 else:
-                    self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
+                    self.floorSurf.blit(self.dicTile[space], (x * tile_scalar, y * tile_scalar))
 
-        for i in range(0, self.xbound, 100):
+        for i in range(0, self.xbound, tile_scalar):
             self.wallSurf.blit(self.dicTile['tw'], (i, 0))
 
-        for j in range(0, self.ybound, 100):
+        for j in range(0, self.ybound, tile_scalar):
             self.wallSurf.blit(self.dicTile['rw'], (i, j))
 
-        for i in range(0, self.xbound, 100):
+        for i in range(0, self.xbound, tile_scalar):
             self.wallSurf.blit(self.dicTile['bw'], (i, j))
 
-        for j in range(0, self.ybound, 100):
+        for j in range(0, self.ybound, tile_scalar):
             self.wallSurf.blit(self.dicTile['lw'], (0, j))
 
         self.wallSurf.blit(self.dicTile['tlc'], (0, 0))
-        self.wallSurf.blit(self.dicTile['blc'], (0, self.ybound - 100))
-        self.wallSurf.blit(self.dicTile['brc'], (self.xbound - 100, self.ybound - 100))
-        self.wallSurf.blit(self.dicTile['trc'], (self.xbound - 100, 0))
+        self.wallSurf.blit(self.dicTile['blc'], (0, self.ybound - tile_scalar))
+        self.wallSurf.blit(self.dicTile['brc'], (self.xbound - tile_scalar, self.ybound - tile_scalar))
+        self.wallSurf.blit(self.dicTile['trc'], (self.xbound - tile_scalar, 0))
         self.wallSurf.set_colorkey((0,0,0))
 
         self.fSurf = pygame.Surface((self.xbound, self.ybound))
