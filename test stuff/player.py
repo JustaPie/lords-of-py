@@ -83,3 +83,6 @@ class player(spritelings.actor):
     def react(self, asshole):
         if self.state == 'normal':
             self.hp = self.hp-asshole.damage
+
+    def cast(self):
+        return self.spell(self, self.facing)
