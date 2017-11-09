@@ -9,4 +9,4 @@ pygame.transform.scale(blank, screen_size)
 class HUD(pygame.sprite.Group):
     def __init__(self, player):
         super().__init__()
-        self.health_bar =
+        self.health_bar = player.hp
