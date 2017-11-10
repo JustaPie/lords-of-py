@@ -38,14 +38,11 @@ class keyboard(object):
 
         facing = self.face(self.subject, look)
         if not facing:
-            #print('not facing')
             facing = self.move(self.subject, move)
         else:
-            #print('facing')
             self.move(self.subject, move)
 
         if locked:
-            print('locked')
             pass
         elif facing:
             self.subject.facing = facing
@@ -54,7 +51,7 @@ class keyboard(object):
         nxt = self.key[pygame.K_e]
         prv = self.key[pygame.K_q]
         squid = (fire, nxt, prv)
-        self.magic(player, room, squid)
+        self.magic(self.subject, room, squid)
 
 
 
@@ -97,15 +94,12 @@ class keyboard(object):
 #'''
     def magic(self, player, room, squid):
         if squid[0]:
-            self.cast(player, room)
+            room.playerProjectiles.add(player.spell(player, player.facing))
         elif squid[1] or squid[2]:
             pass
 
         else:
             return None
-
-    def cast(self, player, room):
-        room.playerProjectiles.add(player.cast())
 
     def cycle_spell(self, player):
         for event in pygame.event.get():
@@ -130,7 +124,6 @@ class keyboard(object):
             xface = 1
 
         if xface or yface:
-            #player.facing = (xface,yface)
-            return (xface,yface)
+            return (xface, yface)
         else:
             return None

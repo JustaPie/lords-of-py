@@ -45,12 +45,11 @@ class player(spritelings.actor):
         #the missile sprites
         self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray}
         self.spell = self.spellbook[1]
+        print(self.spell)
 
 
         #this could be anything that shares an interface with the keyboard object
         self.control_method = keyboard.keyboard(self)
-
-
 
 
     def update(self, room):
@@ -84,5 +83,3 @@ class player(spritelings.actor):
         if self.state == 'normal':
             self.hp = self.hp-asshole.damage
 
-    def cast(self):
-        return self.spell(self, self.facing)
