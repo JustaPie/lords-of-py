@@ -28,7 +28,7 @@ class room():
         self.ybound = len(self.mapCode)*tile_scalar
         self.sizeX = len(self.mapCode[0])
         self.sizeY = len(self.mapCode)
-        self.outerBounds = ((0, self.xbound), (0, self.ybound))
+        self.outerBounds = (self.xbound, self.ybound)
         #self.rect = pygame.Rect.get_rect(self.outerBounds)
 
         #parses the mapcode, assembles the various layers of the visual surface of the room,

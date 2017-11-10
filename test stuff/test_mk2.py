@@ -18,6 +18,7 @@ import player
 import room
 import badguy
 import missiles
+import test_nme
 
 test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
                   'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
@@ -31,10 +32,11 @@ pc = player.player(plyr_loc)
 
 test_room.addPlayer(pc)
 
-maskPos = (nme1_loc)
-mask1 = badguy.mask_of_death(maskPos)
+#maskPos = (nme1_loc)
+#mask1 = badguy.mask_of_death(maskPos)
 #mask2 = badguy.mask_of_death(maskPos)
-test_room.enemies.add(mask1)
+fleye1 = test_nme.fleye((500, 500))
+test_room.enemies.add(fleye1)
 
 running = True
 while (running):

@@ -7,6 +7,7 @@ below presumes the existence of spritesheets for animation purposes
 '''
 
 
+
 '''
 this details the basic structure of inheritance for every type of sprite we'll be using, and holds all the generic methods that we intend to 
 pass downwards via inheritance to more specialized classes. basically, if you plan to use a particular method many times for many different sprites,
@@ -16,6 +17,7 @@ ex: entity is the common ancestor of all our sprite(s/classes), so to give all s
 
 import pygame
 import sys
+import math
 from fractions import Fraction
 
 #the first, most basic level of sprite: an entity
@@ -78,6 +80,7 @@ class player(actor):
 class enemy(actor):
     def __init__(self, img, pos):
         super().__init__(img, pos)
+        self.speed = 0
 
     #handler method for sequencing move orders, calculating movement vectors,
     #picking and checking locations,
@@ -86,6 +89,20 @@ class enemy(actor):
 
     #the following vector methods have to do with adjusting
     #position, velocity, and acceleration
+    def dumb_move(self, target):
+        dx, dy = self.rect.x - target.rect.x, self.rect.y - target.rect.y
+        dist = math.hypot(dx, dy)
+        xvel = self.velocity[0] * dx / dist
+        yvel = self.velocity[1] * dy / dist
+        self.velocity = (xvel, yvel)
+
+    def move_to_sprite(self, target):
+        dx, dy = self.rect.x - target.rect.x, self.rect.y - target.rect.y
+        dist = math.hypot(dx, dy)
+        dx, dy = dx / dist, dy / dist
+        self.velocity = (self.rect.x + dx * self.speed,
+                         self.rect.y + dy * self.speed)
+
 
     #pos_vector is the difference in x, y needed to reach a given point
     def get_pos_vector(self, dest):
