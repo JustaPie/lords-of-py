@@ -26,8 +26,9 @@ class mask_of_death(spritelings.enemy):
         self.mask = pygame.mask.from_surface(self.face)
         self.cooldown = 0
         self.center = self.get_pos(1)
-        self.accel = 1
-        self.top_speed = 6
+        self.acc = 1
+        self.speed = 3
+        self.target = None
 
         self.hp = 100
 
@@ -36,10 +37,16 @@ class mask_of_death(spritelings.enemy):
         surf.blit(self.image, self.rect)
 
     def update(self, room):
-        self.look(room)
+        if self.target:
+            self.move_to_sprite(self.target)
         self.rect.move_ip(self.velocity)
+        self.pos = (self.rect.x, self.rect.y)
         if self.hp<=0:
             self.kill()
+
+    def set_target(self, target):
+        self.target = target
+
 
     def look(self, room):
         for x in room.allSprites :

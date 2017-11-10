@@ -33,10 +33,12 @@ pc = player.player(plyr_loc)
 test_room.addPlayer(pc)
 
 #maskPos = (nme1_loc)
-#mask1 = badguy.mask_of_death(maskPos)
+mask1 = badguy.mask_of_death((1000, 700))
 #mask2 = badguy.mask_of_death(maskPos)
 fleye1 = test_nme.fleye((500, 500))
-test_room.enemies.add(fleye1)
+fleye1.set_target(pc)
+#mask1.set_target(pc)
+test_room.enemies.add(fleye1, mask1)
 
 running = True
 while (running):

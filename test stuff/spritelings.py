@@ -81,6 +81,7 @@ class enemy(actor):
     def __init__(self, img, pos):
         super().__init__(img, pos)
         self.speed = 0
+        self.acc = 0
 
     #handler method for sequencing move orders, calculating movement vectors,
     #picking and checking locations,
@@ -103,27 +104,39 @@ class enemy(actor):
         self.velocity = (self.rect.x + dx * self.speed,
                          self.rect.y + dy * self.speed)
 
+    def react(self, weapon):
+        self.hp -= weapon.damage
+        self.rect.move_ip(weapon.knockback)
 
-    #pos_vector is the difference in x, y needed to reach a given point
-    def get_pos_vector(self, dest):
-        x = self.get_pos(1)[0]
-        y = self.get_pos(1)[1]
-        i = dest[0]
-        j = dest[1]
-        pos_vector = (x - i, y - j)
-        return pos_vector
+    def act(self, victim):
+        victim.hp -= 10
+        victim.velocity = self.velocity
 
-    def get_vel_vector(self):
-        pass
+    def act(self, victim_list):
+        for victim in victim_list:
+            victim.hp -= 10
+            victim.velocity = self.velocity
 
-    def get_acc_vector(self):
-        pass
+    def accel_towards_sprite(self):
+        xvel, yvel = self.velocity[0], self.velocity[1]
+        xpos = self.rect.x
+        ypos = self.rect.y
+        xdest = self.target.rect.x
+        ydest = self.target.rect.y
+        if xpos < xdest:
+            xvel += self.acc
+        elif xpos > xdest:
+            xvel -= self.acc
+        else:
+            pass
+        if ypos < ydest:
+            yvel += self.acc
+        elif ypos > ydest:
+            yvel -= self.acc
+        else:
+            pass
+        self.velocity = (xvel, yvel)
 
-
-    #most basic movement function; just go in a straight line towards a
-    #destination point
-    def move_to(self, dest):
-        pass
 
 #simple test enemy
 class fleye(enemy):
