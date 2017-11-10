@@ -93,7 +93,7 @@ class keyboard(object):
 #and/or encapsulators,
 #'''
     def magic(self, player, room, squid):
-        if squid[0]:
+        if squid[0] and player.cooldown == 0:
             room.playerProjectiles.add(player.spell(player, player.facing))
         elif squid[1] or squid[2]:
             pass

@@ -1,7 +1,7 @@
 import pygame
 import spritelings
 import missiles
-import controller
+#import controller
 import keyboard
 
 pc_pict = pygame.image.load('people\grn_plyr_arw.png').convert_alpha()
@@ -43,8 +43,8 @@ class player(spritelings.actor):
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
-        self.spellbook = {1:missiles.kinetic_bolt, 2:missiles.heat_ray}
-        self.spell = self.spellbook[1]
+        self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt}
+        self.spell = self.spellbook[3]
         print(self.spell)
 
 

@@ -108,6 +108,10 @@ class enemy(actor):
     def move_to(self, dest):
         pass
 
+#simple test enemy
+class fleye(enemy):
+    pass
+
 class npc(actor):
     pass
 
