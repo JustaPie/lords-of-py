@@ -3,25 +3,14 @@ import pygame
 
 pygame.init()
 
-#all of this is pre-loading projectile images, and when we go into final production, this will
-#likely have to be parred down heavily
-acid_orb_l = pygame.image.load('projectiles\disin_orb_l.png').convert_alpha()
-acid_orb_m = pygame.transform.scale(acid_orb_l, (64, 64))
-acid_orb_s = pygame.transform.scale(acid_orb_l, (32, 32))
-
-fire_ball_l = pygame.image.load('projectiles\dfire_ball_l.png').convert_alpha()
-fire_ball_m = pygame.transform.scale(fire_ball_l, (64, 64))
-fire_ball_s = pygame.transform.scale(fire_ball_l, (32, 32))
-
-ice_disc_l = pygame.image.load('projectiles\ice_disc_l.png').convert_alpha()
-ice_disc_m = pygame.transform.scale(ice_disc_l, (64, 64))
-ice_disc_s = pygame.transform.scale(ice_disc_l, (32, 32))
-
-
-kin_bolt = pygame.image.load('projectiles\kin_bolt.png').convert_alpha()
-kin_bolt = pygame.transform.scale(kin_bolt, (32, 32))
-
 #START bolts
+all_bolt_base = pygame.image.load('projectiles\simple_bolts.png')
+kin_bolt = all_bolt_base.subsurface((1, 1), (70, 70))
+melt_bolt = all_bolt_base.subsurface((72, 1), (70, 70))
+hot_bolt = all_bolt_base.subsurface((1, 72), (70, 70))
+cold_bolt = all_bolt_base.subsurface((143, 1), (70, 70))
+bad_bolt = all_bolt_base.subsurface((72, 72), (70, 70))
+misc_bolt = all_bolt_base.subsurface((143, 72), (70, 70))
 #END bolts
 
 #START beams
@@ -39,14 +28,14 @@ kin_beam_impact = kin_beam.subsurface((45, 0), (42, 15))
 
 #constants
 v0_scalar = 2
-accel_scalar = 1.15
+accel_scalar = 1.25
 
 single_growth_delay = 8
-s_grwth_fctr_y = 4
-s_grwth_fctr_x = 2
+s_grwth_fctr_y = 3
+s_grwth_fctr_x = 3
 
 double_growth_delay = 16
-d_grwth_fctr_y = 8
+d_grwth_fctr_y = 6
 d_grwth_fctr_x = 6
 
 #images
@@ -120,7 +109,7 @@ class kinetic_bolt(bolt):
 
 class fire_bolt(bolt):
     def __init__(self, caster, vel):
-        super().__init__(caster, fire_ball_m, vel)
+        super().__init__(caster, hot_bolt, vel)
 
         caster.cooldown += 30
         xk = self.velocity[0] / 10
@@ -130,7 +119,7 @@ class fire_bolt(bolt):
 
 class ice_bolt(bolt):
     def __init__(self, caster, vel):
-        super().__init__(caster, ice_disc_m, vel)
+        super().__init__(caster, cold_bolt, vel)
 
         caster.cooldown += 30
         xk = self.velocity[0] / 10
@@ -140,7 +129,7 @@ class ice_bolt(bolt):
 
 class acid_bolt(bolt):
     def __init__(self, caster, vel):
-        super().__init__(caster, acid_orb_m, vel)
+        super().__init__(caster, melt_bolt, vel)
 
         caster.cooldown += 30
         xk = self.velocity[0] / 10
