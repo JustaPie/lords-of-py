@@ -46,8 +46,9 @@ class player(spritelings.actor):
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
-        self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt}
-        self.spell = self.spellbook[1]
+        self.spellbook = {0:missiles.acid_bolt ,1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt, 4:missiles.kinetic_beam}
+        self.page = 2
+        self.spell = self.spellbook[self.page]
         print(self.spell)
 
 
@@ -90,10 +91,23 @@ class player(spritelings.actor):
 
         self.image = self.dirct[self.facing]
 
+    def next_spell(self):
+        if self.page < len(self.spellbook) - 1:
+            self.page += 1
+            self.spell = self.spellbook[self.page]
+
+    def prev_spell(self):
+        if self.page > 0:
+            self.page-=1
+            self.spell = self.spellbook[self.page]
+
+    def set_frame(self):
+        pass
+
     #this feels like a really cumbersome way of applying damage and effects, but so far,
     #its all we've got.....
     def react(self, asshole):
-        if self.invincible > 0:
+        if self.invincible <= 0:
             self.hp = self.hp-asshole.damage
             self.rect.move_ip(asshole.velocity)
             self.stunned = 128

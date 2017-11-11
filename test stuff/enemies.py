@@ -51,14 +51,31 @@ class enemy(spritelings.actor):
 
 
     def act(self, victim):
-        victim.hp -= 10
-        victim.velocity = self.velocity
+        victim.react(self)
 
 
     def act(self, victim_list):
         for victim in victim_list:
-            victim.hp -= self.damage
-            victim.velocity = self.velocity
+            victim.react(self)
+
+    def move_to(self, dest):
+        xdest, ydest = dest[0], dest[1]
+        xpos, ypos = self.rect.x, self.rect.y
+        xvel, yvel = 0, 0
+        dx, dy = xdest-xpos, ydest-ypos
+        if xvel > dx:
+            xvel = 1
+        elif xvel < dx:
+            xvel = 1
+        else:
+            xvel = 0
+        if yvel > dy:
+            yvel = -1
+        elif yvel < dy:
+            yvel = 1
+        else:
+            yvel = 0
+        self.velocity = (xvel, yvel)
 
 
     def accel_to_sprite(self, target):
@@ -81,7 +98,6 @@ class enemy(spritelings.actor):
             pass
 
         self.velocity = (xvel, yvel)
-        print(self.velocity)
 
 
     def accel_to_dest(self, dest):

@@ -6,6 +6,7 @@ pygame.init()
 #START bolts
 all_bolt_base = pygame.image.load('projectiles\simple_bolts.png')
 kin_bolt = all_bolt_base.subsurface((1, 1), (70, 70))
+kin_bolt = pygame.transform.scale(kin_bolt, (32, 32))
 melt_bolt = all_bolt_base.subsurface((72, 1), (70, 70))
 hot_bolt = all_bolt_base.subsurface((1, 72), (70, 70))
 cold_bolt = all_bolt_base.subsurface((143, 1), (70, 70))
@@ -21,6 +22,7 @@ kin_beam_origin = kin_beam.subsurface((45, 235), (42, 20))
 kin_beam_body = kin_beam.subsurface((45, 55), (42, 181))
 kin_beam_rings = kin_beam.subsurface((45, 15), (42, 42))
 kin_beam_impact = kin_beam.subsurface((45, 0), (42, 15))
+kin_beam_full = {0:kin_beam_origin}
 
 #END beams
 
@@ -69,6 +71,7 @@ class missile(spritelings.actor):
         self.damage = 0
         self.temp = 0
         self.knockback = (0,0)
+        self.acidity = 0
 
 
 
@@ -98,12 +101,12 @@ class kinetic_bolt(bolt):
     def __init__(self, caster, vel):
         super().__init__(caster, kin_bolt, vel)
 
-        xVel = vel[0] * 14
-        yVel = vel[1] * 14
+        xVel = vel[0] * 20
+        yVel = vel[1] * 20
         self.velocity = (xVel, yVel)
-        caster.cooldown += 64
-        xk = self.velocity[0]/7
-        yk = self.velocity[1]/7
+        caster.cooldown += 20
+        xk = self.velocity[0]/4
+        yk = self.velocity[1]/4
         self.knockback = (xk, yk)
 
 
@@ -115,6 +118,7 @@ class fire_bolt(bolt):
         xk = self.velocity[0] / 10
         yk = self.velocity[1] / 10
         self.knockback = (xk, yk)
+        self.temp = 30
 
 
 class ice_bolt(bolt):
@@ -125,6 +129,7 @@ class ice_bolt(bolt):
         xk = self.velocity[0] / 10
         yk = self.velocity[1] / 10
         self.knockback = (xk, yk)
+        self.temp = -30
 
 
 class acid_bolt(bolt):
@@ -135,6 +140,7 @@ class acid_bolt(bolt):
         xk = self.velocity[0] / 10
         yk = self.velocity[1] / 10
         self.knockback = (xk, yk)
+        self.acidity = 20
 
 
 #exploding projectile
@@ -169,15 +175,9 @@ class beam(missile):
 
 class kinetic_beam(beam):
     def __init__(self, caster, vel):
-        super().__init__(caster, kin_bolt)
+        super().__init__(caster, kin_beam_origin)
 
-        xVel = vel[0] * 14
-        yVel = vel[1] * 14
-        self.velocity = (xVel, yVel)
-        caster.cooldown += 15
-        xk = self.velocity[0] / 7
-        yk = self.velocity[1] / 7
-        self.knockback = (xk, yk)
+
 
 
 #rays are a subclass of beams that can be heat or freeze. basically a coninuous stream of
@@ -195,8 +195,6 @@ class ray(beam):
         self.mask = pygame.mask.from_surface(self.image, 0)
 
     def update(self):
-        #if self.caster.state != 'firing':
-            #self.kill()
         self.timer+=1
         self.rect.move_ip(self.velocity)
         #not sure how necessary this little bit here is, as it just adjusts the projectiles to match the movement/position

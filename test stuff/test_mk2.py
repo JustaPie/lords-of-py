@@ -36,7 +36,7 @@ test_room.addPlayer(pc)
 mask1 = badguy.mask_of_death((1000, 700))
 #mask2 = badguy.mask_of_death(maskPos)
 fleye1 = test_nme.fleye((500, 500))
-fleye1.set_target(pc)
+#fleye1.set_target(pc)
 #mask1.set_target(pc)
 test_room.enemies.add(fleye1, mask1)
 
