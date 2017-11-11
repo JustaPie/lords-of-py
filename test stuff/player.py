@@ -9,6 +9,7 @@ speed = 4
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+blank = pygame.image.load('people\hud_blank.png').convert_alpha()
 
 
 class player(spritelings.actor):
@@ -38,13 +39,15 @@ class player(spritelings.actor):
         #currently unsued, but will eventually be the variable that determines which animations to use,
         #whether the player is in control, stunned, flashing, etc.
         self.state = 'normal'
-
+        self.invincible = 0
+        self.stunned = 0
+        self.firing = 0
 
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
         self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt}
-        self.spell = self.spellbook[3]
+        self.spell = self.spellbook[1]
         print(self.spell)
 
 
@@ -57,12 +60,22 @@ class player(spritelings.actor):
             self.kill()
 
         #ticks cooldown back down, at one tick per frame.
-        if self.cooldown > 0:
+        if self.cooldown:
             self.cooldown -= 1
+
+        if self.invincible:
+            self.invincible -= 1
 
         #this is the main interface method that uses the supplied control_method to accept user input and
         #control the player character
         self.control_method.update(room)
+
+        if self.stunned > 0:
+            print('I am stunned')
+            self.stunned -= 1
+            self.velocity = (0,0)
+        if self.stunned <= 0:
+            self.state = 'normal'
 
         #this restricts the player to the buonds of the current room.
         #basically, it checks if the player('s rect) is outside of the room('s rect) and then reverses the player's velocity
@@ -80,6 +93,10 @@ class player(spritelings.actor):
     #this feels like a really cumbersome way of applying damage and effects, but so far,
     #its all we've got.....
     def react(self, asshole):
-        if self.state == 'normal':
+        if self.invincible > 0:
             self.hp = self.hp-asshole.damage
-
+            self.rect.move_ip(asshole.velocity)
+            self.stunned = 128
+            self.invincible = 384
+        else:
+            pass

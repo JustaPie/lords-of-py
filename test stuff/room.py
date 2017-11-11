@@ -120,7 +120,7 @@ class room():
             for nme in player_hitlist_nme:
                 nme.act(player_hitlist_nme[nme])
 
-        enemy_hitlist = pygame.sprite.groupcollide(self.playerProjectiles, self.enemies, 0, 0, pygame.sprite.collide_mask)
+        enemy_hitlist = pygame.sprite.groupcollide(self.playerProjectiles, self.enemies, 0, 0)
         if enemy_hitlist:
             print(enemy_hitlist)
             for nme in enemy_hitlist:

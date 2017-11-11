@@ -10,3 +10,7 @@ class HUD(pygame.sprite.Group):
     def __init__(self, player):
         super().__init__()
         self.health_bar = player.hp
+
+class simple_hp_bar(spritelings.shiny):
+    def __init__(self, subject):
+        super().__init__()

@@ -79,7 +79,7 @@ class keyboard(object):
         yPos = player.pos[1]
         player.pos = (xPos + xVel, yPos + yVel)
         if xdir or ydir:
-            #player.facing= (xdir, ydir)
+            player.facing= (xdir, ydir)
             return (xdir, ydir)
         else:
             return None
@@ -95,6 +95,7 @@ class keyboard(object):
     def magic(self, player, room, squid):
         if squid[0] and player.cooldown == 0:
             room.playerProjectiles.add(player.spell(player, player.facing))
+            player.state = 'firing'
         elif squid[1] or squid[2]:
             pass
 
@@ -124,6 +125,7 @@ class keyboard(object):
             xface = 1
 
         if xface or yface:
+            player.facing = (xface, yface)
             return (xface, yface)
         else:
             return None

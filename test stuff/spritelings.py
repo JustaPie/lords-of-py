@@ -33,6 +33,8 @@ class entity(pygame.sprite.Sprite):
        self.velocity = (0, 0)
        self.mask = pygame.mask.from_surface(self.image)
 
+
+
 #here, act and react are basically get out attribute fuckup free cards.ssss
    def react(self, thing):
         pass
@@ -78,10 +80,11 @@ class player(actor):
 
 
 class enemy(actor):
-    def __init__(self, img, pos):
+    '''def __init__(self, img, pos):
         super().__init__(img, pos)
         self.speed = 0
         self.acc = 0
+        self.damage = 0
 
     #handler method for sequencing move orders, calculating movement vectors,
     #picking and checking locations,
@@ -114,15 +117,37 @@ class enemy(actor):
 
     def act(self, victim_list):
         for victim in victim_list:
-            victim.hp -= 10
+            victim.hp -= self.damage
             victim.velocity = self.velocity
 
-    def accel_towards_sprite(self):
+    def accel_to_sprite(self, target):
         xvel, yvel = self.velocity[0], self.velocity[1]
         xpos = self.rect.x
         ypos = self.rect.y
-        xdest = self.target.rect.x
-        ydest = self.target.rect.y
+        xdest = target.rect.x
+        ydest = target.rect.y
+        if xpos < xdest:
+            xvel += self.acc
+        elif xpos > xdest:
+            xvel -= self.acc
+        else:
+            pass
+        if ypos < ydest:
+            yvel += self.acc
+        elif ypos > ydest:
+            yvel -= self.acc
+        else:
+            pass
+
+        self.velocity = (xvel, yvel)
+        print(self.velocity)
+
+    def accel_to_dest(self, dest):
+        xvel, yvel = self.velocity[0], self.velocity[1]
+        xpos = self.rect.x
+        ypos = self.rect.y
+        xdest = dest[0]
+        ydest = dest[1]
         if xpos < xdest:
             xvel += self.acc
         elif xpos > xdest:
@@ -137,6 +162,26 @@ class enemy(actor):
             pass
         self.velocity = (xvel, yvel)
 
+    def vel_to_sprite(self, target):
+        xvel, yvel = self.velocity[0], self.velocity[1]
+        xpos = self.rect.x
+        ypos = self.rect.y
+        xdest = target.rect.x
+        ydest = target.rect.y
+        if xpos < xdest:
+            xvel += self.acc
+        elif xpos > xdest:
+            xvel -= self.acc
+        else:
+            pass
+        if ypos < ydest:
+            yvel += self.acc
+        elif ypos > ydest:
+            yvel -= self.acc
+        else:
+            pass
+        self.velocity = (xvel, yvel)
+'''
 
 #simple test enemy
 class fleye(enemy):

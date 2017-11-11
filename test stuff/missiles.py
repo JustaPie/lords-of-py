@@ -195,6 +195,8 @@ class ray(beam):
         self.mask = pygame.mask.from_surface(self.image, 0)
 
     def update(self):
+        #if self.caster.state != 'firing':
+            #self.kill()
         self.timer+=1
         self.rect.move_ip(self.velocity)
         #not sure how necessary this little bit here is, as it just adjusts the projectiles to match the movement/position
@@ -232,11 +234,16 @@ class ray(beam):
 class heat_ray(ray):
     def __init__(self, caster, vel):
         super().__init__(caster, hot_ray_1, vel)
+        self.temp = 3
 
 
 class freeze_ray(ray):
     def __init__(self, caster, vel):
         super().__init__(caster, cold_ray_1, vel)
+        self.temp = -3
+
+class beam_group(pygame.sprite.Group):
+    pass
 
 #short-range, conical shotgun spread
 class burst(missile):

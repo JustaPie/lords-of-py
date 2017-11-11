@@ -27,7 +27,7 @@ class mask_of_death(spritelings.enemy):
         self.cooldown = 0
         self.center = self.get_pos(1)
         self.acc = 1
-        self.speed = 3
+        self.speed = .1
         self.target = None
 
         self.hp = 100
