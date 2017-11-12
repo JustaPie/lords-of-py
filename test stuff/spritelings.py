@@ -20,6 +20,14 @@ import sys
 import math
 from fractions import Fraction
 
+#basically a simple way to store a pocket of data that will need to be copied repeatedly
+class anim_frame(object):
+    def __init__(self, img):
+        self.image = img
+        self.rect = img.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+
+
 #the first, most basic level of sprite: an entity
 #entities have an image and a rectangle
 class entity(pygame.sprite.Sprite):
@@ -32,6 +40,16 @@ class entity(pygame.sprite.Sprite):
        self.rect.move_ip(pos)
        self.velocity = (0, 0)
        self.mask = pygame.mask.from_surface(self.image)
+
+#there's prbly a way to set this up so that we can use pre-loaded assets to quickly construct things
+   def gen_anim(self, asset, pos):
+       self.img = asset.img
+       self.rect = asset.rect
+       self.mask = asset.mask
+       self.rect.move_ip(pos)
+       self.velocity = (0,0)
+
+
 
 #here, act and react are basically get out attribute fuckup free cards.ssss
    def react(self, thing):
@@ -78,7 +96,7 @@ class player(actor):
 
 
 class enemy(actor):
-    def __init__(self, img, pos):
+    '''def __init__(self, img, pos):
         super().__init__(img, pos)
         self.speed = 0
         self.acc = 0
@@ -179,7 +197,7 @@ class enemy(actor):
         else:
             pass
         self.velocity = (xvel, yvel)
-
+'''
 
 #simple test enemy
 class fleye(enemy):
