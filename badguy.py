@@ -59,10 +59,8 @@ class mask_of_death(spritelings.enemy):
         self.rect.move_ip(weapon.knockback)
 
     def act(self, victim):
-        victim.hp -= 10
-        victim.velocity = self.velocity
+       victim.react(self)
 
     def act(self, victim_list):
         for victim in victim_list:
-            victim.hp -= 10
-            victim.velocity = self.velocity
+            victim.react(self)

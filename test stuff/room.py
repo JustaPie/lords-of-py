@@ -80,6 +80,7 @@ class room():
 
         self.player = pygame.sprite.GroupSingle()
         self.playerProjectiles = pygame.sprite.Group()
+        self.player_beams = []
 
         self.enemies = pygame.sprite.Group()
         self.enemyProjectiles = pygame.sprite.Group()

@@ -21,11 +21,12 @@ class keyboard(object):
         self.current_spell = 1
         self.cycle_nxt = 0
         self.cycle_prev = 0
+        self.timer = 0
+        self.firing = 0
 
     def update(self, room):
         self.key = pygame.key.get_pressed()
-        #print(self.key)
-
+        self.timer+=1
         mov_up = self.key[pygame.K_w]
         mov_dn = self.key[pygame.K_s]
         mov_lt = self.key[pygame.K_a]
@@ -40,9 +41,12 @@ class keyboard(object):
         lk_rt = self.key[pygame.K_RIGHT]
         look = (lk_up, lk_dn, lk_lt, lk_rt)
 
-        print('look = ', look)
+        fire = self.key[pygame.K_SPACE]
+        nxt = self.key[pygame.K_e]
+        prv = self.key[pygame.K_q]
+        squid = (fire, nxt, prv)
 
-        move_face = self.move(self.subject, move)
+        move_face = self.move(self.subject)
         look_face = self.face(self.subject, look)
         if not locked:
             if not look_face:
@@ -50,20 +54,46 @@ class keyboard(object):
             else:
                 self.subject.facing = look_face
 
-        fire = self.key[pygame.K_SPACE]
-        if fire:
-            print('pressing space')
-        nxt = self.key[pygame.K_e]
-        prv = self.key[pygame.K_q]
-        squid = (fire, nxt, prv)
-
         self.magic(self.subject, room, squid)
         self.cycle_nxt = nxt
         self.cycle_prev = prv
 
+        if self.timer%32 ==0:
+            print("squid= ", squid)
+            print('look = ', look)
+            print('move= ', move)
 
+    def move(self, player):
+        self.key = pygame.key.get_pressed()
+        yVel = 0
+        xVel = 0
+        xdir = 0
+        ydir = 0
+        if self.key[pygame.K_w]:
+            yVel = -speed
+            ydir = -1
+        if self.key[pygame.K_s]:
+            yVel = speed
+            ydir = 1
 
-    def move(self, player, move):
+        if self.key[pygame.K_a]:
+            xVel = -speed
+            xdir = -1
+        if self.key[pygame.K_d]:
+            xVel = speed
+            xdir = 1
+
+        player.velocity = (xVel, yVel)
+        xPos = player.pos[0]
+        yPos = player.pos[1]
+        player.pos = (xPos + xVel, yPos + yVel)
+        if xdir or ydir:
+            #player.facing= (xdir, ydir)
+            return (xdir, ydir)
+        else:
+            return player.facing
+
+    def not_move(self, player, move):
         yVel = 0
         xVel = 0
         xdir = 0
@@ -87,7 +117,7 @@ class keyboard(object):
         yPos = player.pos[1]
         player.pos = (xPos + xVel, yPos + yVel)
         if xdir or ydir:
-            #player.facing= (xdir, ydir)
+            # player.facing= (xdir, ydir)
             return (xdir, ydir)
         else:
             return player.facing
@@ -102,32 +132,59 @@ class keyboard(object):
 #'''
     def magic(self, player, room, squid):
 
-        if squid[0] and player.cooldown == 0:
-            room.playerProjectiles.add(player.spell(player, player.facing))
-            player.state = 'firing'
-            print('casting magic')
-        elif squid[1] or squid[2]:
+        if squid[0] and not self.firing and player.cooldown == 0      :
+            player.cast(room)
+            #player.state = 'firing'
+            self.firing = 1
+            return None
+        if squid[1] or squid[2]:
             if squid[1] and not self.cycle_nxt:
                 player.next_spell()
             elif squid[2] and not self.cycle_prev:
                 player.prev_spell()
         else:
+            self.firing = 0
             return None
 
     #this determines in which direction the player faces, and therefore which directional image to use. This should be eventually combined
     #with the cast function, since they overlap in function.
-    def face(self, player, look):
+    def not_face(self, player, look):
+        self.key = pygame.key.get_pressed()
         xface = 0
         yface = 0
         if look[0]:
             yface = -1
-        elif look[1]:
+        if look[1]:
             yface = 1
 
         if look[2]:
             xface = -1
-        elif look[3]:
+        if look[3]:
             xface = 1
+        if self.timer % 32 ==0:
+            print('xface: ', xface, 'yface: ', yface)
+
+        if xface or yface:
+            #player.facing = (xface, yface)
+            return (xface, yface)
+        else:
+            return None
+
+    def face(self, player, look):
+        self.key = pygame.key.get_pressed()
+        xface = 0
+        yface = 0
+        if self.key[pygame.K_UP]:
+            yface = -1
+        if self.key[pygame.K_DOWN]:
+            yface = 1
+
+        if self.key[pygame.K_LEFT]:
+            xface = -1
+        if self.key[pygame.K_RIGHT]:
+            xface = 1
+        if self.timer % 32 ==0:
+            print('xface: ', xface, 'yface: ', yface)
 
         if xface or yface:
             #player.facing = (xface, yface)

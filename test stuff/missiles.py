@@ -73,6 +73,10 @@ class missile(spritelings.actor):
         self.knockback = (0,0)
         self.acidity = 0
 
+    def update(self, room):
+        self.rect.move_ip(self.velocity)
+
+
 
 
 #most basic missile/projectile. A small circle/square that travels out and hits things.
@@ -84,8 +88,6 @@ class bolt(missile):
         yVel = vel[1] * 10
         self.velocity = (xVel, yVel)
 
-    def update(self):
-        self.rect.move_ip(self.velocity)
 
     def act(self, target):
         target.react(self)
@@ -162,8 +164,14 @@ class beam(missile):
         self.delay = beam_delay
         self.caster = caster
 
+    def charge(self):
+        pass
 
-    def update(self):
+    def extend(self, caster):
+        pass
+
+
+    def update(self, room):
         if self.delay > 0:
             self.delay -= 1
             self.rect.move_ip(self.caster.velocity)

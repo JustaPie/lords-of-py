@@ -45,6 +45,8 @@ while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            pass
 
     disp.blit(test_room.fSurf, (0,0))
 
@@ -73,3 +75,5 @@ while (running):
     msElapsed = clock.tick(fps)
 
     pygame.display.update()
+
+    pygame.event.pump()

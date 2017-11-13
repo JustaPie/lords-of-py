@@ -8,9 +8,11 @@ green = (0, 255, 0)
 plyr_loc = (100, 100)
 nme1_loc = (500, 500)
 fps = 128
-screen_size = (1200, 900)
+screen_size = (1500, 1100)
 
 pygame.init()
+
+print('correct test')
 
 disp = pygame.display.set_mode(screen_size)
 
@@ -36,7 +38,7 @@ test_room.addPlayer(pc)
 mask1 = badguy.mask_of_death((1000, 700))
 #mask2 = badguy.mask_of_death(maskPos)
 fleye1 = test_nme.fleye((500, 500))
-fleye1.set_target(pc)
+#fleye1.set_target(pc)
 #mask1.set_target(pc)
 test_room.enemies.add(fleye1, mask1)
 
@@ -45,6 +47,8 @@ while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            pass
 
     disp.blit(test_room.fSurf, (0,0))
 
@@ -73,3 +77,5 @@ while (running):
     msElapsed = clock.tick(fps)
 
     pygame.display.update()
+
+    pygame.event.pump()

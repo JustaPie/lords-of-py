@@ -3,6 +3,7 @@ import spritelings
 import missiles
 #import controller
 import keyboard
+import keyboard_alt
 
 pc_pict = pygame.image.load('people\grn_plyr_arw.png').convert_alpha()
 speed = 4
@@ -53,7 +54,7 @@ class player(spritelings.actor):
 
 
         #this could be anything that shares an interface with the keyboard object
-        self.control_method = keyboard.keyboard(self)
+        self.control_method = keyboard_alt.keyboard(self)
 
 
     def update(self, room):
@@ -90,6 +91,10 @@ class player(spritelings.actor):
             self.pos = (x, y)
 
         self.image = self.dirct[self.facing]
+
+    def cast(self, room):
+        room.playerProjectiles.add(self.spell(self, self.facing))
+
 
     def next_spell(self):
         if self.page < len(self.spellbook) - 1:

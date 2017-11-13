@@ -12,6 +12,7 @@ import player
 speed = 4
 
 pygame.init()
+print('using correct keyboard_alt')
 
 
 class keyboard(object):
@@ -41,18 +42,15 @@ class keyboard(object):
         lk_rt = self.key[pygame.K_RIGHT]
         look = (lk_up, lk_dn, lk_lt, lk_rt)
 
-        fire = self.key[pygame.K_SPACE]
+        fire = self.key[pygame.K_f]
         nxt = self.key[pygame.K_e]
         prv = self.key[pygame.K_q]
-        squid = (fire, nxt, prv)
+        squid = (fire, nxt, prv, locked)
 
-        move_face = self.move(self.subject)
-        look_face = self.face(self.subject, look)
-        if not locked:
-            if not look_face:
-                self.subject.facing = move_face
-            else:
-                self.subject.facing = look_face
+        self.move(self.subject)
+        #look_face = self.face(self.subject, look)
+        if any(look):
+            self.subject.facing = self.face(self.subject, look)
 
         self.magic(self.subject, room, squid)
         self.cycle_nxt = nxt

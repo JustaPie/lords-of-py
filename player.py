@@ -1,8 +1,9 @@
 import pygame
 import spritelings
 import missiles
-#import controller
+import controller
 import keyboard
+import keyboard_alt
 
 pc_pict = pygame.image.load('people\grn_plyr_arw.png').convert_alpha()
 speed = 4
@@ -39,21 +40,23 @@ class player(spritelings.actor):
         #currently unsued, but will eventually be the variable that determines which animations to use,
         #whether the player is in control, stunned, flashing, etc.
         self.state = 'normal'
+        self.invincible = 0
         self.stunned = 0
-        self.timers = []
-        self.timer = 0
-
+        self.firing = 0
 
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
-        self.spellbook = {1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt}
-        self.spell = self.spellbook[3]
-        print(self.spell)
+        self.spellbook = {0:missiles.acid_bolt ,1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt, 4:missiles.kinetic_beam}
+        self.page = 2
+        self.spell = self.spellbook[self.page]
+        #print(self.spell)
 
 
         #this could be anything that shares an interface with the keyboard object
-        self.control_method = keyboard.keyboard(self)
+        self.control_method = controller.controller(self)
+
+        self.speed = speed
 
 
     def update(self, room):
@@ -61,21 +64,22 @@ class player(spritelings.actor):
             self.kill()
 
         #ticks cooldown back down, at one tick per frame.
-        if self.cooldown > 0:
+        if self.cooldown:
             self.cooldown -= 1
 
-        if self.timer > 0:
-            self.timer-=1
-        else:
-            self.state = 'normal'
-
-        if self.stunned < 0:
-            self.stunned -= 1
-            return None
+        if self.invincible:
+            self.invincible -= 1
 
         #this is the main interface method that uses the supplied control_method to accept user input and
         #control the player character
         self.control_method.update(room)
+
+        if self.stunned > 0:
+            print('I am stunned')
+            self.stunned -= 1
+            self.velocity = (0,0)
+        if self.stunned <= 0:
+            self.state = 'normal'
 
         #this restricts the player to the buonds of the current room.
         #basically, it checks if the player('s rect) is outside of the room('s rect) and then reverses the player's velocity
@@ -90,14 +94,30 @@ class player(spritelings.actor):
 
         self.image = self.dirct[self.facing]
 
+    def cast(self, room):
+        room.playerProjectiles.add(self.spell(self, self.facing))
+
+
+    def next_spell(self):
+        if self.page < len(self.spellbook) - 1:
+            self.page += 1
+            self.spell = self.spellbook[self.page]
+
+    def prev_spell(self):
+        if self.page > 0:
+            self.page-=1
+            self.spell = self.spellbook[self.page]
+
+    def set_frame(self):
+        pass
+
     #this feels like a really cumbersome way of applying damage and effects, but so far,
     #its all we've got.....
     def react(self, asshole):
-        if self.state == 'normal':
+        if self.invincible <= 0:
             self.hp = self.hp-asshole.damage
-            self.rect.move_ip(asshole.velocity[0]%7, asshole.veloctiy[1]%7)
-            self.state = 'flashing'
-            self.stunned = 30
-            self.timer = 384
-        if self.state == 'flashing':
+            self.rect.move_ip(asshole.velocity)
+            self.stunned = 128
+            self.invincible = 384
+        else:
             pass

@@ -44,15 +44,12 @@ class keyboard(object):
         fire = self.key[pygame.K_SPACE]
         nxt = self.key[pygame.K_e]
         prv = self.key[pygame.K_q]
-        squid = (fire, nxt, prv)
+        squid = (fire, nxt, prv, locked)
 
-        move_face = self.move(self.subject)
-        look_face = self.face(self.subject, look)
-        if not locked:
-            if not look_face:
-                self.subject.facing = move_face
-            else:
-                self.subject.facing = look_face
+        self.move(self.subject)
+        #look_face = self.face(self.subject, look)
+        if any in look:
+            self.subject.facing = self.face(self.subject, look)
 
         self.magic(self.subject, room, squid)
         self.cycle_nxt = nxt
