@@ -53,7 +53,7 @@ while (running):
     disp.blit(test_room.fSurf, (0,0))
 
     test_room.player.update(test_room)
-    test_room.playerProjectiles.update()
+    test_room.playerProjectiles.update(test_room)
 
     test_room.enemies.update(test_room)
     test_room.enemyProjectiles.update()

@@ -48,13 +48,13 @@ class player(spritelings.actor):
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
         self.spellbook = {0:missiles.acid_bolt ,1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt, 4:missiles.kinetic_beam}
-        self.page = 2
+        self.page = 4
         self.spell = self.spellbook[self.page]
-        #print(self.spell)
 
 
         #this could be anything that shares an interface with the keyboard object
-        self.control_method = controller.controller(self)
+        #self.control_method = controller.controller(self)
+        self.control_method = keyboard_alt.keyboard(self)
 
         self.speed = speed
 

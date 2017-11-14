@@ -76,6 +76,9 @@ class missile(spritelings.actor):
     def update(self, room):
         self.rect.move_ip(self.velocity)
 
+    def fire(self, room):
+        room.playerProjectiles.add(self)
+
 
 
 
@@ -158,12 +161,23 @@ class frag(missile):
 #spritegroup to each room, just to handle beams and rays, as they will prbly
 #require multiple sprites working in tandem
 #instantaneous straight line laser attack
-class beam(missile):
-    def __init__(self, caster, img):
+'''class beam(missile):
+    def __init__(self, caster, img, vel):
         super().__init__(caster, img)
         self.delay = beam_delay
         self.caster = caster
+        self.velocity = vel
+        self.segments = []
 
+    def update(self, room):
+        self.rect.move_ip(self.caster.velocity)
+        if self.delay>0:
+            self.delay -= 1
+        else:
+            firing = 1
+            while firing:
+                
+        
     def charge(self):
         pass
 
@@ -171,19 +185,38 @@ class beam(missile):
         pass
 
 
-    def update(self, room):
-        if self.delay > 0:
-            self.delay -= 1
-            self.rect.move_ip(self.caster.velocity)
-            #charging cycle
+    
 
-        else:
-            pass
 
 
 class kinetic_beam(beam):
     def __init__(self, caster, vel):
-        super().__init__(caster, kin_beam_origin)
+        super().__init__(caster, kin_beam_full, vel)
+        self.damage = 50
+        self.knockback = (vel[0]*30, vel[1]*30)
+'''
+
+class beam(missile):
+    def __init__(self, caster, img, vel):
+        super().__init__(caster, img)
+        self.dir = vel
+        self.caster = caster
+
+    def update(self, room):
+        self.rect.move_ip(self.caster.velocity)
+
+    def charge(self):
+        pass
+
+    def fire(self, room):
+        firing = 1
+        while firing:
+            nxt
+            room.playerProjectiles
+
+class kinetic_beam(beam):
+    def __init__(self, caster, vel):
+        super().__init__(caster, bad_bolt, vel)
 
 
 
@@ -194,7 +227,7 @@ class kinetic_beam(beam):
 #types of ray is hot or cold, which boils down to a variable
 class ray(beam):
     def __init__(self, caster, img, vel):
-        super().__init__(caster, img)
+        super().__init__(caster, img, vel)
         xVel = vel[0] * v0_scalar
         yVel = vel[1] * v0_scalar
         self.velocity = (xVel, yVel)
@@ -202,7 +235,7 @@ class ray(beam):
         self.caster = caster
         self.mask = pygame.mask.from_surface(self.image, 0)
 
-    def update(self):
+    def update(self, room):
         self.timer+=1
         self.rect.move_ip(self.velocity)
         #not sure how necessary this little bit here is, as it just adjusts the projectiles to match the movement/position
