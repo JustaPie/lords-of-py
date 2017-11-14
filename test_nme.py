@@ -23,7 +23,7 @@ class fleye(enemies.enemy):
         self.hp = 30
         self.damage = 10
         self.dest = self.pos
-        self.acc = .2
+        self.acc = .35
         self.timer = 128*3
         self.target = None
         self.state = 'normal'

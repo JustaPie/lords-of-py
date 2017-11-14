@@ -2,6 +2,7 @@
 import pygame
 import os
 import player
+import spritelings
 
 tile_scalar = 100
 
@@ -110,12 +111,11 @@ class room():
         self.check_collision()
 
     def check_collision(self):
-        player_hitlist_proj = pygame.sprite.groupcollide(self.player, self.enemyProjectiles, 0, 0, pygame.sprite.collide_mask)
+        player_hitlist_proj = pygame.sprite.groupcollide(self.player, self.enemyProjectiles, 0, 0)
         if player_hitlist_proj:
             print(player_hitlist_proj)
 
-        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0,
-                                                        pygame.sprite.collide_mask)
+        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0, spritelings.collide_inner_rect)
         if player_hitlist_nme:
             print(player_hitlist_nme)
             for nme in player_hitlist_nme:

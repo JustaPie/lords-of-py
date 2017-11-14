@@ -44,10 +44,17 @@ class controller(object):
                      'LStick':jub.get_button(8), 'RStick':jub.get_button(9)}
         new_leftstick = {'X':jub.get_axis(0), 'Y':jub.get_axis(1)}
         new_rightstick = {'X': jub.get_axis(4), 'Y': jub.get_axis(3)}
-        #new_triggers =
+        #the triggers are special, in that they are not 2 separate axies, but instead the signed difference between both triggers as a single axis
+        new_triggers = {'RT': jub.get_axis(2), 'LT':jub.get_axis(2)}
 
         self.move(new_leftstick)
-        self.subject.facing = self.look(new_rightstick)
+        self.subject.facing = self.look(new_rightstick, new_triggers)
+        self.magic(new_buttons, new_triggers, room)
+
+        self.buttons = new_buttons
+        self.rightstick = new_rightstick
+        self.leftstick = new_leftstick
+        self.triggers = new_triggers
 
 
     def move(self, stick):
@@ -61,7 +68,7 @@ class controller(object):
 
         self.subject.velocity = (xvel, yvel)
 
-    def look(self, stick):
+    def look(self, stick, triggers):
         dx, dy = stick['X'], stick['Y']
 
         if dx and abs(dx) >= 0.3:
@@ -78,4 +85,15 @@ class controller(object):
             return (dx, dy)
         else:
             return self.subject.facing
+
+    def magic(self, buttons, triggers, room):
+        if buttons['RB'] and not self.buttons['RB']:
+            self.subject.next_spell()
+            print(self.subject.spell)
+        if buttons['LB'] and not self.buttons['LB']:
+            self.subject.prev_spell()
+            print(self.subject.spell)
+        if buttons['X'] and not self.subject.cooldown:
+            self.subject.cast(room)
+
 

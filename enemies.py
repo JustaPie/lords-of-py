@@ -13,6 +13,10 @@ class enemy(spritelings.actor):
         self.temp = 0
         self.heat_threshold = 150
 
+        center = self.rect.center
+        self.inrect = self.rect.inflate((-16, -16))
+        self.inrect.center = center
+
 
     # handler method for sequencing move orders, calculating movement vectors,
     # picking and checking locations,

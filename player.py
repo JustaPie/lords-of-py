@@ -16,6 +16,7 @@ blank = pygame.image.load('people\hud_blank.png').convert_alpha()
 class player(spritelings.actor):
     def __init__(self, pos):
         super().__init__(pc_pict.subsurface(0, 0, 64, 64), pos)
+        self.hp = 100
 
         self.name = 'PC'
         self.image = pc_pict.subsurface(0, 0, 64, 64)
@@ -47,16 +48,20 @@ class player(spritelings.actor):
         #the spellbook is a list/set/group of all the spells the player currently has equipped
         #it is currently implemented as a dictionary that stores and indeces the constructors for
         #the missile sprites
-        self.spellbook = {0:missiles.acid_bolt ,1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt, 4:missiles.kinetic_beam}
+        self.spellbook = {0:missiles.acid_bolt ,1:missiles.freeze_ray, 2:missiles.heat_ray, 3:missiles.kinetic_bolt, 4:missiles.fire_burst}
         self.page = 4
         self.spell = self.spellbook[self.page]
 
 
         #this could be anything that shares an interface with the keyboard object
-        #self.control_method = controller.controller(self)
-        self.control_method = keyboard_alt.keyboard(self)
+        self.control_method = controller.controller(self)
+        #self.control_method = keyboard_alt.keyboard(self)
 
-        self.speed = speed
+        self.speed = 10
+
+        center = self.rect.center
+        self.inrect = self.rect.inflate((-16, -16))
+        self.inrect.center = center
 
 
     def update(self, room):
@@ -86,6 +91,8 @@ class player(spritelings.actor):
         #to keep him/her inbounds
         if room.rect.contains(self.rect.move(self.velocity)):
             self.rect.move_ip(self.velocity)
+            self.inrect.move_ip(self.velocity)
+            self.pos = (self.rect.x, self.rect.y)
         else:
             x = self.pos[0] - self.velocity[0]
             y = self.pos[1] - self.velocity[1]

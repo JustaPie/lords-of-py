@@ -27,6 +27,8 @@ class anim_frame(object):
         self.rect = img.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
+def collide_inner_rect(spriteA, spriteB):
+    return pygame.Rect.colliderect(spriteA.inrect, spriteB.inrect)
 
 #the first, most basic level of sprite: an entity
 #entities have an image and a rectangle

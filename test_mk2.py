@@ -21,6 +21,7 @@ import room
 import badguy
 import missiles
 import test_nme
+import hud
 
 test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
                   'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
@@ -31,16 +32,17 @@ test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
 test_room = room.room(test_room_code)
 
 pc = player.player(plyr_loc)
+player_hud = hud.HUD(player)
 
 test_room.addPlayer(pc)
 
 #maskPos = (nme1_loc)
-mask1 = badguy.mask_of_death((1000, 700))
+#mask1 = badguy.mask_of_death((1000, 700))
 #mask2 = badguy.mask_of_death(maskPos)
 fleye1 = test_nme.fleye((500, 500))
 #fleye1.set_target(pc)
 #mask1.set_target(pc)
-test_room.enemies.add(fleye1, mask1)
+test_room.enemies.add(fleye1)
 
 running = True
 while (running):
@@ -61,14 +63,21 @@ while (running):
     test_room.allSprites.draw(disp)
     test_room.allProjectiles.draw(disp)
 
+    player_hud.update()
+    player_hud.show(disp)
+
     for x in test_room.player:
         pygame.draw.rect(disp, red, x.rect, 4)
+    for x in test_room.player:
+        pygame.draw.rect(disp, blue, x.inrect, 4)
 
     for y in test_room.enemies:
         pygame.draw.rect(disp, blue, y.rect, 4)
+    for x in test_room.enemies:
+        pygame.draw.rect(disp, red, x.inrect, 4)
 
-    #for z in test_room.allProjectiles:
-    #    pygame.draw.rect(disp, green, z.rect, 4)
+    for z in test_room.allProjectiles:
+        pygame.draw.rect(disp, green, z.rect, 4)
 
     test_room.update()
 

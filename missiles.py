@@ -63,6 +63,9 @@ projectiles/missiles/spells are designed to be modular creations that can be mix
 to create new spells on the fly/custom build your ideal spell in the hub room
 '''
 
+class crystal_ball(spritelings.actor):
+    pass
+
 
 class missile(spritelings.actor):
     def __init__(self, caster, img):
@@ -76,9 +79,17 @@ class missile(spritelings.actor):
     def update(self, room):
         self.rect.move_ip(self.velocity)
 
+    def act(self, target):
+        target.react(self)
+        self.kill()
+
+    def act(self, target_list):
+        for target in target_list:
+            target.react(self)
+            self.kill()
+
     def fire(self, room):
         room.playerProjectiles.add(self)
-
 
 
 
@@ -90,16 +101,6 @@ class bolt(missile):
         xVel = vel[0] * 10
         yVel = vel[1] * 10
         self.velocity = (xVel, yVel)
-
-
-    def act(self, target):
-        target.react(self)
-        self.kill()
-
-    def act(self, target_list):
-        for target in target_list:
-            target.react(self)
-            self.kill()
 
 
 class kinetic_bolt(bolt):
@@ -211,7 +212,7 @@ class beam(missile):
     def fire(self, room):
         firing = 1
         while firing:
-            nxt
+            #nxt
             room.playerProjectiles
 
 class kinetic_beam(beam):
@@ -260,6 +261,8 @@ class ray(beam):
             self.set_image(pygame.transform.scale(self.image, (self.rect.width + d_grwth_fctr_x, self.rect.height + d_grwth_fctr_y)))
             self.rect.move_ip(0, -(d_grwth_fctr_y/2))
 
+        #consider redoing the above to use inflate
+
 
     def act(self, target):
         target.react(self)
@@ -286,7 +289,32 @@ class beam_group(pygame.sprite.Group):
 
 #short-range, conical shotgun spread
 class burst(missile):
-    pass
+    def __init__(self, caster, img, vel):
+        super().__init__(caster, img)
+        self.duration = 128
+        self.knockback = (self.rect.y*vel[0], self.rect.y*vel[1])
+
+    def update(self, room):
+        if self.duration>0:
+            self.duration-=1
+            if self.duration%32==0:
+                self.set_image((pygame.transform.scale(self.image, (int(self.rect.width * self.duration/128), int(self.rect.height *self.duration/128)))))
+        if self.duration <= 96:
+            self.knockback = (0,0)
+
+
+    def act(self, target_list):
+        for target in target_list:
+            target.react(self)
+
+    def react(self, stimulus):
+        pass
+
+class fire_burst(burst):
+    def __init__(self, caster, vel):
+        super().__init__(caster, misc_bolt, vel)
+        self.temp = 50
+
 
 
 
