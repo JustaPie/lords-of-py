@@ -115,7 +115,7 @@ class room():
         if player_hitlist_proj:
             print(player_hitlist_proj)
 
-        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0, spritelings.collide_inner_rect)
+        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0, spritelings.collide_hitbox)
         if player_hitlist_nme:
             print(player_hitlist_nme)
             for nme in player_hitlist_nme:
