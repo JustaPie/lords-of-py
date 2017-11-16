@@ -23,6 +23,14 @@ kinetic_shrapnel = all_blasts.subsurface((203, 1), (100, 100))
 #BUBBLES
 
 #BURSTS
+all_bursts = pygame.image.load('projectiles\simple_bursts.png').convert_alpha()
+lava_balls = all_bursts.subsurface((2, 136), (64, 64))
+lava_ball = all_bursts.subsurface((15, 216), (32, 32))
+acid_balls = all_bursts.subsurface((69, 136), (64, 64))
+acid_ball = all_bursts.subsurface((91, 226), (16, 16))
+snow_balls = all_bursts.subsurface((136, 136), (64, 64))
+snow_ball = all_bursts.subsurface((151, 218), (32, 32))
+
 
 #BEAMS/RAYS
 all_rays = pygame.image.load('projectiles\simple_rays.png').convert_alpha()
@@ -42,9 +50,7 @@ class missile(spritelings.entity):
         self.velocity = (0,0)
         self.acidity = 0
         self.focus_cost = 0
-        self.power = 1
-        self.max_power = 100
-        self.charge_rate = .1
+        self.charge_level = caster.charge_level
         self.caster = caster
 
     def update(self, room):
@@ -81,9 +87,9 @@ class dummy_missile(missile):
 
 class bolt(missile):
     def __init__(self, caster, img):
-        super().__init__(caster, pygame.transform.scale(img, (16, 16)))
+        super().__init__(caster, pygame.transform.scale(img, (24, 24)))
         self.knockback_mult = 1/4
-        self.velocity_mult = 18
+        self.velocity_mult = 12
         self.damage = 10
         self.base_img = img
 
@@ -91,25 +97,137 @@ class kinetic_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, kin_bolt)
         self.knockback_mult = 1/2
-        self.velocity_mult = 24
+        self.velocity_mult = 16
 
 
 class fire_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, hot_bolt)
-        self.temp = 30
+        self.temp = 25
 
 
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
-        self.temp = -30
+        self.temp = -25
 
 
 class acid_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, melt_bolt)
         self.acidity = 20
+
+
+###########################
+###       BURSTS        ###
+###########################
+
+class burst(missile):
+    def __init__(self, caster, img):
+        super().__init__(caster, img)
+        self.hp = 6
+
+
+    def split(self, room, *args):
+        for x in args:
+            self.fragment(self).fire( x, room)
+        self.kill()
+
+    def react(self, *args):
+        self.hp -=1
+
+    def update(self, *args):
+        super().update(*args)
+        if self.hp<=0:
+            self.kill()
+
+    def fire(self, dir, room):
+        print(dir)
+        if not dir[1]:
+            self.split(room, dir, (dir[0], -1), (dir[0], 1))
+        elif dir[0] and dir[1]:
+            self.split(room, dir, (0, dir[1]), (dir[0], 0))
+        else:
+            self.split(room, dir, (-1, dir[1]), (1, dir[1]))
+
+class fragment(missile):
+    def __init__(self, caster, img):
+        super().__init__(caster, img)
+        print('new frag')
+        self.velocity_mult = caster.velocity_mult
+        self.knockback_mult = caster.knockback_mult
+        self.temp = caster.temp
+        self.acidity = caster.acidity
+        self.damage = caster.damage
+
+class lava_burst(burst):
+    def __init__(self, *args):
+        super().__init__(*args, lava_balls)
+        self.temp = 40
+        self.velocity_mult = 7
+        self.knockback_mult = 2
+        self.fragment = ember
+
+class ember(fragment):
+    def __init__(self, *args):
+        super().__init__(*args, lava_ball)
+        print(self)
+
+class kinetic_burst(burst):
+    def __init__(self, *args):
+        super().__init__(*args, kinetic_shrapnel)
+
+class atomic_burst(burst):
+    def __init__(self, *args):
+        super().__init__(*args, acid_balls)
+        self.acidity = 30
+        self.velocity_mult = 50
+        self.knockback_mult = 0
+        self.fragment = acid_bubble
+
+    def fire(self, dir, room):
+        if not dir[1]:
+            self.split(room, dir, (dir[0]*2, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*2, -1), (dir[0]*2, 1))
+        elif dir[0] and dir[1]:
+            self.split(room, dir, (dir[0]*2, dir[1]*2), (0, dir[1]), (dir[0], 0), (0, dir[1]*2), (dir[0]*2, 0))
+        else:
+            self.split(room, dir, (dir[0]*2, dir[1]), (-1, dir[1]), (1, dir[1]), (-1, dir[1]*2), (1, dir[1]*2))
+
+class acid_bubble(fragment):
+    def __init__(self, *args):
+        super().__init__(*args, acid_ball)
+        self.timer = 128*5
+
+    def update(self, *args):
+        self.timer -=1
+        self.velocity = (self.velocity[0] * .8, self.velocity[1] * .8)
+        self.rect.move_ip(self.velocity)
+        if self.timer <= 0:
+            self.kill()
+        if self.timer % 8 == 0:
+            self.rect.inflate_ip(1,1)
+
+
+
+class freezing_burst(burst):
+    def __init__(self, *args):
+        super().__init__(*args, snow_balls)
+        self.temp = -25
+        self.velocity_mult = 14
+        self.knockback_mult = 1
+        self.fragment = COLD_THING
+
+class COLD_THING(fragment):
+    def __init__(self, *args):
+        super().__init__(*args, snow_ball)
+
+
+
+
+
+class barrier(missile):
+    def __init__(self, caster, img):
+        super().__init__(caster, img)
 
 
 
@@ -138,7 +256,3 @@ class kinetic_blast(blast):
     def __init__(self, caster):
         super().__init__(caster, kinetic_shrapnel)
 
-
-class burst(missile):
-    def __init__(self, caster, img):
-        super().__init__(caster, img)
