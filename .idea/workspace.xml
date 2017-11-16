@@ -4,7 +4,6 @@
     <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/missiles.py" afterPath="$PROJECT_DIR$/missiles.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/player.py" afterPath="$PROJECT_DIR$/player.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -24,7 +23,7 @@
     <SUITE FILE_PATH="coverage/GameProj$main.coverage" NAME="main Coverage Results" MODIFIED="1507326750419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
     <SUITE FILE_PATH="coverage/lords_of_py$controller.coverage" NAME="controller Coverage Results" MODIFIED="1509669566249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test stuff" />
     <SUITE FILE_PATH="coverage/lords_of_py$testruns.coverage" NAME="testruns Coverage Results" MODIFIED="1508366833256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1510811065982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1510812011870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -50,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="missiles.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="missiles.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/missiles.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="206" column="25" lean-forward="false" selection-start-line="206" selection-start-column="25" selection-end-line="206" selection-end-column="25" />
+            <state relative-caret-position="521">
+              <caret line="189" column="16" lean-forward="false" selection-start-line="189" selection-start-column="16" selection-end-line="189" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -75,8 +74,8 @@
       <file leaf-file-name="controllers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="606">
-              <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="674">
+              <caret line="77" column="32" lean-forward="false" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -84,7 +83,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="enemies.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="enemies.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/enemies.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1445">
@@ -615,7 +614,14 @@
       <option name="project" value="LOCAL" />
       <updated>1510794436157</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="I GOT THE EYES WORKING">
+      <created>1510811271191</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1510811271191</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -729,7 +735,8 @@
     <MESSAGE value="added elemental damage, got an enemy functioning and responding to said damage, getting closer to implementing a humanoid player character, and cleaned up a bunch of stuff" />
     <MESSAGE value="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system" />
     <MESSAGE value="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version" />
+    <MESSAGE value="I GOT THE EYES WORKING" />
+    <option name="LAST_COMMIT_MESSAGE" value="I GOT THE EYES WORKING" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -918,16 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="606">
-          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62">
@@ -938,14 +935,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/missiles.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="206" column="25" lean-forward="false" selection-start-line="206" selection-start-column="25" selection-end-line="206" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/enemies.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1445">
@@ -953,6 +942,24 @@
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="77" column="32" lean-forward="false" selection-start-line="77" selection-start-column="32" selection-end-line="77" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/missiles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="189" column="16" lean-forward="false" selection-start-line="189" selection-start-column="16" selection-end-line="189" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>

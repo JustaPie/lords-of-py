@@ -143,12 +143,13 @@ class burst(missile):
 
     def fire(self, dir, room):
         print(dir)
+        sprd = 2
         if not dir[1]:
-            self.split(room, dir, (dir[0], -1), (dir[0], 1))
+            self.split(room, (dir[0]*sprd, dir[1]), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
         elif dir[0] and dir[1]:
-            self.split(room, dir, (0, dir[1]), (dir[0], 0))
+            self.split(room, (dir[0]*sprd, dir[1]*sprd), (dir[0], dir[1]*sprd), (dir[0]*sprd, dir[1]))
         else:
-            self.split(room, dir, (-1, dir[1]), (1, dir[1]))
+            self.split(room, (dir[0], dir[1]*sprd), (-1, dir[1]*sprd), (1, dir[1]*sprd))
 
 class fragment(missile):
     def __init__(self, caster, img):
@@ -181,17 +182,18 @@ class atomic_burst(burst):
     def __init__(self, *args):
         super().__init__(*args, acid_balls)
         self.acidity = 30
-        self.velocity_mult = 50
+        self.velocity_mult = 40
         self.knockback_mult = 0
         self.fragment = acid_bubble
 
     def fire(self, dir, room):
+        sprd = 2
         if not dir[1]:
-            self.split(room, dir, (dir[0]*2, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*2, -1), (dir[0]*2, 1))
+            self.split(room, dir, (dir[0]*sprd, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
         elif dir[0] and dir[1]:
-            self.split(room, dir, (dir[0]*2, dir[1]*2), (0, dir[1]), (dir[0], 0), (0, dir[1]*2), (dir[0]*2, 0))
+            self.split(room, dir, (dir[0]*sprd, dir[1]*sprd), (0, dir[1]), (dir[0], 0), (0, dir[1]*sprd), (dir[0]*sprd, 0))
         else:
-            self.split(room, dir, (dir[0]*2, dir[1]), (-1, dir[1]), (1, dir[1]), (-1, dir[1]*2), (1, dir[1]*2))
+            self.split(room, dir, (dir[0]*sprd, dir[1]), (-1, dir[1]), (1, dir[1]), (-1, dir[1]*sprd), (1, dir[1]*sprd))
 
 class acid_bubble(fragment):
     def __init__(self, *args):
@@ -213,7 +215,7 @@ class freezing_burst(burst):
     def __init__(self, *args):
         super().__init__(*args, snow_balls)
         self.temp = -25
-        self.velocity_mult = 14
+        self.velocity_mult = 5
         self.knockback_mult = 1
         self.fragment = COLD_THING
 
