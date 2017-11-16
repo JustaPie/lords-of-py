@@ -18,6 +18,9 @@ class entity(pygame.sprite.Sprite):
         self.max_cold = -100
         self.hp = 1000
 
+    def set_size(self, size):
+        pass
+
     def act(self, target):
         pass
 
@@ -46,13 +49,41 @@ class entity(pygame.sprite.Sprite):
         if self.state == 'burning':
             self.hp -= 15
 
+class actor(entity):
+    def __init__(self, img, pos):
+        super().__init__(img, pos)
+        self.facing = (0,0)
 
-class player(entity):
+    #simple, inheritable function designed to allow both the player and enemies to auto-track a target
+    def track(self, target):
+        x1, y1 = self.rect.x, self.rect.y
+        x2, y2 = self.rect.x + self.rect.width, self.rect.y + self.rect.height
+        targ = target.rect.center
+        x0, y0 = 0, 0
+        if targ[0] > x2:
+            x0 = 1
+        elif targ[0] < x1:
+            x0 = -1
+
+        if targ[1] < y1:
+            y0 = -1
+        elif targ[1] > y2:
+            y0 = 1
+
+        self.facing = (x0, y0)
+        return (x0, y0)
+
+    #a default version of the cast method from the player class, to be modified by sub-classes
+    def cast(self, room):
+        self.spell.fire(self.facing, room)
+
+
+class player(actor):
     def __init__(self, img, pos):
         super().__init__(img, pos)
 
 
-class enemy(entity):
+class enemy(actor):
     def __init__(self, img, pos):
         super().__init__(img, pos)
 
@@ -66,3 +97,6 @@ class block(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
 
+class overlay(entity):
+    def __init__(self, img, pos):
+        super().__init__(img, pos)

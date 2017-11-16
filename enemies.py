@@ -3,51 +3,39 @@ import spritelings
 import math
 
 
-class enemy(spritelings.entity):
+class enemy(spritelings.actor):
     def __init__(self, img, pos):
         super().__init__(img, pos)
         self.speed = 0
         self.acc = 0
         self.damage = 0
+        self.spell = None
+        self.state = 'normal'
+        self.target = None
 
 
-    # the following vector methods have to do with adjusting
-    # position, velocity, and acceleration
-    def dumb_move(self, target):
-        dx, dy = self.rect.x - target.rect.x, self.rect.y - target.rect.y
-        dist = math.hypot(dx, dy)
-        xvel = self.velocity[0] * dx / dist
-        yvel = self.velocity[1] * dy / dist
-        self.velocity = (xvel, yvel)
+    def update(self, room):
+        if self.target:
+            self.facing = self.track(self.target)
 
-
-    def move_to_sprite(self, target):
-        dx, dy = self.rect.x - target.rect.x, self.rect.y - target.rect.y
-        dist = math.hypot(dx, dy)
-        dx, dy = dx / dist, dy / dist
-        self.velocity = (self.rect.x + dx * self.speed,
-                         self.rect.y + dy * self.speed)
-
+    def set_target(self, target):
+        self.target = target
 
     def react(self, weapon):
         self.hp -= weapon.damage
         self.rect.move_ip(weapon.knockback)
         self.temp += weapon.temp
         if self.state == 'normal':
-            if self.temp < self.cold_threshold:
+            if self.temp < self.max_cold:
                 self.state = 'frozen'
 
-            elif self.temp > self.heat_threshold:
+            elif self.temp > self.max_heat:
                 self.state = 'burning'
 
-
-    def act(self, victim):
-        victim.react(self)
-
-
-    def act(self, victim_list):
-        for victim in victim_list:
+    def act(self, victims):
+        for victim in victims:
             victim.react(self)
+
 
     def move_to(self, dest):
         xdest, ydest = dest[0], dest[1]
@@ -111,6 +99,32 @@ class enemy(spritelings.entity):
             pass
         self.velocity = (xvel, yvel)
 
+    #basic method to get an enemy to slow down until stopping
+    def slow_to_stop(self):
+        x, y = self.velocity
+        if x < 0-self.acc:
+            x += self.acc
+        elif x > 0+self.acc:
+            x -= self.acc
+        else:
+            x = 0
+
+        if y < 0-self.acc:
+            y += self.acc
+        elif y > 0+self.acc:
+            y -= self.acc
+        else:
+            y = 0
+        self.velocity = (x, y)
+
+    #mathematical (read: non-functional) method for making an enemy circle a target
+    def circle(self, target):
+        #sets the enemy to face the target, then it will pick a random direction
+        #that is normal to the target's relative position, and then moves (sets velocity)
+        #along that path. After moving for a bit, it sets itself to accel_to_sprite
+        dir = self.track(target)
+
+
 
     def vel_to_sprite(self, target):
         xvel = self.velocity[0]
@@ -135,6 +149,9 @@ class enemy(spritelings.entity):
 
 
 
+
+
+
 winged_eye = pygame.image.load("baddies\winged_eye2.png").convert_alpha()
 winged_eye_back = winged_eye.subsurface((1, 1), (234, 116))
 winged_eye_front = winged_eye.subsurface((236, 1), (233, 116))
@@ -154,12 +171,9 @@ class fleye(enemy):
         self.damage = 10
         self.dest = self.rect.center
         self.acc = .35
-        self.timer = 128*3
+        self.timer = 128*20
         self.target = None
         self.state = 'normal'
-        self.cold_threshold = -100
-        self.temp = 0
-        self.heat_threshold = 150
         self.roost = self.rect.center
         self.roosting = 0
 
@@ -190,7 +204,33 @@ class fleye(enemy):
 
 
 
-    def set_target(self, target):
-        self.target = target
+
+
+bouncer_sheet = pygame.image.load('baddies\\bumper.png').convert_alpha()
+bouncer_neutral = bouncer_sheet.subsurface((1,1), (181, 181))
+bouncer_left = bouncer_sheet.subsurface((185, 1), (181, 181))
+bouncer_top_left = bouncer_sheet.subsurface((373, 1),(181, 181))
+bouncer_bottom_left = pygame.transform.flip(bouncer_top_left, 0, 1)
+bouncer_right = pygame.transform.flip(bouncer_left, 1, 0)
+bouncer_top_right = pygame.transform.flip(bouncer_top_left, 1, 0)
+bouncer_bottom_right = pygame.transform.flip(bouncer_top_right, 0, 1)
+bouncer_top = bouncer_sheet.subsurface((558, 0), (181, 181))
+bouncer_bottom = pygame.transform.flip(bouncer_top, 0, 1)
+
+class bouncer(enemy):
+    def __init__(self, pos):
+        super().__init__(bouncer_neutral, pos)
+
+        self.lookup = {(0, 0): bouncer_neutral, (1, 0): bouncer_right, (1, -1): bouncer_top_right, (1, 1): bouncer_bottom_right,
+         (0, -1): bouncer_top, (0, 1): bouncer_bottom, (-1, 0): bouncer_left, (-1, -1): bouncer_top_left, (-1, 1): bouncer_bottom_left}
+
+    def look_at(self):
+        self.image = self.lookup[self.facing]
+
+    #@look_at
+    def update(self, room):
+        super().update(room)
+        self.look_at()
+
 
 

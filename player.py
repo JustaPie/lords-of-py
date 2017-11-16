@@ -15,7 +15,7 @@ down = spritesheet.subsurface((257,0), (38,126))
 top = spritesheet.subsurface((299, 0), (38,126))
 
 
-class player(spritelings.player):
+class player(spritelings.actor):
     def __init__(self, pos):
         super().__init__(spritesheet, pos)
 
@@ -39,9 +39,9 @@ class player(spritelings.player):
         self.velocity = (0,0)
         self.speed = 8
 
-        self.controller = controllers.gamepad(self)
+        self.controller = controllers.keyboard(self)
 
-        self.spellbook = {1:missiles.kinetic_bolt, 2:missiles.acid_bolt, 3:missiles.fire_bolt, 4:missiles.ice_bolt}
+        self.spellbook = {1:missiles.kinetic_bolt, 2:missiles.acid_bolt, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.acid_blast}
         self.page = 1
         self.spell = self.spellbook[1](self)
 
@@ -51,7 +51,7 @@ class player(spritelings.player):
 
         self.controller.update(room)
         self.check_state()
-        room.playerProjectiles.add(self.spell)
+        room.inactivePlayerProjectiles.add(self.spell)
 
         self.image = self.torso[self.facing]
 
