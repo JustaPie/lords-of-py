@@ -71,11 +71,14 @@ class player(spritelings.actor):
             self.spell = self.spellbook[self.page](self)
 
     def cast(self, room):
-        self.spell.fire(self.facing, room)
+        self.spell.fire(self.facing, room.playerProjectiles)
         self.spell = self.spellbook[self.page](self)
 
     def anim(self):
         pass
+
+    def react(self, bastard):
+        self.rect.move_ip(bastard.knockback)
 
 
 

@@ -32,6 +32,11 @@ snow_balls = all_bursts.subsurface((136, 136), (64, 64))
 snow_ball = all_bursts.subsurface((151, 218), (32, 32))
 
 
+idle_flame = all_bursts.subsurface((2,69), (64, 36))
+idle_cloud = all_bursts.subsurface((79,73),(43,46))
+snow_flakes = all_bursts.subsurface((164, 103), (29, 15))
+
+
 #BEAMS/RAYS
 all_rays = pygame.image.load('projectiles\simple_rays.png').convert_alpha()
 hot_rays = all_rays.subsurface((0,0),(56, 18))
@@ -50,7 +55,7 @@ class missile(spritelings.entity):
         self.velocity = (0,0)
         self.acidity = 0
         self.focus_cost = 0
-        self.charge_level = caster.charge_level
+        #self.charge_level = caster.charge_level
         self.caster = caster
 
     def update(self, room):
@@ -64,7 +69,7 @@ class missile(spritelings.entity):
     def charge(self, power):
         pass
 
-    def fire(self, dir, room):
+    def fire(self, dir, team):
         print('firing spell')
 
         self.velocity = (dir[0] * self.velocity_mult,
@@ -73,7 +78,7 @@ class missile(spritelings.entity):
                           self.velocity[1] * self.knockback_mult)
         print(self.velocity)
         self.caster = self
-        room.playerProjectiles.add(self)
+        team.add(self)
 
 
 #purely cosmetic attachment for giving missiles a cool trail
@@ -84,6 +89,17 @@ class trail(missile):
 class dummy_missile(missile):
     pass
 
+
+
+class cloud(missile):
+    pass
+
+class flame(missile):
+    def __init__(self, *args):
+        super().__init__(*args, idle_flame)
+
+class snowflake(missile):
+    pass
 
 class bolt(missile):
     def __init__(self, caster, img):
@@ -128,9 +144,9 @@ class burst(missile):
         self.hp = 6
 
 
-    def split(self, room, *args):
+    def split(self, team, *args):
         for x in args:
-            self.fragment(self).fire( x, room)
+            self.fragment(self).fire( x, team)
         self.kill()
 
     def react(self, *args):

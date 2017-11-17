@@ -1,6 +1,7 @@
 import pygame
 import spritelings
 import math
+import missiles
 
 
 class enemy(spritelings.actor):
@@ -224,6 +225,9 @@ class bouncer(enemy):
         self.lookup = {(0, 0): bouncer_neutral, (1, 0): bouncer_right, (1, -1): bouncer_top_right, (1, 1): bouncer_bottom_right,
          (0, -1): bouncer_top, (0, 1): bouncer_bottom, (-1, 0): bouncer_left, (-1, -1): bouncer_top_left, (-1, 1): bouncer_bottom_left}
 
+        self.timer = 0
+        self.spell = missiles.fire_bolt
+
     def look_at(self):
         self.image = self.lookup[self.facing]
 
@@ -231,6 +235,13 @@ class bouncer(enemy):
     def update(self, room):
         super().update(room)
         self.look_at()
+        if self.timer > 0:
+            self.timer -= 1
+        else:
+            self.spell.fire(self.spell(self), self.facing, room.enemyProjectiles)
+            self.timer = 356
+
+
 
 
 
