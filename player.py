@@ -78,7 +78,7 @@ class player(spritelings.actor):
         pass
 
     def react(self, bastard):
-        self.rect.move_ip(bastard.knockback)
+        print(type(bastard))
 
 
 

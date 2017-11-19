@@ -92,14 +92,29 @@ class dummy_missile(missile):
 
 
 class cloud(missile):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args, idle_cloud)
+        self.acidity = 15
+        self.duration = 128 * 5
+
+    def update(self, *args):
+        super().update(*args)
+        self.duration-= 1
+        if self.duration <= 0:
+            self.kill()
 
 class flame(missile):
     def __init__(self, *args):
         super().__init__(*args, idle_flame)
+        self.temp = 15
+
+    def react(self, *args):
+        super().react(args)
 
 class snowflake(missile):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args, snow_flakes)
+        self.temp = -15
 
 class bolt(missile):
     def __init__(self, caster, img):
