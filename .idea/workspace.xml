@@ -1,81 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/overlays.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/eyes.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/mask.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/sneyeper.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/wined_eye2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/wing_eye.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/winged_eye2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/baddies/winged_eye_damaged.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/badguy.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/controller.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/enemies.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/hud.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/importants.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/keyboard.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/keyboard_alt.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/missiles.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/g_face_right.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/grn_plr_state_tests.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/grn_plyr_arw.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/hud_blank.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/people_format.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/silhouettes.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/people/smol_silvia.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/player.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/dfire_ball_l.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/disin_orb_l.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/disin_orb_m.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/disin_orb_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/fire_ball_m.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/fire_ball_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/gfreeze_ray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/heat_ray.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/heatwave.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/ice_disc_l.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/ice_disc_m.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/ice_disc_s.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_body.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_full.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_full_fade1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_full_fade2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_full_fade3.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_full_fade4.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_beam_impact.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_bolt.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kin_bolt_simple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/kinetic_sheild.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/rays_simple.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/red_on_ylw.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/simple_bolts.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/simple_fire.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/simple_rays.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/projectiles/ylw_on_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/room.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/spritelings.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/test_mk2.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/test_nme.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/cnr_stn_bl.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/cnr_stn_br.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/cnr_stn_tl.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/cnr_stn_tr.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/cobble.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/dungeon_assets.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/wal_stn_b.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/wal_stn_l.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/wal_stn_r.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test stuff/walls/wal_stn_t.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/enemies.py" afterPath="$PROJECT_DIR$/enemies.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/missiles.py" afterPath="$PROJECT_DIR$/missiles.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/player.py" afterPath="$PROJECT_DIR$/player.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/room.py" afterPath="$PROJECT_DIR$/room.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spritelings.py" afterPath="$PROJECT_DIR$/spritelings.py" />
-    </list>
+    <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="Major progress on enemies, the player, and spells" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -94,7 +20,7 @@
     <SUITE FILE_PATH="coverage/GameProj$main.coverage" NAME="main Coverage Results" MODIFIED="1507326750419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
     <SUITE FILE_PATH="coverage/lords_of_py$controller.coverage" NAME="controller Coverage Results" MODIFIED="1509669566249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test stuff" />
     <SUITE FILE_PATH="coverage/lords_of_py$testruns.coverage" NAME="testruns Coverage Results" MODIFIED="1508366833256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1511826612729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1511826786422" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -199,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/overlays.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1275">
-              <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -766,7 +692,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511557752383</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Major progress on enemies, the player, and spells">
+      <created>1511826675940</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1511826675941</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -881,7 +814,8 @@
     <MESSAGE value="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system" />
     <MESSAGE value="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version" />
     <MESSAGE value="I GOT THE EYES WORKING" />
-    <option name="LAST_COMMIT_MESSAGE" value="I GOT THE EYES WORKING" />
+    <MESSAGE value="Major progress on enemies, the player, and spells" />
+    <option name="LAST_COMMIT_MESSAGE" value="Major progress on enemies, the player, and spells" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1017,7 +951,7 @@
     <entry file="file://$PROJECT_DIR$/overlays.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
-          <caret line="75" column="0" lean-forward="true" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
