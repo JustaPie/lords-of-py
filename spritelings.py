@@ -1,7 +1,12 @@
 import pygame
 
 def collide_hitbox(spriteA, spriteB):
-    return pygame.Rect.colliderect(spriteA.hitbox, spriteB.hitbox)
+    if pygame.Rect.colliderect(spriteA.hitbox, spriteB.hitbox):
+        for x in spriteB.hitboxes:
+            if pygame.Rect.colliderect(spriteA.hitbox, x):
+                return True
+    else:
+        return False
 
 class entity(pygame.sprite.Sprite):
     def __init__(self, img, pos):
@@ -11,6 +16,7 @@ class entity(pygame.sprite.Sprite):
         self.rect.center = pos
         self.hitbox = self.rect
         self.velocity = (0,0)
+        self.knockback = (0,0)
 
         self.state = 'normal'
         self.temp = 0
@@ -53,6 +59,7 @@ class actor(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
         self.facing = (0,0)
+        self.damage = 0
 
     #simple, inheritable function designed to allow both the player and enemies to auto-track a target
     def track(self, target):

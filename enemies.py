@@ -2,6 +2,7 @@ import pygame
 import spritelings
 import math
 import missiles
+import overlays
 
 
 class enemy(spritelings.actor):
@@ -9,15 +10,21 @@ class enemy(spritelings.actor):
         super().__init__(img, pos)
         self.speed = 0
         self.acc = 0
-        self.damage = 0
+        self.damage = 10
         self.spell = None
         self.state = 'normal'
         self.target = None
+        self.hp = 300
 
 
     def update(self, room):
+        if self.hp<=0:
+            self.kill()
         if self.target:
             self.facing = self.track(self.target)
+        self.rect.move_ip(self.velocity)
+        self.hitbox.center = self.rect.center
+
 
     def set_target(self, target):
         self.target = target
@@ -35,6 +42,7 @@ class enemy(spritelings.actor):
 
     def act(self, victims):
         for victim in victims:
+            self.knockback = (-victim.velocity[0], -victim.velocity[1])
             victim.react(self)
 
 
@@ -163,24 +171,32 @@ winged_eye_impact = winged_eye.subsurface((245, 314), (227, 150))
 
 fleye_img_lookup = {'normal': winged_eye_front, 'burning': winged_eye_burning, 'frozen': winged_eye_frozen}
 
+feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 
 class fleye(enemy):
     def __init__(self, pos):
-        super().__init__(winged_eye_front, pos)
+        super().__init__(feyenal_fleye, pos)
 
         self.hp = 30
         self.damage = 10
         self.dest = self.rect.center
-        self.acc = .35
+        self.acc = .2
         self.timer = 128*20
         self.target = None
         self.state = 'normal'
         self.roost = self.rect.center
         self.roosting = 0
+        self.eye = None
 
     def update(self, room):
-        if self.hp < 0:
+        if self.hp <= 0:
+            self.eye.kil()
             self.kill()
+
+        if not self.eye:
+            self.eye = overlays.eyeball(self, room)
+        self.eye.update(room)
+
         self.timer -= 1
 
         if self.roosting:
@@ -202,46 +218,148 @@ class fleye(enemy):
 
         #self.check_state()
         self.rect.move_ip(self.velocity)
+        self.eye.rect.center = self.rect.center
+
 
 
 
 
 
 bouncer_sheet = pygame.image.load('baddies\\bumper.png').convert_alpha()
-bouncer_neutral = bouncer_sheet.subsurface((1,1), (181, 181))
-bouncer_left = bouncer_sheet.subsurface((185, 1), (181, 181))
-bouncer_top_left = bouncer_sheet.subsurface((373, 1),(181, 181))
-bouncer_bottom_left = pygame.transform.flip(bouncer_top_left, 0, 1)
-bouncer_right = pygame.transform.flip(bouncer_left, 1, 0)
-bouncer_top_right = pygame.transform.flip(bouncer_top_left, 1, 0)
-bouncer_bottom_right = pygame.transform.flip(bouncer_top_right, 0, 1)
-bouncer_top = bouncer_sheet.subsurface((558, 0), (181, 181))
-bouncer_bottom = pygame.transform.flip(bouncer_top, 0, 1)
+basic_bouncer_img = bouncer_sheet.subsurface((1,1), (181, 181))
+blue_bouncer_img = bouncer_sheet.subsurface((185, 1), (181, 181))
+black_bouncer_img = bouncer_sheet.subsurface((373, 1),(181, 181))
+blind_bouncer_img = bouncer_sheet.subsurface((558, 0), (181, 181))
+baby_bouncer_img = pygame.transform.scale(basic_bouncer_img, (64, 64))
 
 class bouncer(enemy):
     def __init__(self, pos):
-        super().__init__(bouncer_neutral, pos)
-
-        self.lookup = {(0, 0): bouncer_neutral, (1, 0): bouncer_right, (1, -1): bouncer_top_right, (1, 1): bouncer_bottom_right,
-         (0, -1): bouncer_top, (0, 1): bouncer_bottom, (-1, 0): bouncer_left, (-1, -1): bouncer_top_left, (-1, 1): bouncer_bottom_left}
-
+        super().__init__(basic_bouncer_img, pos)
+        self.eye = None
         self.timer = 0
         self.spell = missiles.fire_bolt
+        self.core = self.rect.inflate(-96, -96)
+        self.top = pygame.Rect(*self.rect.center, 43, 43)
 
-    def look_at(self):
-        self.image = self.lookup[self.facing]
+        self.bottom = pygame.Rect(*self.rect.center, 43, 43)
 
-    #@look_at
+        self.left = pygame.Rect(*self.rect.center, 43, 43)
+
+        self.right = pygame.Rect(*self.rect.center, 43, 43)
+
+        self.hitboxes = [self.core, self.top, self.bottom, self.left, self.right]
+
     def update(self, room):
         super().update(room)
-        self.look_at()
+        self.right.midright = self.rect.midright
+        self.left.midleft = self.rect.midleft
+        self.top.midtop = self.rect.midtop
+        self.bottom.midbottom = self.rect.midbottom
+        self.core.center = self.rect.center
+
+        if not self.eye:
+            self.eye = overlays.eyeball(self, room)
+        self.eye.update(room)
+
         if self.timer > 0:
             self.timer -= 1
         else:
             self.spell.fire(self.spell(self), self.facing, room.enemyProjectiles)
             self.timer = 356
 
+    def react(self, weapon):
+        if pygame.Rect.colliderect(self.core, weapon.hitbox):
+            self.hp -= weapon.damage
+            self.rect.move_ip(weapon.knockback)
+            if isinstance(weapon, missiles.missile):
+                weapon.kill()
+        if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
+            self.velocity = (self.velocity[0], -10)
+        if pygame.Rect.colliderect(self.left, weapon.hitbox):
+            self.velocity = (10, self.velocity[1])
+        if pygame.Rect.colliderect(self.top, weapon.hitbox):
+            self.velocity = (self.velocity[0], 10)
+        if pygame.Rect.colliderect(self.right, weapon.hitbox):
+            self.velocity = (-10, self.velocity[1])
+
+    def act(self, victims):
+        for victim in victims:
+            self.knockback = (-victim.velocity[0], -victim.velocity[1])
+            if pygame.Rect.colliderect(self.core, victim.hitbox):
+                victim.react(self)
+
+
+class blue_bouncer(bouncer):
+    def __init__(self, pos):
+        super().__init__(pos)
+        self.image = blue_bouncer_img
+
+    def react(self, weapon):
+        if pygame.Rect.colliderect(self.core, weapon.hitbox):
+            self.hp -= weapon.damage
+            self.rect.move_ip(weapon.knockback)
+            if isinstance(weapon, missiles.missile):
+                weapon.kill()
+        if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
+            self.velocity = (self.velocity[0], 10)
+        if pygame.Rect.colliderect(self.left, weapon.hitbox):
+            self.velocity = (-10, self.velocity[1])
+        if pygame.Rect.colliderect(self.top, weapon.hitbox):
+            self.velocity = (self.velocity[0], -10)
+        if pygame.Rect.colliderect(self.right, weapon.hitbox):
+            self.velocity = (10, self.velocity[1])
+
+
+class black_bouncer(bouncer):
+    def __init__(self, pos):
+        super().__init__(pos)
+        self.image = black_bouncer_img
+        self.reflected = pygame.sprite.Group()
+
+    def react(self, weapon):
+        if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
+            weapon.velocity = (-weapon.velocity[0], 10)
+            self.reflected.add(weapon)
+        if pygame.Rect.colliderect(self.left, weapon.hitbox):
+            weapon.velocity = (-10, -weapon.velocity[1])
+            self.reflected.add(weapon)
+        if pygame.Rect.colliderect(self.top, weapon.hitbox):
+            weapon.velocity = (-weapon.velocity[0], -10)
+            self.reflected.add(weapon)
+        if pygame.Rect.colliderect(self.right, weapon.hitbox):
+            weapon.velocity = (10, -weapon.velocity[1])
+            self.reflected.add(weapon)
+
+        if pygame.Rect.colliderect(self.core, weapon.hitbox):
+            self.hp -= weapon.damage
+            self.rect.move_ip(weapon.knockback)
+            if isinstance(weapon, missiles.missile):
+                weapon.kill()
+
+    def update(self, room):
+        super().update(room)
+        room.enemyProjectiles.add(self.reflected)
 
 
 
 
+class blind_bouncer(bouncer):
+    def __init__(self, pos):
+        super().__init__(pos)
+        self.image = blind_bouncer_img
+        self.eye = None
+
+class baby_bouncer(bouncer):
+    pass
+
+
+
+
+'''         if pygame.Rect.colliderect(self.bottom, victim.hitbox):
+                self.velocity = (self.velocity[0], -10)
+            if pygame.Rect.colliderect(self.left, victim.hitbox):
+                self.velocity = (10, self.velocity[1])
+            if pygame.Rect.colliderect(self.top, victim.hitbox):
+                self.velocity = (self.velocity[0], 10)
+            if pygame.Rect.colliderect(self.right, victim.hitbox):
+                self.velocity = (-10, self.velocity[1])'''

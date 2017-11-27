@@ -19,7 +19,7 @@ class player(spritelings.actor):
     def __init__(self, pos):
         super().__init__(spritesheet, pos)
 
-        self.hp = 100
+        self.hp = 300
         self.max_focus = 150
         self.focus = 0
         self.charge_level = 1
@@ -33,6 +33,7 @@ class player(spritelings.actor):
         center = self.rect.center
         self.hitbox = self.rect.inflate(-20, -39)
         self.hitbox.center = center
+        self.hitboxes = [self.hitbox]
 
 
         self.facing = (0,0)
@@ -47,6 +48,7 @@ class player(spritelings.actor):
 
     def update(self, room):
         if self.hp <= 0:
+            self.spell.kill()
             self.kill()
 
         self.controller.update(room)
@@ -57,6 +59,7 @@ class player(spritelings.actor):
 
         self.rect.move_ip(self.velocity)
         self.hitbox.center = self.rect.center
+        self.spell.rect.center = self.rect.center
 
     def next_spell(self):
         if self.page < len(self.spellbook):
@@ -79,6 +82,12 @@ class player(spritelings.actor):
 
     def react(self, bastard):
         print(type(bastard))
+        self.rect.move_ip(bastard.knockback)
+        self.hp -= bastard.damage
+        self.spell.kill()
+        if isinstance(bastard, missiles.missile):
+            bastard.kill()
+
 
 
 

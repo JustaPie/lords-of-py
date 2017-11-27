@@ -1,40 +1,29 @@
 import pygame
 import spritelings
 
-#START bolts
-all_bolt_base = pygame.image.load('projectiles\simple_bolts.png').convert_alpha()
-kin_bolt = all_bolt_base.subsurface((1, 1), (70, 70))
-melt_bolt = all_bolt_base.subsurface((72, 1), (70, 70))
-hot_bolt = all_bolt_base.subsurface((1, 72), (70, 70))
-cold_bolt = all_bolt_base.subsurface((143, 1), (70, 70))
-bad_bolt = all_bolt_base.subsurface((72, 72), (70, 70))
-misc_bolt = all_bolt_base.subsurface((143, 72), (70, 70))
-#END bolts
+missile_sheet = pygame.image.load('projectiles\simple_missiles.png').convert_alpha()
 
-#START blasts
-#scales: 32, 48, 64, 80, 96
-all_blasts = pygame.image.load('projectiles\simple_blasts.png').convert_alpha()
-melty_blast = all_blasts.subsurface((304, 1), (100, 100))
-firey_blast = all_blasts.subsurface((1,1), (100, 100))
-icey_blast = all_blasts.subsurface((102, 1), (100, 100))
-kinetic_shrapnel = all_blasts.subsurface((203, 1), (100, 100))
-#END blasts
+hot_bolt = missile_sheet.subsurface((1,1), (66, 66))
+melt_bolt = missile_sheet.subsurface((68, 1), (66, 66))
+cold_bolt = missile_sheet.subsurface((135, 1),(66, 66))
 
-#BUBBLES
+lava_balls = missile_sheet.subsurface((1, 135),(66,66))
+lava_ball = missile_sheet.subsurface((1, 202),(66,66))
 
-#BURSTS
-all_bursts = pygame.image.load('projectiles\simple_bursts.png').convert_alpha()
-lava_balls = all_bursts.subsurface((2, 136), (64, 64))
-lava_ball = all_bursts.subsurface((15, 216), (32, 32))
-acid_balls = all_bursts.subsurface((69, 136), (64, 64))
-acid_ball = all_bursts.subsurface((91, 226), (16, 16))
-snow_balls = all_bursts.subsurface((136, 136), (64, 64))
-snow_ball = all_bursts.subsurface((151, 218), (32, 32))
+snow_balls = missile_sheet.subsurface((135, 135),(66, 66))
+snow_ball = missile_sheet.subsurface((135, 202),(66, 66))
 
+acid_balls = missile_sheet.subsurface((68, 135),(66, 66))
+acid_ball = missile_sheet.subsurface((68, 202),(66, 66))
 
-idle_flame = all_bursts.subsurface((2,69), (64, 36))
-idle_cloud = all_bursts.subsurface((79,73),(43,46))
-snow_flakes = all_bursts.subsurface((164, 103), (29, 15))
+tri_bolt = missile_sheet.subsurface((202, 1),(66, 66))
+quad_bolt = missile_sheet.subsurface((202, 68),(66,66))
+penta_bolt = missile_sheet.subsurface((202, 135),(66,66))
+hex_bolt = missile_sheet.subsurface((202, 202),(66,66))
+
+idle_flame = missile_sheet.subsurface((2,69), (64, 36))
+idle_cloud = missile_sheet.subsurface((79,73),(43,46))
+snow_flakes = missile_sheet.subsurface((164, 103), (29, 15))
 
 
 #BEAMS/RAYS
@@ -51,39 +40,43 @@ class missile(spritelings.entity):
 
         self.damage = 0
         self.temp = 0
+        self.knockback_mult = 0
         self.knockback = (0,0)
         self.velocity = (0,0)
         self.acidity = 0
         self.focus_cost = 0
         #self.charge_level = caster.charge_level
         self.caster = caster
+        self.hitbox = self.rect
 
     def update(self, room):
+        if not self.velocity:
+            self.kill()
         self.rect.move_ip(self.caster.velocity)
+        self.hitbox.center = self.rect.center
 
     def act(self, targets):
+        self.knockback = (self.velocity[0] * self.knockback_mult,
+                          self.velocity[1] * self.knockback_mult)
         for target in targets:
             target.react(self)
-            self.kill()
+        #self.kill()
 
     def charge(self, power):
         pass
 
     def fire(self, dir, team):
-        print('firing spell')
-
         self.velocity = (dir[0] * self.velocity_mult,
                         dir[1] * self.velocity_mult)
-        self.knockback = (self.velocity[0] * self.knockback_mult,
-                          self.velocity[1] * self.knockback_mult)
-        print(self.velocity)
         self.caster = self
         team.add(self)
 
 
 #purely cosmetic attachment for giving missiles a cool trail
 class trail(missile):
-    pass
+    def __init__(self, *args):
+        super().__init__(*args)
+
 
 #dummy class used to represent invisible or oddly shaped hitboxes
 class dummy_missile(missile):
@@ -92,13 +85,13 @@ class dummy_missile(missile):
 
 
 class cloud(missile):
-    def __init__(self, *args):
-        super().__init__(*args, idle_cloud)
+    def __init__(self, size,  *args):
+        super().__init__(*args, pygame.transform.scale(idle_cloud, (size, size)))
         self.acidity = 15
-        self.duration = 128 * 5
+        self.duration = 36 * size/8
+        self.velocity = (0,0)
 
     def update(self, *args):
-        super().update(*args)
         self.duration-= 1
         if self.duration <= 0:
             self.kill()
@@ -116,6 +109,10 @@ class snowflake(missile):
         super().__init__(*args, snow_flakes)
         self.temp = -15
 
+
+########################
+#####   BOLTS   ########
+########################
 class bolt(missile):
     def __init__(self, caster, img):
         super().__init__(caster, pygame.transform.scale(img, (24, 24)))
@@ -126,7 +123,7 @@ class bolt(missile):
 
 class kinetic_bolt(bolt):
     def __init__(self, caster):
-        super().__init__(caster, kin_bolt)
+        super().__init__(caster, tri_bolt)
         self.knockback_mult = 1/2
         self.velocity_mult = 16
 
@@ -173,7 +170,6 @@ class burst(missile):
             self.kill()
 
     def fire(self, dir, room):
-        print(dir)
         sprd = 2
         if not dir[1]:
             self.split(room, (dir[0]*sprd, dir[1]), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
@@ -185,12 +181,16 @@ class burst(missile):
 class fragment(missile):
     def __init__(self, caster, img):
         super().__init__(caster, img)
-        print('new frag')
         self.velocity_mult = caster.velocity_mult
         self.knockback_mult = caster.knockback_mult
         self.temp = caster.temp
         self.acidity = caster.acidity
         self.damage = caster.damage
+        '''center = self.rect.center
+        self.rect = self.rect.inflate(-32, -32)
+        self.hitbox = self.rect.inflate(-40, -40)
+        self.rect.center = center
+        self.hitbox.center = center'''
 
 class lava_burst(burst):
     def __init__(self, *args):
@@ -202,12 +202,9 @@ class lava_burst(burst):
 
 class ember(fragment):
     def __init__(self, *args):
-        super().__init__(*args, lava_ball)
-        print(self)
+        super().__init__(*args, lava_ball.subsurface((13,14), (33,33)))
 
-class kinetic_burst(burst):
-    def __init__(self, *args):
-        super().__init__(*args, kinetic_shrapnel)
+        #print(self)
 
 class atomic_burst(burst):
     def __init__(self, *args):
@@ -228,17 +225,29 @@ class atomic_burst(burst):
 
 class acid_bubble(fragment):
     def __init__(self, *args):
-        super().__init__(*args, acid_ball)
+        super().__init__(*args, pygame.transform.scale(acid_ball, (20, 20)))
         self.timer = 128*5
+        self.size = 24
 
-    def update(self, *args):
+    def update(self, room):
         self.timer -=1
         self.velocity = (self.velocity[0] * .8, self.velocity[1] * .8)
         self.rect.move_ip(self.velocity)
         if self.timer <= 0:
+            room.playerProjectiles.add(cloud(int(self.size*1.2), self))
             self.kill()
         if self.timer % 8 == 0:
+            center = self.rect.center
+            self.size += 1
             self.rect.inflate_ip(1,1)
+            self.image = pygame.transform.scale(acid_ball, (self.size, self.size))
+            self.rect.center = center
+    def react(self, bastard):
+        super().react(bastard)
+        self.timer = 0
+    def act(self, *args):
+        super().act(*args)
+        self.timer = 0
 
 
 
@@ -252,7 +261,7 @@ class freezing_burst(burst):
 
 class COLD_THING(fragment):
     def __init__(self, *args):
-        super().__init__(*args, snow_ball)
+        super().__init__(*args, snow_ball.subsurface((13,14), (33,33)))
 
 
 
@@ -262,30 +271,4 @@ class barrier(missile):
     def __init__(self, caster, img):
         super().__init__(caster, img)
 
-
-
-class blast(missile):
-    def __init__(self, caster, img):
-        super().__init__(caster, pygame.transform.scale(img, (64, 64)))
-        self.knockback_mult = 0
-        self.velocity_mult = 10
-        self.damage = 10
-        self.base_img = img
-
-
-class fire_blast(blast):
-    def __init__(self, caster):
-        super().__init__(caster, firey_blast)
-
-class ice_blast(blast):
-    def __init__(self, caster):
-        super().__init__(caster, icey_blast)
-
-class acid_blast(blast):
-    def __init__(self, caster):
-        super().__init__(caster, melty_blast)
-
-class kinetic_blast(blast):
-    def __init__(self, caster):
-        super().__init__(caster, kinetic_shrapnel)
 
