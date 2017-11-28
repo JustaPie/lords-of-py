@@ -36,7 +36,7 @@ hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
 
-bumper = enemies.black_bouncer((600, 600))
+bumper = enemies.blind_bouncer((600, 600))
 bumper.set_target(pc)
 test_room.enemies.add(bumper)
 
@@ -87,7 +87,7 @@ while (running):
     #player_hud.update()
     #player_hud.show(disp)
 
-    for x in test_room.player:
+    '''for x in test_room.player:
         pygame.draw.rect(disp, green, x.rect, 4)
     for x in test_room.player:
         pygame.draw.rect(disp, red, x.hitbox, 4)
@@ -103,6 +103,7 @@ while (running):
         pygame.draw.rect(disp, red, z.rect, 7)
     for z in test_room.allProjectiles:
         pygame.draw.rect(disp, green, z.hitbox, 4)
+    '''
 
     test_room.update()
 

@@ -42,7 +42,7 @@ class player(spritelings.actor):
 
         self.controller = controllers.gamepad(self)
 
-        self.spellbook = {1:missiles.atomic_burst, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst}
+        self.spellbook = {1:missiles.atomic_burst, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.kinetic_splitter}
         self.page = 1
         self.spell = self.spellbook[1](self)
 

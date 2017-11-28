@@ -270,7 +270,8 @@ class bouncer(enemy):
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
-            self.rect.move_ip(weapon.knockback)
+            self.velocity = (self.velocity[0]*weapon.stopping_power, self.velocity[1]*weapon.stopping_power)
+            #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):
                 weapon.kill()
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
@@ -297,7 +298,7 @@ class blue_bouncer(bouncer):
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
-            self.rect.move_ip(weapon.knockback)
+            #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):
                 weapon.kill()
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
@@ -332,7 +333,7 @@ class black_bouncer(bouncer):
 
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
-            self.rect.move_ip(weapon.knockback)
+            #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):
                 weapon.kill()
 
@@ -349,6 +350,21 @@ class blind_bouncer(bouncer):
         self.image = blind_bouncer_img
         self.eye = None
 
+    def update(self, room):
+        #super().update(room)
+        if self.hp<=0:
+            self.kill()
+        if self.target:
+            self.facing = self.track(self.target)
+        self.rect.move_ip(self.velocity)
+        self.hitbox.center = self.rect.center
+        self.right.midright = self.rect.midright
+        self.left.midleft = self.rect.midleft
+        self.top.midtop = self.rect.midtop
+        self.bottom.midbottom = self.rect.midbottom
+        self.core.center = self.rect.center
+
+
 class baby_bouncer(bouncer):
     pass
 
@@ -363,3 +379,4 @@ class baby_bouncer(bouncer):
                 self.velocity = (self.velocity[0], 10)
             if pygame.Rect.colliderect(self.right, victim.hitbox):
                 self.velocity = (-10, self.velocity[1])'''
+

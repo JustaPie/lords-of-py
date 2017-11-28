@@ -42,7 +42,9 @@ class missile(spritelings.entity):
         self.temp = 0
         self.knockback_mult = 0
         self.knockback = (0,0)
+        self.stopping_power = 1
         self.velocity = (0,0)
+        self.velocity_mult = 1
         self.acidity = 0
         self.focus_cost = 0
         #self.charge_level = caster.charge_level
@@ -153,7 +155,7 @@ class acid_bolt(bolt):
 class burst(missile):
     def __init__(self, caster, img):
         super().__init__(caster, img)
-        self.hp = 6
+        self.hp = 60
 
 
     def split(self, team, *args):
@@ -204,7 +206,7 @@ class ember(fragment):
     def __init__(self, *args):
         super().__init__(*args, lava_ball.subsurface((13,14), (33,33)))
 
-        #print(self)
+
 
 class atomic_burst(burst):
     def __init__(self, *args):
@@ -262,6 +264,22 @@ class freezing_burst(burst):
 class COLD_THING(fragment):
     def __init__(self, *args):
         super().__init__(*args, snow_ball.subsurface((13,14), (33,33)))
+
+
+'''
+#tri_bolt = missile_sheet.subsurface((202, 1),(66, 66))
+#quad_bolt = missile_sheet.subsurface((202, 68),(66,66))
+#penta_bolt = missile_sheet.subsurface((202, 135),(66,66))
+#hex_bolt = missile_sheet.subsurface((202, 202),(66,66))
+'''
+sides = {6:hex_bolt, 5:penta_bolt, 4:quad_bolt, 3:tri_bolt}
+
+class kinetic_splitter(missile):
+    def __init__(self, *args, points = 6):
+        super().__init__(*args, pygame.transform.scale(sides[points], (32, 32)))
+        self.points = points
+        self.velocity_mult = 10
+
 
 
 
