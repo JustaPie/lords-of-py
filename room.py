@@ -117,18 +117,18 @@ class room():
     def check_collision(self):
         player_hitlist_proj = pygame.sprite.groupcollide(self.enemyProjectiles, self.player, 0, 0, spritelings.collide_hitbox)
         if player_hitlist_proj:
-            print(player_hitlist_proj)
+            #print(player_hitlist_proj)
             for nme in player_hitlist_proj:
                 nme.act(player_hitlist_proj[nme])
 
         player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0, spritelings.collide_hitbox)
         if player_hitlist_nme:
-            print(player_hitlist_nme)
+            #print(player_hitlist_nme)
             for nme in player_hitlist_nme:
                 nme.act(player_hitlist_nme[nme])
 
         enemy_hitlist = pygame.sprite.groupcollide(self.playerProjectiles, self.enemies, 0, 0, spritelings.collide_hitbox)
         if enemy_hitlist:
-            print(enemy_hitlist)
+            #print(enemy_hitlist)
             for bullet in enemy_hitlist:
                 bullet.act(enemy_hitlist[bullet])

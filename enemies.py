@@ -250,7 +250,7 @@ class bouncer(enemy):
         super().__init__(basic_bouncer_img, pos)
         self.eye = None
         self.timer = 0
-        self.spell = missiles.fire_bolt
+        self.spell = missiles.ice_bolt
         self.core = self.rect.inflate(-96, -96)
         self.top = pygame.Rect(*self.rect.center, 43, 43)
 
@@ -337,17 +337,17 @@ class black_bouncer(bouncer):
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             weapon.velocity = (-weapon.velocity[0], 10)
             self.reflected.add(weapon)
-        if pygame.Rect.colliderect(self.left, weapon.hitbox):
+        elif pygame.Rect.colliderect(self.left, weapon.hitbox):
             weapon.velocity = (-10, -weapon.velocity[1])
             self.reflected.add(weapon)
-        if pygame.Rect.colliderect(self.top, weapon.hitbox):
+        elif pygame.Rect.colliderect(self.top, weapon.hitbox):
             weapon.velocity = (-weapon.velocity[0], -10)
             self.reflected.add(weapon)
-        if pygame.Rect.colliderect(self.right, weapon.hitbox):
+        elif pygame.Rect.colliderect(self.right, weapon.hitbox):
             weapon.velocity = (10, -weapon.velocity[1])
             self.reflected.add(weapon)
 
-        if pygame.Rect.colliderect(self.core, weapon.hitbox):
+        elif pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
             #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):

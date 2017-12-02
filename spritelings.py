@@ -34,18 +34,20 @@ class cond_queue(object):
             self.size += 1
 
     def __call__(self):
+        #print('calling cond_queue')
         for eff in self.internals:
+            print('eff = ', eff, type(eff))
             eff(self.subject)
             if eff == None:
                 self.internals.remove(eff)
 
-    def apply(self, cond, *args):
-        for conds in self.internals:
-            if cond.isinstance(conds):
-                conds.extend(*args)
+    def apply(self, *args):
+        print('applying ', *args)
+        for arg in args:
+            if any(self.internals) == type(arg):
+                pass
             else:
-                self.internals.append(cond(*args))
-
+                self.internals.append(arg)
 
 class entity(pygame.sprite.Sprite):
     def __init__(self, img, pos):
@@ -89,11 +91,13 @@ class entity(pygame.sprite.Sprite):
         if self.temp < 0:
             self.temp += 1
             if self.temp < self.max_cold:
+                print(self, 'is frozen')
                 self.state = 'frozen'
                 self.velocity = (0,0)
         elif self.temp > 0:
             self.temp -= 1
             if self.temp > self.max_heat:
+                print(self, 'is burning')
                 self.state = 'burning'
 
         if self.state == 'frozen':
@@ -138,33 +142,56 @@ class actor(entity):
 #im trying to do these as nested classes so we can re-define them for individual classes of enemies. That way, we can
 # get different behaviors for different enemies
     class burn(object):
-        def __init__(self, magnitude, duration):
+        def __init__(self, subject, magnitude):
+            print('doin a freeze')
             self.magnitude = magnitude
-            self.duration = duration
+            self.duration = 128 * 3
+            self.subject = subject
 
-        def __call__(self, subject):
-            subject.hp -= self.magnitude
+        def __call__(self, room):
+            print('callin a freeze')
+            subject = self.subject
+            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
+            print(freeze_factor)
+            if freeze_factor >= 1:
+                print("I should be frozen")
+                subject.velocity = 0
+                room.overlays.add(subject.frozen())
+            x = subject.velocity[0]
+            y = subject.velocity[1]
+            x = x * freeze_factor
+            y = y * freeze_factor
+            subject.velocity = (x, y)
+            self.duration = 128 * 10
+
             self.duration -= 1
             if self.duration <= 0:
-                self = None
+                self.magnitude = 0
+                return False
+            return True
 
-        def extend(self, mag, dur):
+        def extend(self, mag):
             self.magnitude += mag
-            self.duration += dur
+            if self.duration < 128 * 3:
+                self.duration = 128 * 3
 
-    def melt(self, magnitude, duration):
+    class melt(object):
         pass
 
     class freeze(object):
         def __init__(self, subject, magnitude):
+            print('doin a freeze')
             self.magnitude = magnitude
             self.duration = 128*3
             self.subject = subject
 
         def __call__(self, room):
+            print('callin a freeze')
             subject = self.subject
-            freeze_factor = (self.magnitude - abs(subject.max_cold)) / abs(subject.max_cold)
+            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
+            print(freeze_factor)
             if freeze_factor >=1:
+                print("I should be frozen")
                 subject.velocity = 0
                 room.overlays.add(subject.frozen())
             x = subject.velocity[0]
@@ -187,10 +214,10 @@ class actor(entity):
                 self.duration = 128*3
 
 
-    def flash(self, duration):
+    class flash(object):
         pass
 
-    def stagger(self, duration):
+    class stagger(object):
         pass
 
     def affect(self, cond):

@@ -54,10 +54,11 @@ class missile(spritelings.entity):
         self.focus_cost = 0
         #self.charge_level = caster.charge_level
         self.caster = caster
-        self.hitbox = self.rect
+        self.hitbox = self.rect.inflate(-(self.rect.width*0.75), -(self.rect.height * 0.75))
 
     def update(self, room):
-        if self.velocity <= (1, 1):
+        if abs(self.velocity[0]) <= 1 and abs(self.velocity[1]) <= 1 :
+            #print(self, "has stopped")
             self.kill()
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
@@ -67,7 +68,6 @@ class missile(spritelings.entity):
                           self.velocity[1] * self.knockback_mult)
         for target in targets:
             target.react(self)
-        #self.kill()
 
     def charge(self, power):
         pass
@@ -143,14 +143,13 @@ class fire_bolt(bolt):
     def act(self, targets):
         super().act(targets)
         for target in targets:
-            target.affect(target.burn(5, 128))
+            target.affect(target.burn(target, 5))
 
 
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
         self.temp = -25
-
 
     def act(self, targets):
         super().act(targets)

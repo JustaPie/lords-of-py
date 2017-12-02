@@ -87,7 +87,7 @@ while (running):
     #player_hud.update()
     #player_hud.show(disp)
 
-    '''for x in test_room.player:
+    for x in test_room.player:
         pygame.draw.rect(disp, green, x.rect, 4)
     for x in test_room.player:
         pygame.draw.rect(disp, red, x.hitbox, 4)
@@ -103,7 +103,7 @@ while (running):
         pygame.draw.rect(disp, red, z.rect, 7)
     for z in test_room.allProjectiles:
         pygame.draw.rect(disp, green, z.hitbox, 4)
-    '''
+
 
     test_room.update()
 
