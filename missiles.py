@@ -36,14 +36,19 @@ cold_ray_1 = cold_rays.subsurface((0,0), (18, 18))
 
 class missile(spritelings.entity):
     def __init__(self, caster, img):
-        super().__init__(img, caster.rect.center)
-
+        super().__init__(img, caster.cast_from)
+        self.cast_from = self.rect.center
         self.damage = 0
         self.temp = 0
+
+#I'm currently considering phasing out knockback in favor of either stopping_power (a basic slowing effect) or
+# a much simpler form. Iwant shots to feel like they have impact: when something gets hit, it has to visibly react
+#to the impact, but knockback is sorta clumsy, and produces erratic behavior, such as enemies rocketing off-screen
+#when hit
         self.knockback_mult = 0
         self.knockback = (0,0)
         self.stopping_power = 1
-        self.velocity = (0,0)
+        self.velocity = (10,10)
         self.velocity_mult = 1
         self.acidity = 0
         self.focus_cost = 0
@@ -52,7 +57,7 @@ class missile(spritelings.entity):
         self.hitbox = self.rect
 
     def update(self, room):
-        if not self.velocity:
+        if self.velocity <= (1, 1):
             self.kill()
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
@@ -120,7 +125,7 @@ class bolt(missile):
         super().__init__(caster, pygame.transform.scale(img, (24, 24)))
         self.knockback_mult = 1/4
         self.velocity_mult = 12
-        self.damage = 10
+        self.damage = 4
         self.base_img = img
 
 class kinetic_bolt(bolt):
@@ -135,11 +140,23 @@ class fire_bolt(bolt):
         super().__init__(caster, hot_bolt)
         self.temp = 25
 
+    def act(self, targets):
+        super().act(targets)
+        for target in targets:
+            target.affect(target.burn(5, 128))
+
 
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
         self.temp = -25
+
+
+    def act(self, targets):
+        super().act(targets)
+        for target in targets:
+            target.affect(target.freeze(target, 15))
+
 
 
 class acid_bolt(bolt):
@@ -172,6 +189,7 @@ class burst(missile):
             self.kill()
 
     def fire(self, dir, room):
+        self.cast_from = self.rect.center
         sprd = 2
         if not dir[1]:
             self.split(room, (dir[0]*sprd, dir[1]), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
@@ -217,6 +235,7 @@ class atomic_burst(burst):
         self.fragment = acid_bubble
 
     def fire(self, dir, room):
+        self.cast_from = self.rect.center
         sprd = 2
         if not dir[1]:
             self.split(room, dir, (dir[0]*sprd, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
@@ -279,6 +298,9 @@ class kinetic_splitter(missile):
         super().__init__(*args, pygame.transform.scale(sides[points], (32, 32)))
         self.points = points
         self.velocity_mult = 10
+
+    def act(self, targets):
+        super().act(targets)
 
 
 

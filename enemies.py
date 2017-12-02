@@ -15,13 +15,17 @@ class enemy(spritelings.actor):
         self.state = 'normal'
         self.target = None
         self.hp = 300
+        self.armor = .65
 
+    def frozen(self):
+        return overlays.frozen(self)
 
     def update(self, room):
         if self.hp<=0:
             self.kill()
         if self.target:
             self.facing = self.track(self.target)
+        self.condition()
         self.rect.move_ip(self.velocity)
         self.hitbox.center = self.rect.center
 
@@ -159,7 +163,10 @@ class enemy(spritelings.actor):
 
 
 
-
+#####################################################
+#############   FLEYES      #########################
+#####################################################
+#bog standard flying enemies, they swoop wildly around, orbiting the player
 
 winged_eye = pygame.image.load("baddies\winged_eye2.png").convert_alpha()
 winged_eye_back = winged_eye.subsurface((1, 1), (234, 116))
@@ -173,6 +180,7 @@ fleye_img_lookup = {'normal': winged_eye_front, 'burning': winged_eye_burning, '
 
 feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 
+#just sorta flies around the player at semi-ridiculous speeds.
 class fleye(enemy):
     def __init__(self, pos):
         super().__init__(feyenal_fleye, pos)
@@ -222,8 +230,12 @@ class fleye(enemy):
 
 
 
-
-
+#####################################################
+#############   BOUNCERS    #########################
+#####################################################
+#the bouncer overclass contains several variants of bouncers.
+#their thing is that they react to incoming sprites and walls
+#by altering velocities
 
 bouncer_sheet = pygame.image.load('baddies\\bumper.png').convert_alpha()
 basic_bouncer_img = bouncer_sheet.subsurface((1,1), (181, 181))
@@ -232,6 +244,7 @@ black_bouncer_img = bouncer_sheet.subsurface((373, 1),(181, 181))
 blind_bouncer_img = bouncer_sheet.subsurface((558, 0), (181, 181))
 baby_bouncer_img = pygame.transform.scale(basic_bouncer_img, (64, 64))
 
+#standard version; bounces off walls and bullets, flying away from them on contact
 class bouncer(enemy):
     def __init__(self, pos):
         super().__init__(basic_bouncer_img, pos)
@@ -271,9 +284,10 @@ class bouncer(enemy):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
             self.velocity = (self.velocity[0]*weapon.stopping_power, self.velocity[1]*weapon.stopping_power)
-            #self.rect.move_ip(weapon.knockback)
+    #so I'm handling missile penetration a bit weirdly here. All bullets travel at a given velocity, when it strikes a
+    #enemy, the enemy slows the bullet, when velocity drops to a certain point, the bullet stops dealing damage
             if isinstance(weapon, missiles.missile):
-                weapon.kill()
+                weapon.velocity = (weapon.velocity[0]-weapon.velocity*self.armor, weapon.velocity[1]-weapon.velocity[1]*self.armor)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             self.velocity = (self.velocity[0], -10)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
@@ -290,6 +304,7 @@ class bouncer(enemy):
                 victim.react(self)
 
 
+#reacts to incoming fire by bouncing towards it
 class blue_bouncer(bouncer):
     def __init__(self, pos):
         super().__init__(pos)
@@ -300,7 +315,7 @@ class blue_bouncer(bouncer):
             self.hp -= weapon.damage
             #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):
-                weapon.kill()
+                weapon.velocity = (weapon.velocity[0]*self.armor, weapon.velocity[1]*self.armor)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             self.velocity = (self.velocity[0], 10)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
@@ -311,6 +326,7 @@ class blue_bouncer(bouncer):
             self.velocity = (10, self.velocity[1])
 
 
+#bounces incoming missiles back towards their origin
 class black_bouncer(bouncer):
     def __init__(self, pos):
         super().__init__(pos)
@@ -335,7 +351,7 @@ class black_bouncer(bouncer):
             self.hp -= weapon.damage
             #self.rect.move_ip(weapon.knockback)
             if isinstance(weapon, missiles.missile):
-                weapon.kill()
+                weapon.velocity = (weapon.velocity[0]*self.armor, weapon.velocity[1]*self.armor)
 
     def update(self, room):
         super().update(room)
@@ -343,7 +359,7 @@ class black_bouncer(bouncer):
 
 
 
-
+#nearly the same as the basic bouncer, except it doesn't shoot
 class blind_bouncer(bouncer):
     def __init__(self, pos):
         super().__init__(pos)
@@ -365,6 +381,8 @@ class blind_bouncer(bouncer):
         self.core.center = self.rect.center
 
 
+#extra small version of the basic bouncer designed to be spawned in swarms that fly erratically around the room,
+#bouncing off of each other
 class baby_bouncer(bouncer):
     pass
 

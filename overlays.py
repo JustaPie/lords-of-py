@@ -2,6 +2,13 @@ import pygame
 import spritelings
 import player
 
+#####################################################
+#############   OVERLAYS    #########################
+#####################################################
+# overlays are a mostly cosmetic effects class for drawing an image to the screen on top of something. Adding overlays
+# to a sprite is a handy way of managing recurring images within the sprite to which they apply. this might also be our
+# go-to way of printing text to the screen. Its also how I handle healthbars, for the player and potentially enemies
+
 blank = pygame.image.load('people\hud_blank.png').convert_alpha()
 #blank.set_colorkey((255, 255, 255))
 bar = pygame.image.load('overlays\hpbar.png').convert_alpha()
@@ -73,3 +80,24 @@ class eyeball(spritelings.overlay):
         self.image = self.eye_lookup[self.subject.facing]
         self.rect.center = self.subject.rect.center
 
+ice_cube = pygame.image.load('overlays\generic_ice_cube.png')
+
+class frozen(spritelings.overlay):
+    def __init__(self, subject):
+        super().__init__(ice_cube, subject.rect.center)
+        self.subject = subject
+
+
+    def update(self, room):
+        self.rect.center = self.subject.rect.center
+        room.overlays.add(self)
+
+class burning(spritelings.overlay):
+    def __init__(self, subject):
+        super().__init__(ice_cube, subject.rect.center)
+        self.subject = subject
+
+
+    def update(self, room):
+        self.rect.center = self.subject.rect.center
+        room.overlays.add(self)
