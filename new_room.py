@@ -37,11 +37,8 @@ class theme(object):
                    'rw': rgtWall, 'lw': lftWall}
         self.enemy_lookup = {'basic_baddy':enemies.bouncer}
 
-    def populate(self):
+    def populate(self, seed):
         return self.enemy_lookup['basic_baddy'](70, 70)
-
-    def depict(self):
-        pass
 
 class fog_theme(theme):
     def __init__(self):
