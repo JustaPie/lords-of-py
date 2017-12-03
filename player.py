@@ -16,7 +16,7 @@ top = spritesheet.subsurface((299, 0), (38,126))
 
 
 class player(spritelings.actor):
-    def __init__(self, pos):
+    def __init__(self, pos, original = None):
         super().__init__(spritesheet, pos)
 
         self.hp = 300
