@@ -36,7 +36,7 @@ hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
 
-bumper = enemies.black_bouncer((600, 600))
+bumper = enemies.bouncer((600, 600))
 bumper.set_target(pc)
 test_room.enemies.add(bumper)
 

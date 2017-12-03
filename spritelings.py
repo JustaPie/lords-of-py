@@ -37,17 +37,14 @@ class cond_queue(object):
         #print('calling cond_queue')
         for eff in self.internals:
             print('eff = ', eff, type(eff))
-            eff(self.subject)
-            if eff == None:
-                self.internals.remove(eff)
+
+    def pop(self):
+        temp = self.internals[0]
+        self.internals.remove(self.internals[0])
 
     def apply(self, *args):
         print('applying ', *args)
-        for arg in args:
-            if any(self.internals) == type(arg):
-                pass
-            else:
-                self.internals.append(arg)
+        self.internals.append(args)
 
 class entity(pygame.sprite.Sprite):
     def __init__(self, img, pos):
@@ -141,10 +138,11 @@ class actor(entity):
 
 #im trying to do these as nested classes so we can re-define them for individual classes of enemies. That way, we can
 # get different behaviors for different enemies
+###new/alt plan: nested classes in missiles/projectiles
     class burn(object):
-        def __init__(self, subject, magnitude):
-            print('doin a freeze')
-            self.magnitude = magnitude
+        def __init__(self, subject, ignite_chance):
+            print('doin a burn')
+            self.ignite = ignite_chance
             self.duration = 128 * 3
             self.subject = subject
 
@@ -236,7 +234,6 @@ class enemy(actor):
 class missile(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
-
 
 class block(entity):
     def __init__(self, img, pos):

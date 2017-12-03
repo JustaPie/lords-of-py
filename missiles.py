@@ -34,6 +34,8 @@ acid_rays = all_rays.subsurface((0,38),(56, 18))
 hot_ray_1 = hot_rays.subsurface((0,0), (18, 18))
 cold_ray_1 = cold_rays.subsurface((0,0), (18, 18))
 
+rand = 3
+
 class missile(spritelings.entity):
     def __init__(self, caster, img):
         super().__init__(img, caster.cast_from)
@@ -54,12 +56,75 @@ class missile(spritelings.entity):
         self.focus_cost = 0
         #self.charge_level = caster.charge_level
         self.caster = caster
-        self.hitbox = self.rect.inflate(-(self.rect.width*0.75), -(self.rect.height * 0.75))
+        self.hitbox = self.rect.inflate(-(self.rect.width*0.5), -(self.rect.height * 0.5))
+        self.hitbox.center = self.rect.center
+
+        '''
+        class burn(object):
+            def __init__(self, subject, ignite_chance):
+                print('doin a burn')
+                self.match = 'burn'
+                self.ignite_chance = ignite_chance
+                self.duration = 128 * rand
+                self.subject = subject
+
+            def __call__(self, room):
+                print('callin a burn')
+                ignite_on = 
+                ignite = self.ignite_chance == ignite_on
+                if ignite:
+                    pass
+            
+        class melt(object):
+            pass
+
+        class freeze(object):
+            def __init__(self, subject, magnitude):
+                print('doin a freeze')
+                self.match = 'freeze'
+                self.magnitude = magnitude
+                self.duration = 128 * 3
+                self.subject = subject
+
+            def __call__(self, room):
+                print('callin a freeze')
+                subject = self.subject
+                freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
+                print(freeze_factor)
+                if freeze_factor >= 1:
+                    print("I should be frozen")
+                    subject.velocity = 0
+                    room.overlays.add(subject.frozen())
+                x = subject.velocity[0]
+                y = subject.velocity[1]
+                x = x * freeze_factor
+                y = y * freeze_factor
+                subject.velocity = (x, y)
+                self.duration = 128 * 10
+
+                self.duration -= 1
+                if self.duration <= 0:
+                    self.magnitude = 0
+                    return False
+                return True
+
+            def extend(self, mag):
+                self.magnitude += mag
+                if self.duration < 128 * 3:
+                    self.duration = 128 * 3
+
+        class flash(object):
+            pass
+
+        class stagger(object):
+            pass
+        
+        class knockback2(object):
+            pass
+        '''
 
     def update(self, room):
-        if abs(self.velocity[0]) <= 1 and abs(self.velocity[1]) <= 1 :
-            #print(self, "has stopped")
-            self.kill()
+
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
 
@@ -68,6 +133,9 @@ class missile(spritelings.entity):
                           self.velocity[1] * self.knockback_mult)
         for target in targets:
             target.react(self)
+        if abs(self.velocity[0]) <= 1 and abs(self.velocity[1]) <= 1 :
+            print(self, "has stopped")
+            self.kill()
 
     def charge(self, power):
         pass
@@ -77,45 +145,6 @@ class missile(spritelings.entity):
                         dir[1] * self.velocity_mult)
         self.caster = self
         team.add(self)
-
-
-#purely cosmetic attachment for giving missiles a cool trail
-class trail(missile):
-    def __init__(self, *args):
-        super().__init__(*args)
-
-
-#dummy class used to represent invisible or oddly shaped hitboxes
-class dummy_missile(missile):
-    pass
-
-
-
-class cloud(missile):
-    def __init__(self, size,  *args):
-        super().__init__(*args, pygame.transform.scale(idle_cloud, (size, size)))
-        self.acidity = 15
-        self.duration = 36 * size/8
-        self.velocity = (0,0)
-
-    def update(self, *args):
-        self.duration-= 1
-        if self.duration <= 0:
-            self.kill()
-
-class flame(missile):
-    def __init__(self, *args):
-        super().__init__(*args, idle_flame)
-        self.temp = 15
-
-    def react(self, *args):
-        super().react(args)
-
-class snowflake(missile):
-    def __init__(self, *args):
-        super().__init__(*args, snow_flakes)
-        self.temp = -15
-
 
 ########################
 #####   BOLTS   ########
@@ -156,8 +185,6 @@ class ice_bolt(bolt):
         for target in targets:
             target.affect(target.freeze(target, 15))
 
-
-
 class acid_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, melt_bolt)
@@ -174,9 +201,9 @@ class burst(missile):
         self.hp = 60
 
 
-    def split(self, team, *args):
+    def split(self, room, *args):
         for x in args:
-            self.fragment(self).fire( x, team)
+            self.fragment(self).fire( x, room)
         self.kill()
 
     def react(self, *args):
@@ -205,11 +232,7 @@ class fragment(missile):
         self.temp = caster.temp
         self.acidity = caster.acidity
         self.damage = caster.damage
-        '''center = self.rect.center
-        self.rect = self.rect.inflate(-32, -32)
-        self.hitbox = self.rect.inflate(-40, -40)
-        self.rect.center = center
-        self.hitbox.center = center'''
+
 
 class lava_burst(burst):
     def __init__(self, *args):
@@ -248,20 +271,26 @@ class acid_bubble(fragment):
         super().__init__(*args, pygame.transform.scale(acid_ball, (20, 20)))
         self.timer = 128*5
         self.size = 24
+        print("my caster is: ", self.caster, "my center is: ", self.rect.center)
 
     def update(self, room):
         self.timer -=1
         self.velocity = (self.velocity[0] * .8, self.velocity[1] * .8)
         self.rect.move_ip(self.velocity)
+        center = self.rect.center
         if self.timer <= 0:
+            print("exploding at: ", self.rect.center)
             room.playerProjectiles.add(cloud(int(self.size*1.2), self))
             self.kill()
         if self.timer % 8 == 0:
-            center = self.rect.center
+
             self.size += 1
             self.rect.inflate_ip(1,1)
+            self.hitbox.inflate_ip(1,1)
             self.image = pygame.transform.scale(acid_ball, (self.size, self.size))
             self.rect.center = center
+            self.hitbox.center = center
+
     def react(self, bastard):
         super().react(bastard)
         self.timer = 0
@@ -309,5 +338,49 @@ class kinetic_splitter(missile):
 class barrier(missile):
     def __init__(self, caster, img):
         super().__init__(caster, img)
+
+
+########################################################################################################################
+######   MISC AND COSMETIC          ####################################################################################
+########################################################################################################################
+
+#purely cosmetic attachment for giving missiles a cool trail
+###might re-class the trail to serve as the parent of snowflakes, etc.
+class trail(missile):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+class cloud(missile):
+    def __init__(self, size,  *args):
+        super().__init__(*args, pygame.transform.scale(idle_cloud, (size, size)))
+        self.acidity = 15
+        self.duration = 36 * size/8
+        print("my caster is: ", self.caster, "my center is: ", self.rect.center)
+        self.velocity = (0,0)
+
+    def update(self, *args):
+
+        self.hitbox.center = self.rect.center
+        self.duration-= 1
+        if self.duration <= 0:
+            self.kill()
+
+class flame(missile):
+    def __init__(self, *args):
+        super().__init__(*args, idle_flame)
+        self.temp = 15
+
+    def react(self, *args):
+        super().react(args)
+
+class snowflake(missile):
+    def __init__(self, *args):
+        super().__init__(*args, snow_flakes)
+        self.temp = -15
+
+
+#dummy class used to represent invisible or oddly shaped hitboxes
+class dummy_missile(missile):
+    pass
 
 

@@ -287,15 +287,21 @@ class bouncer(enemy):
     #so I'm handling missile penetration a bit weirdly here. All bullets travel at a given velocity, when it strikes a
     #enemy, the enemy slows the bullet, when velocity drops to a certain point, the bullet stops dealing damage
             if isinstance(weapon, missiles.missile):
-                weapon.velocity = (weapon.velocity[0]-weapon.velocity*self.armor, weapon.velocity[1]-weapon.velocity[1]*self.armor)
+                x = weapon.velocity[0]-weapon.velocity[0]*self.armor
+                y = weapon.velocity[1]-weapon.velocity[1]*self.armor
+                weapon.velocity = (x, y)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             self.velocity = (self.velocity[0], -10)
+            weapon.velocity = (0,0)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
             self.velocity = (10, self.velocity[1])
+            weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
             self.velocity = (self.velocity[0], 10)
+            weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
             self.velocity = (-10, self.velocity[1])
+            weapon.velocity = (0, 0)
 
     def act(self, victims):
         for victim in victims:
