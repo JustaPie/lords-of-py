@@ -3,7 +3,6 @@ import player
 
 
 def auto(player):
-
     pygame.joystick.init()
     if pygame.joystick.get_count():
         jub = pygame.joystick.Joystick(0)
@@ -36,7 +35,10 @@ right stick = 9
 
 class gamepad(object):
     def __init__(self, player):
-
+        self.jub = pygame.joystick.Joystick(0)
+        self.jub.init()
+        jub = self.jub
+        print(jub.get_name())
 
         self.leftstick = {'X':jub.get_axis(0), 'Y':jub.get_axis(1)}
         self.rightstick = {'X':jub.get_axis(3), 'Y':jub.get_axis(4)}
@@ -47,6 +49,7 @@ class gamepad(object):
         self.subject = player
 
     def update(self, room):
+        jub = self.jub
         new_buttons = {'A':jub.get_button(0), 'B':jub.get_button(1), 'X':jub.get_button(2), 'Y':jub.get_button(3),
                     'LB':jub.get_button(4), 'RB':jub.get_button(5), 'Start':jub.get_button(7), 'Select':jub.get_button(6),
                      'LStick':jub.get_button(8), 'RStick':jub.get_button(9)}
