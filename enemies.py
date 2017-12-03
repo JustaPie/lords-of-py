@@ -277,6 +277,7 @@ class bouncer(enemy):
         if self.timer > 0:
             self.timer -= 1
         else:
+            #sound effect
             self.spell.fire(self.spell(self), self.facing, room.enemyProjectiles)
             self.timer = 356
 

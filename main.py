@@ -22,13 +22,13 @@ import missiles
 import enemies
 import overlays
 
-test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
-                  'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
-                  'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
-                  'fffffffffffffffff', 'fffffffffffffffff']
+size = (16, 10)
+seed = 124
+theme = room.theme()
+dif = 1
 
 
-test_room = room.room(test_room_code)
+test_room = room.room(size, seed, theme, dif)
 
 pc = player.player(plyr_loc)
 HUD = overlays.hud(pc, disp)
@@ -106,6 +106,7 @@ while (running):
 
 
     test_room.update()
+    #test_room.draw(disp)
 
 
     clock = pygame.time.Clock()

@@ -38,7 +38,7 @@ rand = 3
 
 class missile(spritelings.entity):
     def __init__(self, caster, img):
-        super().__init__(img, caster.cast_from)
+        super().__init__(img, caster.rect.center)
         self.cast_from = self.rect.center
         self.damage = 0
         self.temp = 0
@@ -124,9 +124,9 @@ class missile(spritelings.entity):
         '''
 
     def update(self, room):
-
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
+        self.cast_from = self.rect.center
 
     def act(self, targets):
         self.knockback = (self.velocity[0] * self.knockback_mult,
