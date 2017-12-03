@@ -1,11 +1,17 @@
 import pygame
 import player
 
-pygame.joystick.init()
 
-jub = pygame.joystick.Joystick(0)
-jub.init()
-print(jub.get_name())
+def auto(player):
+
+    pygame.joystick.init()
+    if pygame.joystick.get_count():
+        jub = pygame.joystick.Joystick(0)
+        jub.init()
+        print(jub.get_name())
+        return gamepad(player)
+    else:
+        return keyboard(player)
 
 '''
 for the xbone controller:
@@ -30,6 +36,8 @@ right stick = 9
 
 class gamepad(object):
     def __init__(self, player):
+
+
         self.leftstick = {'X':jub.get_axis(0), 'Y':jub.get_axis(1)}
         self.rightstick = {'X':jub.get_axis(3), 'Y':jub.get_axis(4)}
         self.triggers = {'RT':jub.get_axis(2)}
