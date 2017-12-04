@@ -4,6 +4,8 @@ import math
 import missiles
 import overlays
 
+def slow(velocity, by):
+    return velocity[0] - velocity[0]*by, velocity[1] - velocity[1]*by
 
 class enemy(spritelings.actor):
     def __init__(self, img, pos):
@@ -12,13 +14,13 @@ class enemy(spritelings.actor):
         self.acc = 0
         self.damage = 10
         self.spell = None
-        self.state = 'normal'
         self.target = None
         self.hp = 300
-        self.armor = .65
+        self.armor = .15
+        self.hitboxes = [self.hitbox]
 
     def frozen(self):
-        return overlays.frozen(self)
+        self.overlays.add(overlays.frozen(self))
 
     def update(self, room):
         if self.hp<=0:
@@ -26,6 +28,7 @@ class enemy(spritelings.actor):
         if self.target:
             self.facing = self.track(self.target)
         self.condition()
+        room.overlays.add(self.overlays)
         self.rect.move_ip(self.velocity)
         self.hitbox.center = self.rect.center
 
@@ -35,19 +38,16 @@ class enemy(spritelings.actor):
 
     def react(self, weapon):
         self.hp -= weapon.damage
+        weapon.velocity = slow(weapon.velocity, self.armor)
         self.rect.move_ip(weapon.knockback)
-        self.temp += weapon.temp
-        if self.state == 'normal':
-            if self.temp < self.max_cold:
-                self.state = 'frozen'
 
-            elif self.temp > self.max_heat:
-                self.state = 'burning'
+
 
     def act(self, victims):
         for victim in victims:
             self.knockback = (-victim.velocity[0], -victim.velocity[1])
             victim.react(self)
+            victim.apply(self.effects)
 
 
     def move_to(self, dest):
@@ -160,7 +160,11 @@ class enemy(spritelings.actor):
             pass
         self.velocity = (xvel, yvel)
 
+loogloog = pygame.image.load('baddies\loogloog.png').convert_alpha().subsurface((0,0), (100, 100))
 
+class lugg(enemy):
+    def __init__(self, pos):
+        super().__init__(loogloog, pos)
 
 
 #####################################################
@@ -184,21 +188,22 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 class fleye(enemy):
     def __init__(self, pos):
         super().__init__(feyenal_fleye, pos)
-
+        self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
+        self.hitbox.center = self.rect.center
         self.hp = 30
         self.damage = 10
         self.dest = self.rect.center
         self.acc = .2
         self.timer = 128*20
         self.target = None
-        self.state = 'normal'
         self.roost = self.rect.center
         self.roosting = 0
         self.eye = None
+        self.hitboxes = [self.hitbox]
 
     def update(self, room):
         if self.hp <= 0:
-            self.eye.kil()
+            self.eye.kill()
             self.kill()
 
         if not self.eye:
@@ -226,6 +231,7 @@ class fleye(enemy):
 
         #self.check_state()
         self.rect.move_ip(self.velocity)
+        self.hitbox.center = self.rect.center
         self.eye.rect.center = self.rect.center
 
 
@@ -325,12 +331,16 @@ class blue_bouncer(bouncer):
                 weapon.velocity = (weapon.velocity[0]*self.armor, weapon.velocity[1]*self.armor)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             self.velocity = (self.velocity[0], 10)
+            weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
             self.velocity = (-10, self.velocity[1])
+            weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
             self.velocity = (self.velocity[0], -10)
+            weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
             self.velocity = (10, self.velocity[1])
+            weapon.velocity = (0, 0)
 
 
 #bounces incoming missiles back towards their origin

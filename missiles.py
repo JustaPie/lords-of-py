@@ -1,5 +1,6 @@
 import pygame
 import spritelings
+from random import *
 
 missile_sheet = pygame.image.load('projectiles\simple_missiles.png').convert_alpha()
 
@@ -41,8 +42,6 @@ class missile(spritelings.entity):
         super().__init__(img, caster.rect.center)
         self.cast_from = self.rect.center
         self.damage = 0
-        self.temp = 0
-
 #I'm currently considering phasing out knockback in favor of either stopping_power (a basic slowing effect) or
 # a much simpler form. Iwant shots to feel like they have impact: when something gets hit, it has to visibly react
 #to the impact, but knockback is sorta clumsy, and produces erratic behavior, such as enemies rocketing off-screen
@@ -52,81 +51,87 @@ class missile(spritelings.entity):
         self.stopping_power = 1
         self.velocity = (10,10)
         self.velocity_mult = 1
-        self.acidity = 0
         self.focus_cost = 0
         #self.charge_level = caster.charge_level
         self.caster = caster
         self.hitbox = self.rect.inflate(-(self.rect.width*0.5), -(self.rect.height * 0.5))
         self.hitbox.center = self.rect.center
+        self.contact = False
+        self.acting = False
 
-        '''
-        class burn(object):
-            def __init__(self, subject, ignite_chance):
-                print('doin a burn')
-                self.match = 'burn'
-                self.ignite_chance = ignite_chance
-                self.duration = 128 * rand
-                self.subject = subject
+    class burn(object):
+        def __init__(self, ignite_chance):
+            print('doin a burn')
+            self.match = 'burn'
+            self.ignite_chance = ignite_chance
+            self.duration = 128 * randint(0, 10)
 
-            def __call__(self, room):
-                print('callin a burn')
-                ignite_on = 
-                ignite = self.ignite_chance == ignite_on
-                if ignite:
-                    pass
-            
-        class melt(object):
-            pass
-
-        class freeze(object):
-            def __init__(self, subject, magnitude):
-                print('doin a freeze')
-                self.match = 'freeze'
-                self.magnitude = magnitude
-                self.duration = 128 * 3
-                self.subject = subject
-
-            def __call__(self, room):
-                print('callin a freeze')
-                subject = self.subject
-                freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
-                print(freeze_factor)
-                if freeze_factor >= 1:
-                    print("I should be frozen")
-                    subject.velocity = 0
-                    room.overlays.add(subject.frozen())
-                x = subject.velocity[0]
-                y = subject.velocity[1]
-                x = x * freeze_factor
-                y = y * freeze_factor
-                subject.velocity = (x, y)
-                self.duration = 128 * 10
-
-                self.duration -= 1
-                if self.duration <= 0:
-                    self.magnitude = 0
-                    return False
+        def __call__(self, subject):
+            print('callin a burn')
+            self.duration -= 1
+            ignite_on = randint(0, 100)
+            ignite = self.ignite_chance >= ignite_on
+            if ignite:
+                subject.burning(self.duration)
+                return False
+            elif self.duration <= 1:
+                return False
+            else:
+                self.duration = self.duration/2
                 return True
 
-            def extend(self, mag):
-                self.magnitude += mag
-                if self.duration < 128 * 3:
-                    self.duration = 128 * 3
+        def extend(self, burn):
+            self.duration += burn.duration
+            self.ignite_chance = max(self.ignite_chance, burn.ignite_chance)
 
-        class flash(object):
-            pass
+    class melt(object):
+        pass
 
-        class stagger(object):
-            pass
-        
-        class knockback2(object):
-            pass
-        '''
+    class freeze(object):
+        def __init__(self, magnitude):
+            print('doin a freeze')
+            self.match = 'freeze'
+            self.magnitude = magnitude
+            self.duration = 128 * 3
+
+        def __call__(self, subject):
+            print('callin a freeze')
+            freeze_factor = (self.magnitude - abs(subject.max_cold) )/ abs(subject.max_cold)
+            print(freeze_factor)
+            if freeze_factor >=1:
+                self.duration = 128 * 10
+                subject.frozen(self.duration)
+            else:
+                x, y = subject.velocity[0], subject.velocity[1]
+                x, y = int(x*freeze_factor), int(y*freeze_factor)
+                subject.velocity = (x, y)
+
+            self.duration -= 1
+            if self.duration <= 0:
+                self.magnitude = 0
+                return False
+            return True
+
+        def extend(self, freezie):
+            self.magnitude += freezie.magnitude
+            if self.duration < 128 * 3:
+                self.duration = 128 * 3
+
+    class flash(object):
+        pass
+
+    class stagger(object):
+        pass
+
+    class knockback2(object):
+        pass
+
 
     def update(self, room):
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
         self.cast_from = self.rect.center
+
 
     def act(self, targets):
         self.knockback = (self.velocity[0] * self.knockback_mult,
@@ -159,31 +164,36 @@ class bolt(missile):
 
 class kinetic_bolt(bolt):
     def __init__(self, caster):
-        super().__init__(caster, tri_bolt)
+        super().__init__(caster, hex_bolt)
         self.knockback_mult = 1/2
         self.velocity_mult = 16
+
+    def update(self, room):
+        super().update(room)
+        if self.contact and not self.acting:
+            self.image = tri_bolt
+        self.acting = False
+
+    def act(self, targets):
+        super(kinetic_bolt, self).act(targets)
+        self.contact = True
+        self.acting = True
+        input()
 
 
 class fire_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, hot_bolt)
-        self.temp = 25
-
-    def act(self, targets):
-        super().act(targets)
-        for target in targets:
-            target.affect(target.burn(target, 5))
+        self.damage = 2
+        self.effects.append(self.burn(15))
 
 
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
         self.temp = -25
+        self.effects.append(self.freeze(15))
 
-    def act(self, targets):
-        super().act(targets)
-        for target in targets:
-            target.affect(target.freeze(target, 15))
 
 class acid_bolt(bolt):
     def __init__(self, caster):

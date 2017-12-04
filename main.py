@@ -36,7 +36,7 @@ hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
 
-bumper = enemies.bouncer((600, 600))
+bumper = enemies.lugg((600, 600))
 bumper.set_target(pc)
 test_room.enemies.add(bumper)
 
@@ -67,6 +67,8 @@ while (running):
 
     disp.blit(test_room.fSurf, (0,0))
 
+    test_room.update()
+
     test_room.player.update(test_room)
     test_room.playerProjectiles.update(test_room)
 
@@ -79,6 +81,7 @@ while (running):
     test_room.inactivePlayerProjectiles.update(test_room)
     test_room.inactivePlayerProjectiles.draw(disp)
 
+    test_room.playerProjectiles.draw(disp)
     test_room.nme_overlays.draw(disp)
 
     HUD.update(test_room)
@@ -96,8 +99,8 @@ while (running):
         pygame.draw.rect(disp, blue, y.rect, 8)
     for y in test_room.enemies:
         pygame.draw.rect(disp, red, y.hitbox, 4)
-        for z in y.hitboxes:
-            pygame.draw.rect(disp, green, z, 5)
+        #for z in y.hitboxes:
+            #pygame.draw.rect(disp, green, z, 5)
 
     for z in test_room.allProjectiles:
         pygame.draw.rect(disp, red, z.rect, 7)
@@ -105,7 +108,7 @@ while (running):
         pygame.draw.rect(disp, green, z.hitbox, 4)
 
 
-    test_room.update()
+    #test_room.update()
     #test_room.draw(disp)
 
 

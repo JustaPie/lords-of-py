@@ -37,14 +37,19 @@ class cond_queue(object):
         #print('calling cond_queue')
         for eff in self.internals:
             print('eff = ', eff, type(eff))
+            if not eff(self.subject):
+                self.internals.remove(eff)
 
-    def pop(self):
-        temp = self.internals[0]
-        self.internals.remove(self.internals[0])
+    def add(self, cond):
+        matched = False
+        for curr in self.internals:
+           if curr.match == cond.match:
+               curr.extend(cond)
+               matched = True
+        if not matched:
+            self.internals.append(cond)
 
-    def apply(self, *args):
-        print('applying ', *args)
-        self.internals.append(args)
+
 
 class entity(pygame.sprite.Sprite):
     def __init__(self, img, pos):
@@ -53,13 +58,10 @@ class entity(pygame.sprite.Sprite):
         self.rect = img.get_rect()
         self.rect.center = pos
         self.hitbox = self.rect
-
+        self.effects = []
 
         self.velocity = (0,0)
         self.knockback = (0,0)
-
-        self.state = 'normal'
-
         #eventual replacement for the state variable. this will contain a list of functions/functors that will be performed on the sprite during the update
         self.condition = cond_queue(self)
         self.overlays = pygame.sprite.Group()
@@ -83,35 +85,13 @@ class entity(pygame.sprite.Sprite):
     def update(self, room):
         pass
 
-    #to be phased out and replaced with the conditions  mechanic
-    def check_state(self):
-        if self.temp < 0:
-            self.temp += 1
-            if self.temp < self.max_cold:
-                print(self, 'is frozen')
-                self.state = 'frozen'
-                self.velocity = (0,0)
-        elif self.temp > 0:
-            self.temp -= 1
-            if self.temp > self.max_heat:
-                print(self, 'is burning')
-                self.state = 'burning'
-
-        if self.state == 'frozen':
-            self.velocity = (0, 0)
-            if self.temp >=0:
-                self.state = 'normal'
-
-        if self.state == 'burning':
-            self.hp -= 15
-
-
 class actor(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
         self.facing = (0,0)
         self.cast_from = self.rect.center
         self.damage = 0
+
 
     #simple, inheritable function designed to allow both the player and enemies to auto-track a target
     def track(self, target):
@@ -136,90 +116,9 @@ class actor(entity):
     def cast(self, room):
         self.spell.fire(self.facing, room)
 
-#im trying to do these as nested classes so we can re-define them for individual classes of enemies. That way, we can
-# get different behaviors for different enemies
-###new/alt plan: nested classes in missiles/projectiles
-    class burn(object):
-        def __init__(self, subject, ignite_chance):
-            print('doin a burn')
-            self.ignite = ignite_chance
-            self.duration = 128 * 3
-            self.subject = subject
-
-        def __call__(self, room):
-            print('callin a freeze')
-            subject = self.subject
-            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
-            print(freeze_factor)
-            if freeze_factor >= 1:
-                print("I should be frozen")
-                subject.velocity = 0
-                room.overlays.add(subject.frozen())
-            x = subject.velocity[0]
-            y = subject.velocity[1]
-            x = x * freeze_factor
-            y = y * freeze_factor
-            subject.velocity = (x, y)
-            self.duration = 128 * 10
-
-            self.duration -= 1
-            if self.duration <= 0:
-                self.magnitude = 0
-                return False
-            return True
-
-        def extend(self, mag):
-            self.magnitude += mag
-            if self.duration < 128 * 3:
-                self.duration = 128 * 3
-
-    class melt(object):
-        pass
-
-    class freeze(object):
-        def __init__(self, subject, magnitude):
-            print('doin a freeze')
-            self.magnitude = magnitude
-            self.duration = 128*3
-            self.subject = subject
-
-        def __call__(self, room):
-            print('callin a freeze')
-            subject = self.subject
-            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
-            print(freeze_factor)
-            if freeze_factor >=1:
-                print("I should be frozen")
-                subject.velocity = 0
-                room.overlays.add(subject.frozen())
-            x = subject.velocity[0]
-            y = subject.velocity[1]
-            x = x*freeze_factor
-            y = y*freeze_factor
-            subject.velocity = (x, y)
-            self.duration = 128*10
-
-
-            self.duration -= 1
-            if self.duration <= 0:
-                self.magnitude = 0
-                return False
-            return True
-
-        def extend(self, mag):
-            self.magnitude += mag
-            if self.duration< 128*3:
-                self.duration = 128*3
-
-
-    class flash(object):
-        pass
-
-    class stagger(object):
-        pass
-
-    def affect(self, cond):
-        self.condition.apply(cond)
+    def apply(self, effects):
+        for effect in effects:
+            self.condition.add(effect)
 
 class player(actor):
     def __init__(self, img, pos):
