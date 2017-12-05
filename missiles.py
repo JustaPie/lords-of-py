@@ -1,6 +1,8 @@
-import pygame
-import spritelings
 from random import *
+
+import pygame
+
+import spritelings
 
 missile_sheet = pygame.image.load('projectiles\simple_missiles.png').convert_alpha()
 
@@ -198,7 +200,7 @@ class ice_bolt(bolt):
 class acid_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, melt_bolt)
-        self.acidity = 20
+        self.effects.append(self.melt(10))
 
 
 ###########################
