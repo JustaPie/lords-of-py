@@ -1,8 +1,9 @@
 import pygame
-import spritelings
-import math
+
 import missiles
 import overlays
+import spritelings
+
 
 def slow(velocity, by):
     return velocity[0] - velocity[0]*by, velocity[1] - velocity[1]*by
@@ -160,11 +161,11 @@ class enemy(spritelings.actor):
             pass
         self.velocity = (xvel, yvel)
 
-loogloog = pygame.image.load('baddies\loogloog.png').convert_alpha().subsurface((0,0), (100, 100))
+loognoog = pygame.image.load('baddies\loogloog.png').convert_alpha()
 
 class lugg(enemy):
     def __init__(self, pos):
-        super().__init__(loogloog, pos)
+        super().__init__(pygame.transform.scale(loognoog, (300,200)), pos)
 
 
 #####################################################

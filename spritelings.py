@@ -7,22 +7,7 @@ def collide_hitbox(spriteA, spriteB):
                 return True
     else:
         return False
-'''
-def burn(me, magnitude, duration):
-    pass
 
-def melt(me, magnitude, duration):
-    pass
-
-def freeze(me, magnitude, duration):
-    pass
-
-def flash(me, duration):
-    pass
-
-def stagger(me, duration):
-    pass
-'''
 
 class cond_queue(object):
     def __init__(self, subject, *args):
@@ -41,6 +26,7 @@ class cond_queue(object):
                 self.internals.remove(eff)
 
     def add(self, cond):
+        print('adding condition')
         matched = False
         for curr in self.internals:
            if curr.match == cond.match:

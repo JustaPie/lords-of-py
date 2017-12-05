@@ -18,7 +18,6 @@ disp = pygame.display.set_mode(screen_size)
 
 import player
 import room
-import missiles
 import enemies
 import overlays
 
@@ -83,6 +82,9 @@ while (running):
 
     test_room.playerProjectiles.draw(disp)
     test_room.nme_overlays.draw(disp)
+
+    test_room.overlays.draw(disp)
+    test_room.overlays.update(test_room)
 
     HUD.update(test_room)
     HUD.draw(disp)

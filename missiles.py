@@ -2,6 +2,7 @@ from random import *
 
 import pygame
 
+import overlays
 import spritelings
 
 missile_sheet = pygame.image.load('projectiles\simple_missiles.png').convert_alpha()
@@ -45,7 +46,7 @@ class missile(spritelings.entity):
         self.cast_from = self.rect.center
         self.damage = 0
 #I'm currently considering phasing out knockback in favor of either stopping_power (a basic slowing effect) or
-# a much simpler form. Iwant shots to feel like they have impact: when something gets hit, it has to visibly react
+# a much simpler form. I want shots to feel like they have impact: when something gets hit, it has to visibly react
 #to the impact, but knockback is sorta clumsy, and produces erratic behavior, such as enemies rocketing off-screen
 #when hit
         self.knockback_mult = 0
@@ -58,8 +59,7 @@ class missile(spritelings.entity):
         self.caster = caster
         self.hitbox = self.rect.inflate(-(self.rect.width*0.5), -(self.rect.height * 0.5))
         self.hitbox.center = self.rect.center
-        self.contact = False
-        self.acting = False
+        self.impact = overlays.generic_impact
 
     class burn(object):
         def __init__(self, ignite_chance):
@@ -103,7 +103,9 @@ class missile(spritelings.entity):
             if freeze_factor >=1:
                 self.duration = 128 * 10
                 subject.frozen(self.duration)
+                print('freezing something')
             else:
+                print('slowing something')
                 x, y = subject.velocity[0], subject.velocity[1]
                 x, y = int(x*freeze_factor), int(y*freeze_factor)
                 subject.velocity = (x, y)
@@ -115,6 +117,7 @@ class missile(spritelings.entity):
             return True
 
         def extend(self, freezie):
+            print('extendin a freeze')
             self.magnitude += freezie.magnitude
             if self.duration < 128 * 3:
                 self.duration = 128 * 3
@@ -130,6 +133,7 @@ class missile(spritelings.entity):
 
 
     def update(self, room):
+        room.overlays.add(self.overlays)
         self.rect.move_ip(self.caster.velocity)
         self.hitbox.center = self.rect.center
         self.cast_from = self.rect.center
@@ -140,6 +144,7 @@ class missile(spritelings.entity):
                           self.velocity[1] * self.knockback_mult)
         for target in targets:
             target.react(self)
+        self.overlays.add(self.impact(self.rect.center))
         if abs(self.velocity[0]) <= 1 and abs(self.velocity[1]) <= 1 :
             print(self, "has stopped")
             self.kill()
@@ -172,15 +177,11 @@ class kinetic_bolt(bolt):
 
     def update(self, room):
         super().update(room)
-        if self.contact and not self.acting:
-            self.image = tri_bolt
-        self.acting = False
+
 
     def act(self, targets):
         super(kinetic_bolt, self).act(targets)
-        self.contact = True
-        self.acting = True
-        input()
+
 
 
 class fire_bolt(bolt):
@@ -188,6 +189,7 @@ class fire_bolt(bolt):
         super().__init__(caster, hot_bolt)
         self.damage = 2
         self.effects.append(self.burn(15))
+        self.impact = overlays.fiery_impact
 
 
 class ice_bolt(bolt):
@@ -228,7 +230,7 @@ class burst(missile):
 
     def fire(self, dir, room):
         self.cast_from = self.rect.center
-        sprd = 2
+        sprd = 3
         if not dir[1]:
             self.split(room, (dir[0]*sprd, dir[1]), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
         elif dir[0] and dir[1]:
@@ -241,8 +243,7 @@ class fragment(missile):
         super().__init__(caster, img)
         self.velocity_mult = caster.velocity_mult
         self.knockback_mult = caster.knockback_mult
-        self.temp = caster.temp
-        self.acidity = caster.acidity
+        self.effects = caster.effects
         self.damage = caster.damage
 
 
@@ -270,7 +271,7 @@ class atomic_burst(burst):
 
     def fire(self, dir, room):
         self.cast_from = self.rect.center
-        sprd = 2
+        sprd = randint(0, 4)
         if not dir[1]:
             self.split(room, dir, (dir[0]*sprd, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
         elif dir[0] and dir[1]:

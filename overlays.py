@@ -1,6 +1,8 @@
+import random
+
 import pygame
+
 import spritelings
-import player
 
 #####################################################
 #############   OVERLAYS    #########################
@@ -85,19 +87,46 @@ ice_cube = pygame.image.load('overlays\generic_ice_cube.png')
 class frozen(spritelings.overlay):
     def __init__(self, subject):
         super().__init__(ice_cube, subject.rect.center)
+        print('something should be frozen')
         self.subject = subject
 
 
     def update(self, room):
         self.rect.center = self.subject.rect.center
-        room.overlays.add(self)
+        #room.overlays.add(self)
 
 class burning(spritelings.overlay):
     def __init__(self, subject):
-        super().__init__(ice_cube, subject.rect.center)
+        super().__init__(pygame.transform.scale(ice_cube, (subject.rect.width, subject.rect.height)), subject.rect.center)
         self.subject = subject
 
 
     def update(self, room):
         self.rect.center = self.subject.rect.center
-        room.overlays.add(self)
+        #room.overlays.add(self)
+
+impacts = pygame.image.load('overlays\impacts.png').convert_alpha()
+standard_impact = impacts.subsurface((2,2), (128, 128))
+hot_impact = impacts.subsurface((130,0), (128, 128))
+
+class impact(spritelings.overlay):
+    def __init__(self, img,  pos, variance = 8):
+        x, y = pos[0] + random.randint(-variance, variance), pos[1] + random.randint(-variance, variance)
+        super().__init__(img, (x,y))
+        self.timer = 6
+
+    def update(self, room):
+        super().update(room)
+        if self.timer <= 0:
+            self.kill()
+        self.timer -= 1
+
+class generic_impact(impact):
+    def __init__(self, pos, size = 16):
+        super().__init__(pygame.transform.scale(standard_impact, (size, size)), pos)
+
+
+class fiery_impact(impact):
+    def __init__(self, pos, size = 16):
+        random.randint(size/2, size)
+        super().__init__(pygame.transform.scale(hot_impact, (size, size)), pos)
