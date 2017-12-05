@@ -17,15 +17,21 @@ class enemy(spritelings.actor):
         self.spell = None
         self.target = None
         self.hp = 300
+        #self.overlays.add(overlays.healthbar(self))
         self.armor = .15
         self.hitboxes = [self.hitbox]
+        #self.flash_image = overlays.generic_flash
+        self.fire_sprite = overlays.fire_sprite
+        self.ice_sprite = overlays.ice_sprite
+        self.acid_sprite = overlays.acid_sprite
 
-    def frozen(self):
-        self.overlays.add(overlays.frozen(self))
 
     def update(self, room):
         if self.hp<=0:
             self.kill()
+        if not self.flashing:
+            pass
+
         if self.target:
             self.facing = self.track(self.target)
         self.condition()
@@ -41,14 +47,20 @@ class enemy(spritelings.actor):
         self.hp -= weapon.damage
         weapon.velocity = slow(weapon.velocity, self.armor)
         self.rect.move_ip(weapon.knockback)
-
+        '''
+        if not self.flashing:
+            self.flashing += 4
+        elif self.flashing:
+            self.overlays.add(self.flash_image(self.rect.center))
+        '''
 
 
     def act(self, victims):
         for victim in victims:
             self.knockback = (-victim.velocity[0], -victim.velocity[1])
             victim.react(self)
-            victim.apply(self.effects)
+            for effect in self.effects:
+                effect(victim)
 
 
     def move_to(self, dest):
@@ -166,6 +178,7 @@ loognoog = pygame.image.load('baddies\loogloog.png').convert_alpha()
 class lugg(enemy):
     def __init__(self, pos):
         super().__init__(pygame.transform.scale(loognoog, (300,200)), pos)
+        self.hp = 100000
 
 
 #####################################################

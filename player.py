@@ -1,7 +1,8 @@
 import pygame
-import spritelings
+
 import controllers
 import missiles
+import spritelings
 
 spritesheet = pygame.image.load('people\smol_silvia.png').convert_alpha()
 neutral = spritesheet.subsurface((0,0), (59,126))
@@ -42,7 +43,7 @@ class player(spritelings.actor):
 
         self.controller = controllers.auto(self)
 
-        self.spellbook = {1:missiles.kinetic_bolt, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.kinetic_splitter}
+        self.spellbook = {1:missiles.acid_bolt, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.kinetic_splitter}
         self.page = 1
         self.spell = self.spellbook[1](self)
 

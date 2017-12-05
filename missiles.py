@@ -38,7 +38,10 @@ acid_rays = all_rays.subsurface((0,38),(56, 18))
 hot_ray_1 = hot_rays.subsurface((0,0), (18, 18))
 cold_ray_1 = cold_rays.subsurface((0,0), (18, 18))
 
-rand = 3
+def reduce(this, by):
+    x = this[0]-(this[0]*by)
+    y = this[1]-(this[1]*by)
+    return (x, y)
 
 class missile(spritelings.entity):
     def __init__(self, caster, img):
@@ -51,7 +54,7 @@ class missile(spritelings.entity):
 #when hit
         self.knockback_mult = 0
         self.knockback = (0,0)
-        self.stopping_power = 1
+        self.slow_rate = 0
         self.velocity = (10,10)
         self.velocity_mult = 1
         self.focus_cost = 0
@@ -67,14 +70,15 @@ class missile(spritelings.entity):
             self.match = 'burn'
             self.ignite_chance = ignite_chance
             self.duration = 128 * randint(0, 10)
+            #subject.cond_queue.add(self)
 
         def __call__(self, subject):
             print('callin a burn')
             self.duration -= 1
-            ignite_on = randint(0, 100)
+            ignite_on = randint(0, 1000)
             ignite = self.ignite_chance >= ignite_on
             if ignite:
-                subject.burning(self.duration)
+                subject.apply(subject.burning(self.duration))
                 return False
             elif self.duration <= 1:
                 return False
@@ -87,7 +91,15 @@ class missile(spritelings.entity):
             self.ignite_chance = max(self.ignite_chance, burn.ignite_chance)
 
     class melt(object):
-        pass
+        def __init__(self, acidity):
+            self.acidity = acidity
+
+        def __call__(self, subject):
+            subject.armor -= subject.armor * 1/(self.acidity * 100)
+            return False
+
+        def extend(self, blah):
+            pass
 
     class freeze(object):
         def __init__(self, magnitude):
@@ -102,7 +114,7 @@ class missile(spritelings.entity):
             print(freeze_factor)
             if freeze_factor >=1:
                 self.duration = 128 * 10
-                subject.frozen(self.duration)
+                subject.apply(subject.frozen(self.duration))
                 print('freezing something')
             else:
                 print('slowing something')
@@ -144,6 +156,8 @@ class missile(spritelings.entity):
                           self.velocity[1] * self.knockback_mult)
         for target in targets:
             target.react(self)
+            for effect in self.effects:
+                effect(target)
         self.overlays.add(self.impact(self.rect.center))
         if abs(self.velocity[0]) <= 1 and abs(self.velocity[1]) <= 1 :
             print(self, "has stopped")
@@ -195,8 +209,9 @@ class fire_bolt(bolt):
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
-        self.temp = -25
+        self.damage = 2
         self.effects.append(self.freeze(15))
+        self.impact = overlays.cold_impact
 
 
 class acid_bolt(bolt):
@@ -245,15 +260,18 @@ class fragment(missile):
         self.knockback_mult = caster.knockback_mult
         self.effects = caster.effects
         self.damage = caster.damage
+        self.impact = caster.impact
 
 
 class lava_burst(burst):
     def __init__(self, *args):
         super().__init__(*args, lava_balls)
-        self.temp = 40
         self.velocity_mult = 7
-        self.knockback_mult = 2
+        self.knockback_mult = .6
         self.fragment = ember
+        self.effects.append(self.burn(7))
+        self.impact = overlays.fiery_impact
+        self.damage = 2
 
 class ember(fragment):
     def __init__(self, *args):
@@ -264,10 +282,10 @@ class ember(fragment):
 class atomic_burst(burst):
     def __init__(self, *args):
         super().__init__(*args, acid_balls)
-        self.acidity = 30
         self.velocity_mult = 40
         self.knockback_mult = 0
         self.fragment = acid_bubble
+        self.impact = overlays.generic_impact
 
     def fire(self, dir, room):
         self.cast_from = self.rect.center
@@ -316,10 +334,12 @@ class acid_bubble(fragment):
 class freezing_burst(burst):
     def __init__(self, *args):
         super().__init__(*args, snow_balls)
-        self.temp = -25
         self.velocity_mult = 5
-        self.knockback_mult = 1
+        self.knockback_mult = .2
         self.fragment = COLD_THING
+        self.effects.append(self.freeze(12))
+        self.impact = overlays.cold_impact
+        self.damage = 3
 
 class COLD_THING(fragment):
     def __init__(self, *args):

@@ -19,10 +19,11 @@ class cond_queue(object):
             self.size += 1
 
     def __call__(self):
-        #print('calling cond_queue')
+        print('calling cond_queue on: ', self.internals)
         for eff in self.internals:
             print('eff = ', eff, type(eff))
-            if not eff(self.subject):
+            result = eff(self.subject)
+            if not result:
                 self.internals.remove(eff)
 
     def add(self, cond):
@@ -59,6 +60,12 @@ class entity(pygame.sprite.Sprite):
     # the velocity of any hostile projectile in contact with it.
         self.resistance = (1, 1)
 
+        self.skip = False
+
+    def apply(self, *args):
+        for arg in args:
+            self.condition.add(arg)
+
     def set_size(self, size):
         pass
 
@@ -71,12 +78,20 @@ class entity(pygame.sprite.Sprite):
     def update(self, room):
         pass
 
+class blank(pygame.sprite.Sprite):
+    def __init__(self, *args):
+        pass
+
 class actor(entity):
     def __init__(self, img, pos):
         super().__init__(img, pos)
         self.facing = (0,0)
         self.cast_from = self.rect.center
         self.damage = 0
+        self.flashing = 0
+        self.fire_sprite = blank
+        self.ice_sprite = blank
+        self.acid_sprite = blank
 
 
     #simple, inheritable function designed to allow both the player and enemies to auto-track a target
@@ -102,9 +117,53 @@ class actor(entity):
     def cast(self, room):
         self.spell.fire(self.facing, room)
 
-    def apply(self, effects):
-        for effect in effects:
-            self.condition.add(effect)
+    class burning(object):
+        def __init__(self, duration):
+            #super().__init__()
+            self.match = 'burning'
+            self.duration = duration
+            self.ignited = False
+            self.layer = None
+
+        def __call__(self, target):
+            from random import  randint
+            if not self.ignited:
+                self.layer = target.fire_sprite(target)
+                target.overlays.add(self.layer)
+                self.ignited = True
+            target.hp -= randint(0, 1)
+            self.duration -= 1
+            if self.duration <= 0:
+                target.overlays.remove(self.layer)
+                return False
+            else:
+                return True
+
+        def extend(self, blah):
+            pass
+
+    class frozen(object):
+        def __init__(self, duration):
+            self.duration = duration
+            self.cubed = False
+            self.match = 'frozen'
+            self.layer = None
+
+        def __call__(self, target):
+            if not self.cubed:
+                self.layer = target.ice_sprite(target)
+                target.overlays.add(self.layer)
+                self.cubed = True
+            target.skip = True
+            self.duration -=1
+            if self.duration <= 0:
+                target.overlays.remove(self.layer)
+                return False
+            else:
+                return True
+
+        def extend(self, blah):
+            pass
 
 class player(actor):
     def __init__(self, img, pos):
