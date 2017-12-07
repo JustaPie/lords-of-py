@@ -1,34 +1,36 @@
 
 import pygame
+import os
+import player
+import spritelings
+
+tile_scalar = 100
+
 class room():
     '''this stuff is supposed to be present in all instances of rooms in the current level; it will be passed in by the level'''
     '''all of this is the set of all possible things that can be created in this room, and then the associated lookups for keyying them to the mapCode'''
     #set of unique, pre-loaded images with associated keys in the dicTile
-    tileSet = []
-    floor = pygame.image.load('cobble.png').convert_alpha()
-    tlcrnr = pygame.image.load('top_lft_cnr_stnT.png').convert_alpha()
-    trcrnr = pygame.image.load('top_rgt_cnr_stnT.png').convert_alpha()
-    blcrnr = pygame.image.load('btm_lft_cnr_stnT.png').convert_alpha()
-    brcrnr = pygame.image.load('btm_rgt_cnr_stnT.png').convert_alpha()
-    topWall = pygame.image.load('top_stn_wallT.png').convert_alpha()
-    btmWall = pygame.image.load('btm_stn_wallT.png').convert_alpha()
-    rgtWall = pygame.image.load('rgt_stn_wallT.png').convert_alpha()
-    lftWall = pygame.image.load('lft_stn_wallT.png').convert_alpha()
+
+    floor = pygame.image.load('walls\cobble.png').convert_alpha()
+    tlcrnr = pygame.image.load("walls\cnr_stn_tl.png").convert_alpha()
+    trcrnr = pygame.image.load("walls\cnr_stn_tr.png").convert_alpha()
+    blcrnr = pygame.image.load("walls\cnr_stn_bl.png").convert_alpha()
+    brcrnr = pygame.image.load("walls\cnr_stn_br.png").convert_alpha()
+    topWall = pygame.image.load("walls\wal_stn_t.png").convert_alpha()
+    btmWall = pygame.image.load('walls\wal_stn_b.png').convert_alpha()
+    rgtWall = pygame.image.load('walls\wal_stn_r.png').convert_alpha()
+    lftWall = pygame.image.load('walls\wal_stn_l.png').convert_alpha()
     #tile set lookup
     dicTile = {'f': floor, 'trc': trcrnr, 'tlc': tlcrnr, 'blc': blcrnr, 'brc': brcrnr, 'tw': topWall,'bw': btmWall,'rw': rgtWall,'lw': lftWall}
 
-    #set of all possible unique sprites that can appear in this room
-    spriteSet = []
-    #lookup for the spriteSet
-    #spritionary = {'def1': default_enemy_1}
-
-    def __init__(self, mapcode, ):
+    def __init__(self, mapcode):
         self.mapCode = mapcode
-        self.xbound = len(self.mapCode[0])*100
-        self.ybound = len(self.mapCode)*100
+        self.xbound = len(self.mapCode[0])*tile_scalar
+        self.ybound = len(self.mapCode)*tile_scalar
         self.sizeX = len(self.mapCode[0])
         self.sizeY = len(self.mapCode)
-        self.outerBounds = ((0, self.xbound), (0, self.ybound))
+        self.outerBounds = (self.xbound, self.ybound)
+        #self.rect = pygame.Rect.get_rect(self.outerBounds)
 
         #parses the mapcode, assembles the various layers of the visual surface of the room,
         #and saves any special char/script sequences to the internal lists for those things
@@ -46,40 +48,87 @@ class room():
                 space = row[x]
                 if space == '<':
 
-                    self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
+                    self.floorSurf.blit(self.dicTile[space], (x * tile_scalar, y * tile_scalar))
                 else:
-                    self.floorSurf.blit(self.dicTile[space], (x * 100, y * 100))
+                    self.floorSurf.blit(self.dicTile[space], (x * tile_scalar, y * tile_scalar))
 
-        for i in range(0, self.xbound, 100):
+        for i in range(0, self.xbound, tile_scalar):
             self.wallSurf.blit(self.dicTile['tw'], (i, 0))
 
-        for j in range(0, self.ybound, 100):
+        for j in range(0, self.ybound, tile_scalar):
             self.wallSurf.blit(self.dicTile['rw'], (i, j))
 
-        for i in range(0, self.xbound, 100):
+        for i in range(0, self.xbound, tile_scalar):
             self.wallSurf.blit(self.dicTile['bw'], (i, j))
 
-        for j in range(0, self.ybound, 100):
+        for j in range(0, self.ybound, tile_scalar):
             self.wallSurf.blit(self.dicTile['lw'], (0, j))
 
         self.wallSurf.blit(self.dicTile['tlc'], (0, 0))
-        self.wallSurf.blit(self.dicTile['blc'], (0, self.ybound - 100))
-        self.wallSurf.blit(self.dicTile['brc'], (self.xbound - 100, self.ybound - 100))
-        self.wallSurf.blit(self.dicTile['trc'], (self.xbound - 100, 0))
+        self.wallSurf.blit(self.dicTile['blc'], (0, self.ybound - tile_scalar))
+        self.wallSurf.blit(self.dicTile['brc'], (self.xbound - tile_scalar, self.ybound - tile_scalar))
+        self.wallSurf.blit(self.dicTile['trc'], (self.xbound - tile_scalar, 0))
         self.wallSurf.set_colorkey((0,0,0))
 
         self.fSurf = pygame.Surface((self.xbound, self.ybound))
         self.fSurf.blit(self.floorSurf, (0,0))
         self.fSurf.blit(self.wallSurf, (0,0))
 
+        self.rect = self.fSurf.get_rect()
 
-    #update the stationary images
-    def draw(self, disp):
-        pass
+        self.allSprites = pygame.sprite.Group()
+        self.allProjectiles = pygame.sprite.Group()
 
-    #create the list of sprites for the first time
-    def populate(self):
-        pass
+        self.player = pygame.sprite.GroupSingle()
+        self.playerProjectiles = pygame.sprite.Group()
+        self.inactivePlayerProjectiles= pygame.sprite.Group()
 
-    def script(self):
-        pass
+        self.enemies = pygame.sprite.Group()
+        self.enemyProjectiles = pygame.sprite.Group()
+
+        self.nme_overlays = pygame.sprite.Group()
+
+        self.overlays = pygame.sprite.Group()
+
+
+
+    def cleanup(self):
+        for x in self.allProjectiles:
+            if not self.rect.contains(x.rect):
+                #print('deleted a spell')
+                x.kill()
+                x = None
+                #if x:
+                    #print('OB spell:', x)
+
+
+    def addPlayer(self, player):
+        self.allSprites.add(player)
+        self.player.add(player)
+
+    #supposed to be one of the primary interface methods between sprites/room and level. currently it only adds
+    #stuff to allSprites
+    def update(self):
+        self.allSprites.add(self.enemies, self.player)
+        self.allProjectiles.add(self.playerProjectiles, self.enemyProjectiles)
+        self.cleanup()
+        self.check_collision()
+
+    def check_collision(self):
+        player_hitlist_proj = pygame.sprite.groupcollide(self.enemyProjectiles, self.player, 0, 0, spritelings.collide_hitbox)
+        if player_hitlist_proj:
+            #print(player_hitlist_proj)
+            for nme in player_hitlist_proj:
+                nme.act(player_hitlist_proj[nme])
+
+        player_hitlist_nme = pygame.sprite.groupcollide(self.enemies, self.player, 0, 0, spritelings.collide_hitbox)
+        if player_hitlist_nme:
+            #print(player_hitlist_nme)
+            for nme in player_hitlist_nme:
+                nme.act(player_hitlist_nme[nme])
+
+        enemy_hitlist = pygame.sprite.groupcollide(self.playerProjectiles, self.enemies, 0, 0, spritelings.collide_hitbox)
+        if enemy_hitlist:
+            #print(enemy_hitlist)
+            for bullet in enemy_hitlist:
+                bullet.act(enemy_hitlist[bullet])
