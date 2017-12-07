@@ -19,8 +19,10 @@ class door(spritelings.block):
         pass
 
     def enter(self):
+        pass
 
 #finish writing theme and fog_theme
+
 class theme(object):
     def __init__(self):
         floor = pygame.image.load('walls\cobble.png').convert_alpha()
