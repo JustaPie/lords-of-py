@@ -21,6 +21,8 @@ print('correct test')
 
 disp = pygame.display.set_mode(screen_size)
 
+pygame.mixer.pre_init(44100, 16, 2, 4096)
+pygame.mixer.music.load("audio/worms.ogg")
 import player
 import room
 import missiles
@@ -100,6 +102,9 @@ fleye3.set_target(pc)
 intro_background = pygame.image.load("splash.png") #Load the image file
 intro_background = pygame.transform.scale(intro_background, (xsize, ysize))  # Make it the same size as the screen
 intro = True
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play(-1)
+
 while intro :
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -107,17 +112,67 @@ while intro :
             quit()
         if event.type == pygame.KEYDOWN:
             intro = False
+    disp.blit(intro_background, (0, 0))
 
-    disp.blit(intro_background,(0,0))
-    #pygame.display.update()
-    #disp.fill(white)
     for p in particles:
         p.move()
         pygame.draw.circle(disp, p.col, (p.x, p.y), 2)
 
     pygame.display.flip()
     clock.tick(50)
+#########################################
+font = pygame.font.Font(None, 25)
+pygame.time.set_timer(pygame.USEREVENT, 200)
+def text_generator(text):
+    tmp = ''
+    for letter in text:
+        tmp += letter
+        # don't pause for spaces
+        if letter != ' ':
+            yield tmp
 
+class DynamicText(object):
+    def __init__(self, font, text, pos, autoreset=False):
+        self.done = False
+        self.font = font
+        self.text = text
+        self._gen = text_generator(self.text)
+        self.pos = pos
+        self.autoreset = autoreset
+        self.update()
+
+    def reset(self):
+        self._gen = text_generator(self.text)
+        self.done = False
+        self.update()
+
+    def update(self):
+        if not self.done:
+            try:
+                self.rendered = self.font.render(next(self._gen), True, (0, 128, 0))
+            except StopIteration:
+                self.done = True
+                if self.autoreset: self.reset()
+
+    def draw(self, disp):
+        disp.blit(self.rendered, self.pos)
+
+
+
+
+message = DynamicText(font, "???: Wake up Evaline....???: “Yes, yes, wake up!”???: “….”", (200, 200), autoreset=False)
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: break
+        if event.type == pygame.USEREVENT: message.update()
+    else:
+        disp.fill(pygame.color.Color('black'))
+        message.draw(disp)
+        pygame.display.flip()
+        clock.tick(60)
+        continue
+    break
+#########################################
 
 running = True
 while (running):
