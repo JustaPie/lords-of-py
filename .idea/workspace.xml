@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="" />
+=======
+    <list default="true" id="b01d9dff-bef6-4d6a-b986-af9c3f0c4610" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/GameProj.iml" afterPath="$PROJECT_DIR$/.idea/GameProj.iml" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
+>>>>>>> Logan's-Stuff
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,40 +18,69 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/GameProj$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1507612256677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/lords_of_py$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1512662923675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/lords_of_py$testruns.coverage" NAME="testruns Coverage Results" MODIFIED="1508366833256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/lords_of_py$room.coverage" NAME="room Coverage Results" MODIFIED="1508367217059" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/GameProj$main.coverage" NAME="main Coverage Results" MODIFIED="1507326750419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
     <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1508367505696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+=======
+    <SUITE FILE_PATH="coverage/lords_of_py$room.coverage" NAME="room Coverage Results" MODIFIED="1509502004890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/GameProj$main.coverage" NAME="main Coverage Results" MODIFIED="1507326750419" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+    <SUITE FILE_PATH="coverage/lords_of_py$controller_tests.coverage" NAME="controller tests Coverage Results" MODIFIED="1509471343473" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$controller.coverage" NAME="controller Coverage Results" MODIFIED="1509669566249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test stuff" />
+    <SUITE FILE_PATH="coverage/lords_of_py$test_mk2.coverage" NAME="test_mk2 Coverage Results" MODIFIED="1510613607745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test stuff" />
+    <SUITE FILE_PATH="coverage/lords_of_py$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1512098122971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$missiles.coverage" NAME="missiles Coverage Results" MODIFIED="1509499297479" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test stuff" />
+    <SUITE FILE_PATH="coverage/GameProj$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1507612256677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$testruns.coverage" NAME="testruns Coverage Results" MODIFIED="1508366833256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$main.coverage" NAME="main Coverage Results" MODIFIED="1512625259945" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/lords_of_py$test_mk2__1_.coverage" NAME="test_mk2 (1) Coverage Results" MODIFIED="1510712531865" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+>>>>>>> Logan's-Stuff
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="756">
               <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+=======
+            <state relative-caret-position="4347">
+              <caret line="186" column="48" lean-forward="false" selection-start-line="186" selection-start-column="48" selection-end-line="186" selection-end-column="48" />
+>>>>>>> Logan's-Stuff
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="player.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="player.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/player.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="273">
               <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+=======
+            <state relative-caret-position="27">
+              <caret line="49" column="46" lean-forward="false" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+>>>>>>> Logan's-Stuff
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="room.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/room.py">
+      <file leaf-file-name="enemies.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/enemies.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="42">
               <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+=======
+            <state relative-caret-position="509">
+              <caret line="267" column="0" lean-forward="true" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
+>>>>>>> Logan's-Stuff
               <folding />
             </state>
           </provider>
@@ -52,19 +89,63 @@
       <file leaf-file-name="spritelings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spritelings.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="399">
               <caret line="19" column="24" lean-forward="false" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+=======
+            <state relative-caret-position="324">
+              <caret line="48" column="37" lean-forward="false" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testruns.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testruns.py">
+      <file leaf-file-name="missiles.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/missiles.py">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1701">
+              <caret line="65" column="28" lean-forward="false" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
+>>>>>>> Logan's-Stuff
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="room.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/room.py">
+          <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="1575">
               <caret line="75" column="35" lean-forward="false" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+=======
+            <state relative-caret-position="-27">
+              <caret line="17" column="23" lean-forward="false" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+>>>>>>> Logan's-Stuff
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="overlays.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/overlays.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1512">
+              <caret line="74" column="14" lean-forward="false" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controllers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controllers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,6 +164,25 @@
       <find>import</find>
       <find>*100</find>
       <find>portrait</find>
+      <find>interactors</find>
+      <find>interactor</find>
+      <find>1</find>
+      <find>100</find>
+      <find>speed</find>
+      <find>print</find>
+      <find>fir</find>
+      <find>firing</find>
+      <find>freeze</find>
+      <find>hitbox</find>
+      <find>cloud</find>
+      <find>print(&quot;my caster is: &quot;, self.caster</find>
+      <find>state</find>
+      <find>cast_from</find>
+      <find>input</find>
+      <find>oom.overlays.add(self.overlays</find>
+      <find>burnin</find>
+      <find>burning</find>
+      <find>impact</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,10 +199,42 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/testruns.py" />
-        <option value="$PROJECT_DIR$/room.py" />
-        <option value="$PROJECT_DIR$/spritelings.py" />
+        <option value="$PROJECT_DIR$/controller tests.py" />
+        <option value="$PROJECT_DIR$/projectiles.py" />
+        <option value="$PROJECT_DIR$/test stuff/controller.py" />
+        <option value="$PROJECT_DIR$/test stuff/importants.py" />
+        <option value="$PROJECT_DIR$/test stuff/badguy.py" />
+        <option value="$PROJECT_DIR$/test stuff/enemies.py" />
+        <option value="$PROJECT_DIR$/test stuff/test_nme.py" />
+        <option value="$PROJECT_DIR$/test stuff/spritelings.py" />
+        <option value="$PROJECT_DIR$/test stuff/room.py" />
+        <option value="$PROJECT_DIR$/test stuff/missiles.py" />
+        <option value="$PROJECT_DIR$/test stuff/keyboard.py" />
+        <option value="$PROJECT_DIR$/test stuff/test_mk2.py" />
+        <option value="$PROJECT_DIR$/test stuff/keyboard_alt.py" />
+        <option value="$PROJECT_DIR$/test stuff/player.py" />
+        <option value="$PROJECT_DIR$/keyboard_alt.py" />
+        <option value="$PROJECT_DIR$/test_nme.py" />
+        <option value="$PROJECT_DIR$/controller.py" />
+        <option value="$PROJECT_DIR$/test stuff/hud.py" />
+        <option value="$PROJECT_DIR$/test_mk2.py" />
+        <option value="$PROJECT_DIR$/test_mk3/main.py" />
+        <option value="$PROJECT_DIR$/test_mk3/enemies.py" />
+        <option value="$PROJECT_DIR$/test_mk3/room.py" />
+        <option value="$PROJECT_DIR$/test_mk3/controllers.py" />
+        <option value="$PROJECT_DIR$/test_mk3/missiles.py" />
+        <option value="$PROJECT_DIR$/test_mk3/spritelings.py" />
+        <option value="$PROJECT_DIR$/test_mk3/player.py" />
+        <option value="$PROJECT_DIR$/controllers.py" />
+        <option value="$PROJECT_DIR$/blocks.py" />
+        <option value="$PROJECT_DIR$/new_room.py" />
         <option value="$PROJECT_DIR$/player.py" />
+        <option value="$PROJECT_DIR$/missiles.py" />
+        <option value="$PROJECT_DIR$/spritelings.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/room.py" />
+        <option value="$PROJECT_DIR$/enemies.py" />
+        <option value="$PROJECT_DIR$/overlays.py" />
       </list>
     </option>
   </component>
@@ -113,9 +245,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="104" />
-    <option name="y" value="9" />
-    <option name="width" value="1337" />
+    <option name="x" value="426" />
+    <option name="y" value="295" />
+    <option name="width" value="595" />
     <option name="height" value="1026" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -153,11 +285,20 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+=======
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/FSU/Spring 2017/Python/hw3" />
+>>>>>>> Logan's-Stuff
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Skull_000\Documents\GitHub\lords-of-py\test stuff" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Skull_000\Documents\GitHub\lords-of-py" />
+      <recent name="C:\Users\Skull_000\Documents\GitHub\lords-of-py\test stuff" />
       <recent name="C:\Users\Skull_000\Desktop\FSU\Spring 2017\Python\GameProj" />
     </key>
   </component>
@@ -173,7 +314,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main (1)">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="controller" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test stuff" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GameProj" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test stuff/controller.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -187,10 +347,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GameProj" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Skull_000\Documents\GitHub\lords-of-py\test stuff\main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -198,17 +359,18 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <option name="SDK_HOME" value="C:\Users\Skull_000\AppData\Local\Programs\Python\Python36-32\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GameProj" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
     <configuration name="room" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -223,12 +385,13 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GameProj" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/room.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\Skull_000\Documents\GitHub\lords-of-py\test stuff\room.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="testruns" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test_mk2 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -241,22 +404,46 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GameProj" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testruns.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_mk2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="4">
+    <configuration name="test_mk2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test stuff" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GameProj" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test stuff/test_mk2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python.main (1)" />
-      <item index="1" class="java.lang.String" itemvalue="Python.main" />
-      <item index="2" class="java.lang.String" itemvalue="Python.testruns" />
-      <item index="3" class="java.lang.String" itemvalue="Python.room" />
+      <item index="1" class="java.lang.String" itemvalue="Python.room" />
+      <item index="2" class="java.lang.String" itemvalue="Python.test_mk2" />
+      <item index="3" class="java.lang.String" itemvalue="Python.controller" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test_mk2 (1)" />
+      <item index="5" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.room" />
-        <item index="2" class="java.lang.String" itemvalue="Python.testruns" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test_mk2 (1)" />
+        <item index="2" class="java.lang.String" itemvalue="Python.test_mk2" />
+        <item index="3" class="java.lang.String" itemvalue="Python.controller" />
+        <item index="4" class="java.lang.String" itemvalue="Python.room" />
       </list>
     </recent_temporary>
   </component>
@@ -274,54 +461,391 @@
       <option name="presentableId" value="Default" />
       <updated>1507326240613</updated>
     </task>
-    <task id="LOCAL-00001" summary="buncha new images, plus I figured out transparency. Also there's a file called testruns I want you guys to look at. It contains a rough draft of the mapCode parser, currently capable of creating rectangular rooms of (theorhetically) any size. Besides that, a few important questions about what we want to do going forwards with this piece --author 'Logan' is not 'Name  ' and matches no existing author">
-      <created>1507962388416</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00009" summary="more structure work">
+      <created>1509599133007</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1507962388416</updated>
+      <updated>1509599133007</updated>
     </task>
-    <task id="LOCAL-00002" summary="further work on room.py, several spritesheets for experimentation,nothing crazy. yet.">
-      <created>1508373309803</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
+    <task id="LOCAL-00010" summary="Now into the second generation of testing,">
+      <created>1509730177990</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
-      <updated>1508373309803</updated>
+      <updated>1509730177990</updated>
     </task>
-    <task id="LOCAL-00003" summary="further work on room.py, several spritesheets for experimentation,nothing crazy. yet.">
-      <created>1508434754755</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
+    <task id="LOCAL-00011" summary="Kinda late, but this is the latest and greatest of my work">
+      <created>1510018281009</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
       <option name="project" value="LOCAL" />
-      <updated>1508434754755</updated>
+      <updated>1510018281009</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00012" summary="Kinda late, but this is the latest and greatest of my work">
+      <created>1510018418683</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1510018418683</updated>
+    </task>
+    <task id="LOCAL-00013" summary="more documentation, comments explaining what does what">
+      <created>1510022538015</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1510022538015</updated>
+    </task>
+    <task id="LOCAL-00014" summary="more documentation, comments explaining what does what">
+      <created>1510198040046</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1510198040046</updated>
+    </task>
+    <task id="LOCAL-00015" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510208924887</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1510208924887</updated>
+    </task>
+    <task id="LOCAL-00016" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510210377029</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1510210377029</updated>
+    </task>
+    <task id="LOCAL-00017" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510210739276</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1510210739276</updated>
+    </task>
+    <task id="LOCAL-00018" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510253248764</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1510253248764</updated>
+    </task>
+    <task id="LOCAL-00019" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510253260750</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1510253260750</updated>
+    </task>
+    <task id="LOCAL-00020" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510289038038</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1510289038038</updated>
+    </task>
+    <task id="LOCAL-00021" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510294759692</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1510294759693</updated>
+    </task>
+    <task id="LOCAL-00022" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510348667572</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1510348667572</updated>
+    </task>
+    <task id="LOCAL-00023" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510353571311</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1510353571311</updated>
+    </task>
+    <task id="LOCAL-00024" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510354977233</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1510354977233</updated>
+    </task>
+    <task id="LOCAL-00025" summary="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF">
+      <created>1510371407173</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1510371407173</updated>
+    </task>
+    <task id="LOCAL-00026" summary="added elemental damage, got an enemy functioning and responding to said damage, getting closer to implementing a humanoid player character, and cleaned up a bunch of stuff">
+      <created>1510380475058</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1510380475058</updated>
+    </task>
+    <task id="LOCAL-00027" summary="added elemental damage, got an enemy functioning and responding to said damage, getting closer to implementing a humanoid player character, and cleaned up a bunch of stuff">
+      <created>1510380863875</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1510380863875</updated>
+    </task>
+    <task id="LOCAL-00028" summary="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system">
+      <created>1510617009687</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1510617009687</updated>
+    </task>
+    <task id="LOCAL-00029" summary="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system">
+      <created>1510621499800</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1510621499800</updated>
+    </task>
+    <task id="LOCAL-00030" summary="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system">
+      <created>1510640422941</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1510640422942</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version">
+      <created>1510722564926</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1510722564926</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version">
+      <created>1510794436157</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1510794436157</updated>
+    </task>
+    <task id="LOCAL-00033" summary="I GOT THE EYES WORKING">
+      <created>1510811271191</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1510811271191</updated>
+    </task>
+    <task id="LOCAL-00034" summary="I GOT THE EYES WORKING">
+      <created>1510812028926</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1510812028926</updated>
+    </task>
+    <task id="LOCAL-00035" summary="I GOT THE EYES WORKING">
+      <created>1510884203075</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1510884203075</updated>
+    </task>
+    <task id="LOCAL-00036" summary="I GOT THE EYES WORKING">
+      <created>1511127006145</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1511127006145</updated>
+    </task>
+    <task id="LOCAL-00037" summary="I GOT THE EYES WORKING">
+      <created>1511557752383</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1511557752383</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Major progress on enemies, the player, and spells">
+      <created>1511826675940</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1511826675941</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Major progress on enemies, the player, and spells">
+      <created>1511835295806</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1511835295806</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Adjustments to how projectiles work">
+      <created>1512177827052</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1512177827052</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Adjustments to how projectiles work">
+      <created>1512185026997</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1512185026997</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Adjustments to how projectiles work">
+      <created>1512185040982</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1512185040982</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Adjustments to how projectiles work">
+      <created>1512263868818</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1512263868818</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Adjustments to how projectiles work">
+      <created>1512264515546</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1512264515546</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Adjustments to how projectiles work">
+      <created>1512332252639</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1512332252639</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Adjustments to how projectiles work">
+      <created>1512334987531</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1512334987531</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Adjustments to how projectiles work">
+      <created>1512335283034</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1512335283034</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Adjustments to how projectiles work">
+      <created>1512341342488</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1512341342488</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Adjustments to how projectiles work">
+      <created>1512369774580</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1512369774580</updated>
+    </task>
+    <task id="LOCAL-00050" summary="BEHOLD THE LOOGNOOG&#10;also, I'm trying to figure out">
+      <created>1512371142609</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1512371142610</updated>
+    </task>
+    <task id="LOCAL-00051" summary="BEHOLD THE LOOGNOOG&#10;also, I'm trying to figure out">
+      <created>1512438243329</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1512438243330</updated>
+    </task>
+    <task id="LOCAL-00052" summary="BEHOLD THE LOOGNOOG&#10;also, I'm trying to figure out">
+      <created>1512453253122</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1512453253122</updated>
+    </task>
+    <task id="LOCAL-00053" summary="I got elemental stuff working... mostly">
+      <created>1512499630693</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1512499630693</updated>
+    </task>
+    <task id="LOCAL-00054" summary="I got elemental stuff working... mostly">
+      <created>1512615553488</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1512615553489</updated>
+    </task>
+    <task id="LOCAL-00055" summary="I got elemental stuff working... mostly">
+      <created>1512622239631</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1512622239631</updated>
+    </task>
+    <task id="LOCAL-00056" summary="I got elemental stuff working... mostly">
+      <created>1512623559462</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1512623559462</updated>
+    </task>
+    <task id="LOCAL-00057" summary="I got elemental stuff working... mostly">
+      <created>1512625071245</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1512625071245</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="-9" y="-9" width="1938" height="1098" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1453125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+=======
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <layout>
+>>>>>>> Logan's-Stuff
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925683" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28316087" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19447514" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1078125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28316087" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16736402" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+>>>>>>> Logan's-Stuff
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39981186" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925683" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968238" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32925683" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -348,6 +872,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -385,15 +919,41 @@
     <MESSAGE value="buncha new images, plus I figured out transparency. Also there's a file called testruns I want you guys to look at. It contains a rough draft of the mapCode parser, currently capable of creating rectangular rooms of (theorhetically) any size. Besides that, a few important questions about what we want to do going forwards with this piece" />
     <MESSAGE value="buncha new images, plus I figured out transparency. Also there's a file called testruns I want you guys to look at. It contains a rough draft of the mapCode parser, currently capable of creating rectangular rooms of (theorhetically) any size. Besides that, a few important questions about what we want to do going forwards with this piece --author 'Logan' is not 'Name  ' and matches no existing author" />
     <MESSAGE value="further work on room.py, several spritesheets for experimentation,nothing crazy. yet." />
-    <option name="LAST_COMMIT_MESSAGE" value="further work on room.py, several spritesheets for experimentation,nothing crazy. yet." />
+    <MESSAGE value="Added a very important design doc, detailing goals, objectives, problems, and potential solutions regarding the level, room, and entity scopes. Please read it, as it should help explain what needs to get done for us to move forward.&#10;the file in question is &quot;scope design doc&quot;, it has replaced room design doc." />
+    <MESSAGE value="Extra stuf, not as important as the previous update.&#10;READ &quot;scope design doc&quot;" />
+    <MESSAGE value="Figured out how controllers work. also messed around with organization" />
+    <MESSAGE value="update for stuff" />
+    <MESSAGE value="more structure work" />
+    <MESSAGE value="Now into the second generation of testing," />
+    <MESSAGE value="Kinda late, but this is the latest and greatest of my work" />
+    <MESSAGE value="more documentation, comments explaining what does what" />
+    <MESSAGE value="STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" />
+    <MESSAGE value="added elemental damage, got an enemy functioning and responding to said damage, getting closer to implementing a humanoid player character, and cleaned up a bunch of stuff" />
+    <MESSAGE value="work done on using controllers, tried to fix the working directory/pathing issues (not sure if i was successful) and some work on new projectiles system" />
+    <MESSAGE value="Moving into the final generation of testing, this is the last major overhaul of the structure.&#10;consolidated existing files, kept what was good, ditched what wasn't, and as of tonight, i have restored (roughly) equivalent functionality to the third and final version" />
+    <MESSAGE value="I GOT THE EYES WORKING" />
+    <MESSAGE value="Major progress on enemies, the player, and spells" />
+    <MESSAGE value="Adjustments to how projectiles work" />
+    <MESSAGE value="BEHOLD THE LOOGNOOG&#10;also, I'm trying to figure out" />
+    <MESSAGE value="I got elemental stuff working... mostly" />
+    <option name="LAST_COMMIT_MESSAGE" value="I got elemental stuff working... mostly" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="4" />
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/test stuff/keyboard.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="9" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="756">
@@ -511,67 +1071,135 @@
         <state relative-caret-position="1275">
           <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
           <folding />
+=======
+    <entry file="file://$PROJECT_DIR$/test stuff/room.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/main.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/main.py" />
+    <entry file="file://$PROJECT_DIR$/../main.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/testruns.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/main.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/controller tests.py" />
+    <entry file="file://$PROJECT_DIR$/projectiles.py" />
+    <entry file="file://$PROJECT_DIR$/testruns.py" />
+    <entry file="file://$PROJECT_DIR$/room" />
+    <entry file="file://$PROJECT_DIR$/controller tests.py" />
+    <entry file="file://$PROJECT_DIR$/old tests/controller tests.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/controller.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/badguy.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/test_nme.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/enemies.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/spritelings.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/missiles.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/test_mk2.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/keyboard_alt.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/player.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/room.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/keyboard.py" />
+    <entry file="file://$PROJECT_DIR$/badguy.py" />
+    <entry file="file://$PROJECT_DIR$/keyboard.py" />
+    <entry file="file://$PROJECT_DIR$/keyboard_alt.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/importants.py" />
+    <entry file="file://$PROJECT_DIR$/test stuff/hud.py" />
+    <entry file="file://$PROJECT_DIR$/controller.py" />
+    <entry file="file://$PROJECT_DIR$/hud.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk2.py" />
+    <entry file="file://$PROJECT_DIR$/test_nme.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/main.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/room.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/controllers.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/enemies.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/missiles.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/spritelings.py" />
+    <entry file="file://$PROJECT_DIR$/test_mk3/player.py" />
+    <entry file="uml://Python/overlays.healthbar">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>Python</ID>
+          <OriginalElement>overlays.healthbar</OriginalElement>
+          <nodes>
+            <node x="0.0" y="158.0">overlays.healthbar</node>
+            <node x="0.5" y="79.0">spritelings.overlay</node>
+            <node x="4.5" y="0.0">spritelings.entity</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="spritelings.overlay" target="spritelings.entity">
+              <point x="0.0" y="-14.5" />
+              <point x="0.0" y="14.5" />
+            </edge>
+            <edge source="overlays.healthbar" target="spritelings.overlay">
+              <point x="0.0" y="-14.5" />
+              <point x="0.0" y="14.5" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="-387.0" y="-69.0" />
+          <SelectedNodes>
+            <node>overlays.healthbar</node>
+          </SelectedNodes>
+          <Categories />
+          <SCOPE>All</SCOPE>
+>>>>>>> Logan's-Stuff
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/old_room.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="425">
           <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
           <folding />
+=======
+        <state relative-caret-position="1917">
+          <caret line="74" column="8" lean-forward="false" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
+          <folding>
+            <element signature="e#1#14#0" expanded="false" />
+          </folding>
+>>>>>>> Logan's-Stuff
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/room.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/pygame/sprite.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="513">
+          <caret line="344" column="0" lean-forward="false" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testruns.py">
+    <entry file="file://$PROJECT_DIR$/blocks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
+    <entry file="file://$PROJECT_DIR$/controllers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" column="12" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="476">
           <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding />
+=======
+        <state relative-caret-position="135">
+          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+>>>>>>> Logan's-Stuff
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
+    <entry file="file://$PROJECT_DIR$/spritelings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testruns.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1513">
-          <caret line="89" column="34" lean-forward="true" selection-start-line="89" selection-start-column="12" selection-end-line="89" selection-end-column="34" />
+        <state relative-caret-position="324">
+          <caret line="48" column="37" lean-forward="false" selection-start-line="48" selection-start-column="37" selection-end-line="48" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/room.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="1377">
           <caret line="81" column="50" lean-forward="false" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
           <folding />
@@ -622,98 +1250,41 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1122">
           <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+=======
+        <state relative-caret-position="-27">
+          <caret line="17" column="23" lean-forward="false" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
+>>>>>>> Logan's-Stuff
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/overlays.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="1700">
           <caret line="100" column="9" lean-forward="false" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
           <folding />
+=======
+        <state relative-caret-position="1512">
+          <caret line="74" column="14" lean-forward="false" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+>>>>>>> Logan's-Stuff
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testruns.py">
+    <entry file="file://$PROJECT_DIR$/missiles.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1683">
-          <caret line="99" column="41" lean-forward="false" selection-start-line="99" selection-start-column="41" selection-end-line="99" selection-end-column="41" />
+        <state relative-caret-position="-1701">
+          <caret line="65" column="28" lean-forward="false" selection-start-line="65" selection-start-column="28" selection-end-line="65" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1806">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1806">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/room.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="10" column="30" lean-forward="false" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
-      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="255">
           <caret line="16" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
         </state>
@@ -761,22 +1332,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="19" column="24" lean-forward="false" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+=======
+        <state relative-caret-position="27">
+          <caret line="49" column="46" lean-forward="false" selection-start-line="49" selection-start-column="46" selection-end-line="49" selection-end-column="46" />
+>>>>>>> Logan's-Stuff
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="756">
           <caret line="37" column="4" lean-forward="false" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
+=======
+        <state relative-caret-position="4347">
+          <caret line="186" column="48" lean-forward="false" selection-start-line="186" selection-start-column="48" selection-end-line="186" selection-end-column="48" />
+>>>>>>> Logan's-Stuff
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/player.py">
+    <entry file="file://$PROJECT_DIR$/enemies.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="273">
           <caret line="25" column="21" lean-forward="false" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
+=======
+        <state relative-caret-position="509">
+          <caret line="267" column="0" lean-forward="true" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
+>>>>>>> Logan's-Stuff
           <folding />
         </state>
       </provider>
