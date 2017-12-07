@@ -2,6 +2,7 @@ import pygame
 
 import missiles
 import overlays
+import room
 import spritelings
 
 
@@ -304,7 +305,6 @@ class bouncer(enemy):
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
-            self.velocity = (self.velocity[0]*weapon.stopping_power, self.velocity[1]*weapon.stopping_power)
     #so I'm handling missile penetration a bit weirdly here. All bullets travel at a given velocity, when it strikes a
     #enemy, the enemy slows the bullet, when velocity drops to a certain point, the bullet stops dealing damage
             if isinstance(weapon, missiles.missile):
@@ -344,17 +344,29 @@ class blue_bouncer(bouncer):
             if isinstance(weapon, missiles.missile):
                 weapon.velocity = (weapon.velocity[0]*self.armor, weapon.velocity[1]*self.armor)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
-            self.velocity = (self.velocity[0], 10)
-            weapon.velocity = (0, 0)
+            if isinstance(weapon, room.wall):
+                self.velocity = (self.velocity[0], -10)
+            else:
+                self.velocity = (self.velocity[0], 10)
+                weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
-            self.velocity = (-10, self.velocity[1])
-            weapon.velocity = (0, 0)
+            if isinstance(weapon, room.wall):
+                self.velocity = (10, self.velocity[1])
+            else:
+                self.velocity = (-10, self.velocity[1])
+                weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
-            self.velocity = (self.velocity[0], -10)
-            weapon.velocity = (0, 0)
+            if isinstance(weapon, room.wall):
+                self.velocity = (self.velocity[0], 10)
+            else:
+                self.velocity = (self.velocity[0], -10)
+                weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
-            self.velocity = (10, self.velocity[1])
-            weapon.velocity = (0, 0)
+            if isinstance(weapon, room.wall):
+                self.velocity = (-10, self.velocity[1])
+            else:
+                self.velocity = (10, self.velocity[1])
+                weapon.velocity = (0, 0)
 
 
 #bounces incoming missiles back towards their origin

@@ -18,7 +18,6 @@ disp = pygame.display.set_mode(screen_size)
 
 import player
 import room
-import enemies
 import overlays
 
 size = (12, 8)
@@ -35,26 +34,6 @@ hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
 
-bumper = enemies.lugg((600, 600))
-bumper.set_target(pc)
-test_room.enemies.add(bumper)
-
-#test_room.overlays.add(hp)
-
-'''
-fleye1 = enemies.fleye((500, 500))
-test_room.enemies.add(fleye1)
-fleye1.set_target(pc)
-
-''''''
-fleye2 = enemies.fleye((400, 400))
-test_room.enemies.add(fleye2)
-fleye2.set_target(pc)
-
-fleye3 = enemies.fleye((600, 600))
-test_room.enemies.add(fleye3)
-fleye3.set_target(pc)
-'''
 
 running = True
 while (running):

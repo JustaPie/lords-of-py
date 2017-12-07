@@ -64,6 +64,7 @@ class wall(spritelings.block):
                     #target.hitbox.left = self.hitbox.right
                     target.hitbox.right = self.hitbox.left
                     target.rect.center = target.hitbox.center
+                target.react(self)
 
 
 
@@ -123,10 +124,12 @@ class theme(object):
         # tile set lookup
         self.image_lookup = {'f': floor, 'trc': trcrnr, 'tlc': tlcrnr, 'blc': blcrnr, 'brc': brcrnr, 'tw': topWall, 'bw': btmWall,
                    'rw': rgtWall, 'lw': lftWall}
-        self.enemy_lookup = {'basic_baddy':enemies.bouncer}
+        self.enemy_lookup = {0:enemies.bouncer, 1:enemies.black_bouncer, 2:enemies.blue_bouncer,
+                             3:enemies.blind_bouncer, 4:enemies.fleye, 5:enemies.lugg}
 
-    def populate(self, seed):
-        return self.enemy_lookup['basic_baddy'](70, 70)
+    def populate(self, space):
+        from random import randint
+        return self.enemy_lookup[randint(0, 5)](space)
 
     def build(self, border):
         all_walls = pygame.sprite.Group()
@@ -192,7 +195,7 @@ class room(pygame.sprite.Sprite):
         self.playerProjectiles = pygame.sprite.Group()
         self.inactivePlayerProjectiles= pygame.sprite.Group()
 
-        self.enemies = pygame.sprite.Group()
+        self.enemies = pygame.sprite.Group(self.theme.populate(self.rect.center))
         self.enemyProjectiles = pygame.sprite.Group()
 
         self.nme_overlays = pygame.sprite.Group()
@@ -217,6 +220,8 @@ class room(pygame.sprite.Sprite):
     def addPlayer(self, player):
         self.allSprites.add(player)
         self.player.add(player)
+        for baddy in self.enemies:
+            baddy.set_target(player)
         if not self.rect.contains(player.rect):
             player.rect.top = self.rect.top
             player.rect.left = self.rect.left
