@@ -14,6 +14,9 @@ xsize = 1440
 ysize = 800
 screen_size = (xsize, ysize)
 
+game_over = pygame.image.load("bits&bobs/you are dead.png") #Load the image file
+game_over = pygame.transform.scale(game_over, (xsize, ysize))  # Make it the same size as the screen
+
 pygame.mixer.pre_init(44100, 16, 2, 4096)
 
 pygame.init()
@@ -160,15 +163,45 @@ class DynamicText(object):
 
 
 
+#very long winded way to display dialogue....there has to be a better way.
+message1 = DynamicText(font, "???: Wake up Evaline....", (200, 200), autoreset=False)
+message2 = DynamicText(font, "???: Yes, yes, wake up!", (200, 225), autoreset=False)
+message3 = DynamicText(font, "???: .......", (200, 250), autoreset=False)
 
-message = DynamicText(font, "???: Wake up Evaline....???: “Yes, yes, wake up!”???: “….”", (200, 200), autoreset=False)
+counter = 1
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: break
-        if event.type == pygame.USEREVENT: message.update()
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        if event.type == pygame.KEYDOWN:
+            break
+        if event.type == pygame.USEREVENT:
+            if counter == 1:
+                message1.update()
+            elif counter == 2:
+                message1.update()
+                message2.update()
+            elif counter == 3:
+                message1.update()
+                message2.update()
+                message3.update()
+
     else:
         disp.fill(pygame.color.Color('black'))
-        message.draw(disp)
+        if counter ==1:
+            message1.draw(disp)
+        if counter ==2:
+            message1.draw(disp)
+            message2.draw(disp)
+        if counter ==3:
+            message1.draw(disp)
+            message2.draw(disp)
+            message3.draw(disp)
+        if message1.done:
+            counter = 2
+        if message2.done:
+            counter = 3
         pygame.display.flip()
         clock.tick(60)
         continue
@@ -179,9 +212,14 @@ running = True
 while (running):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            pygame.quit()
+            quit()
         elif event.type == pygame.KEYDOWN:
             pass
+        elif event.type == player.heros_death:
+            disp.blit(game_over, (0, 0))
+            running = False
+
 
     disp.blit(test_room.fSurf, (0,0))
 
@@ -232,3 +270,19 @@ while (running):
     pygame.display.update()
 
     pygame.event.pump()
+
+####################################################    GAME OVER         #######################
+
+
+pygame.mixer.music.load("audio/game_over.wav")
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play()
+
+while(True):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+    else:
+        disp.blit(game_over, (0, 0))
+        pygame.display.update()

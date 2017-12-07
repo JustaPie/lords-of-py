@@ -20,11 +20,14 @@ died = pygame.mixer.Sound("audio/player_death.wav")
 ow = pygame.mixer.Sound("audio/ow.wav")
 swap = pygame.mixer.Sound("audio/spell_swap.wav")
 died.set_volume(1)
+heros_death = pygame.USEREVENT + 1
+player_death_event = pygame.event.Event(heros_death)
+
 class player(spritelings.actor):
     def __init__(self, pos, original = None):
         super().__init__(spritesheet, pos)
 
-        self.hp = 100
+        self.hp = 20
         self.max_focus = 150
         self.focus = 0
         self.charge_level = 1
@@ -56,7 +59,7 @@ class player(spritelings.actor):
             self.spell.kill()
             self.kill()
             died.play()
-
+            pygame.event.post(player_death_event)
 
         self.controller.update(room)
         self.check_state()
