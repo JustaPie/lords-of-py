@@ -126,11 +126,18 @@ class theme(object):
         self.image_lookup = {'f': floor, 'trc': trcrnr, 'tlc': tlcrnr, 'blc': blcrnr, 'brc': brcrnr, 'tw': topWall, 'bw': btmWall,
                    'rw': rgtWall, 'lw': lftWall}
         self.enemy_lookup = {0:enemies.bouncer, 1:enemies.black_bouncer, 2:enemies.blue_bouncer,
-                             3:enemies.blind_bouncer, 4:enemies.fleye, 5:enemies.lugg}
+                             3:enemies.blind_bouncer, 4:enemies.fleye, 5:enemies.lugg,
+                             6:enemies.sneyeper, 7:enemies.blue_sneyeper, 8:enemies.green_sneyeper}
 
-    def populate(self, space):
+    def populate(self, space, budget, predef):
         from random import randint
-        return self.enemy_lookup[randint(0, 5)](space)
+        difficulty = 0
+        pop = pygame.sprite.Group()
+        while difficulty<budget:
+            species = randint(0, 8)
+            level = budget/10
+            pop.add()
+
 
     def build(self, border):
         all_walls = pygame.sprite.Group()
@@ -163,7 +170,7 @@ size_limit = (16, 11)
 
 #finsih room
 class room(pygame.sprite.Sprite):
-    def __init__(self, screen, size, seed, theme,  difficulty, player_spawn= (100, 100), hub = False):
+    def __init__(self, screen, size, predef, theme,  difficulty, player_spawn= (100, 100), hub = False):
         super(room, self).__init__()
         if hub:
             pass
@@ -196,7 +203,7 @@ class room(pygame.sprite.Sprite):
         self.playerProjectiles = pygame.sprite.Group()
         self.inactivePlayerProjectiles= pygame.sprite.Group()
 
-        self.enemies = pygame.sprite.Group(self.theme.populate(self.rect.center))
+        self.enemies = pygame.sprite.Group(self.theme.populate(self.rect, difficulty*10, predef))
         self.enemyProjectiles = pygame.sprite.Group()
 
         self.nme_overlays = pygame.sprite.Group()
@@ -301,6 +308,8 @@ class room(pygame.sprite.Sprite):
         for y in test_room.enemies:
             pygame.draw.rect(disp, blue, y.rect, 8)
             pygame.draw.rect(disp, red, y.hitbox, 4)
+            for xy in y.hitboxes:
+                pygame.draw.rect(disp, green, xy, 2)
 
         for z in test_room.allProjectiles:
             pygame.draw.rect(disp, red, z.rect, 7)

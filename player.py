@@ -24,10 +24,11 @@ class player(spritelings.actor):
     def __init__(self, pos, original = None):
         super().__init__(spritesheet, pos)
 
-        self.hp = 100
+        self.hp = 600
         self.max_focus = 150
         self.focus = 0
         self.charge_level = 1
+        self.armor = .25
 
         self.torso = {(0,0):neutral, (1,0):right, (1,-1):top_right, (1,1):bottom_right, (0,-1):top,
                       (0,1):down, (-1,0):left, (-1,-1):top_left, (-1,1):bottom_left}
@@ -47,7 +48,7 @@ class player(spritelings.actor):
 
         self.controller = controllers.auto(self)
 
-        self.spellbook = {1:missiles.acid_bolt, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.kinetic_splitter}
+        self.spellbook = {1:missiles.acid_bolt, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.atomic_burst}
         self.page = 1
         self.spell = self.spellbook[1](self)
 
@@ -95,9 +96,4 @@ class player(spritelings.actor):
         self.hp -= bastard.damage
         ow.play()
         self.spell.kill()
-        if isinstance(bastard, missiles.missile):
-            bastard.kill()
-
-
-
 
