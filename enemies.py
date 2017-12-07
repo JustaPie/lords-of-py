@@ -267,21 +267,27 @@ baby_bouncer_img = pygame.transform.scale(basic_bouncer_img, (64, 64))
 
 #standard version; bounces off walls and bullets, flying away from them on contact
 class bouncer(enemy):
-    def __init__(self, pos):
-        super().__init__(basic_bouncer_img, pos)
+    def __init__(self, pos, level = 2):
+        size = 60*level
+
+        super().__init__(pygame.transform.scale(basic_bouncer_img, (size,size)), pos)
+        self.speed = max(20 / level, 4)
+        self.armor = 0.07 + (0.05 * level)
+        self.damage = 2 + (level)
         self.eye = None
         self.timer = 0
         self.spell = missiles.ice_bolt
-        self.core = self.rect.inflate(-96, -96)
-        self.top = pygame.Rect(*self.rect.center, 43, 43)
+        self.core = self.rect.inflate(-size*.51, -size*0.51)
+        self.top = pygame.Rect(*self.rect.center, size/4, size/4)
 
-        self.bottom = pygame.Rect(*self.rect.center, 43, 43)
+        self.bottom = pygame.Rect(*self.rect.center, size/4, size/4)
 
-        self.left = pygame.Rect(*self.rect.center, 43, 43)
+        self.left = pygame.Rect(*self.rect.center, size/4, size/4)
 
-        self.right = pygame.Rect(*self.rect.center, 43, 43)
+        self.right = pygame.Rect(*self.rect.center, size/4, size/4)
 
         self.hitboxes = [self.core, self.top, self.bottom, self.left, self.right]
+        self.size = size
 
     def update(self, room):
         super().update(room)
@@ -292,7 +298,7 @@ class bouncer(enemy):
         self.core.center = self.rect.center
 
         if not self.eye:
-            self.eye = overlays.eyeball(self, room)
+            self.eye = overlays.eyeball(self, room, self.core)
         self.eye.update(room)
 
         if self.timer > 0:
@@ -312,16 +318,16 @@ class bouncer(enemy):
                 y = weapon.velocity[1]-weapon.velocity[1]*self.armor
                 weapon.velocity = (x, y)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
-            self.velocity = (self.velocity[0], -10)
+            self.velocity = (self.velocity[0], -self.speed)
             weapon.velocity = (0,0)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
-            self.velocity = (10, self.velocity[1])
+            self.velocity = (self.speed, self.velocity[1])
             weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
-            self.velocity = (self.velocity[0], 10)
+            self.velocity = (self.velocity[0], self.speed)
             weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
-            self.velocity = (-10, self.velocity[1])
+            self.velocity = (-self.speed, self.velocity[1])
             weapon.velocity = (0, 0)
 
     def act(self, victims):
@@ -333,8 +339,8 @@ class bouncer(enemy):
 
 #reacts to incoming fire by bouncing towards it
 class blue_bouncer(bouncer):
-    def __init__(self, pos):
-        super().__init__(pos)
+    def __init__(self, pos, level = 2):
+        super().__init__(pos, level)
         self.image = blue_bouncer_img
 
     def react(self, weapon):
@@ -345,27 +351,27 @@ class blue_bouncer(bouncer):
                 weapon.velocity = (weapon.velocity[0]*self.armor, weapon.velocity[1]*self.armor)
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             if isinstance(weapon, room.wall):
-                self.velocity = (self.velocity[0], -10)
+                self.velocity = (self.velocity[0], -self.speed)
             else:
-                self.velocity = (self.velocity[0], 10)
+                self.velocity = (self.velocity[0], self.speed)
                 weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
             if isinstance(weapon, room.wall):
-                self.velocity = (10, self.velocity[1])
+                self.velocity = (self.speed, self.velocity[1])
             else:
-                self.velocity = (-10, self.velocity[1])
+                self.velocity = (-self.speed, self.velocity[1])
                 weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
             if isinstance(weapon, room.wall):
-                self.velocity = (self.velocity[0], 10)
+                self.velocity = (self.velocity[0], self.speed)
             else:
-                self.velocity = (self.velocity[0], -10)
+                self.velocity = (self.velocity[0], -self.speed)
                 weapon.velocity = (0, 0)
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
             if isinstance(weapon, room.wall):
-                self.velocity = (-10, self.velocity[1])
+                self.velocity = (-self.speed, self.velocity[1])
             else:
-                self.velocity = (10, self.velocity[1])
+                self.velocity = (self.speed, self.velocity[1])
                 weapon.velocity = (0, 0)
 
 

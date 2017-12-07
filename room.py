@@ -15,6 +15,7 @@ class wall(spritelings.block):
         super(wall, self).__init__(*args)
         #hitbox_lookup = {'up': , 'down': , 'left': ,'right': }
         self.facing = facing
+        self.damage = 0
         if facing == 'up':
             self.hitbox = self.rect.inflate(0, -(self.rect.height*.65))
             self.hitbox.top = self.rect.top

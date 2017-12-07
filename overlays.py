@@ -69,10 +69,11 @@ bottom_left = eye_chart.subsurface((0,128), (65, 65))
 bottom_right = eye_chart.subsurface((128, 128), (65, 65))
 
 class eyeball(spritelings.overlay):
-    def __init__(self, subject, room):
+    def __init__(self, subject, room, size):
         super().__init__(neutral, subject.rect.center)
         self.subject = subject
-        self.eye_lookup = {(0, 0): neutral, (1, 0): right, (1, -1): top_right, (1, 1): bottom_right,
+        fix = pygame.transform.scale
+        self.eye_lookup = {(0, 0): fix(neutral, size), (1, 0): right, (1, -1): top_right, (1, 1): bottom_right,
          (0, -1): top, (0, 1): bottom, (-1, 0): left, (-1, -1): top_left, (-1, 1): bottom_left}
         self.rect.center = self.subject.rect.center
         self.image = self.eye_lookup[self.subject.facing]
