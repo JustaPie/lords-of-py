@@ -84,6 +84,11 @@ class eyeball(spritelings.overlay):
 
 ice_cube = pygame.image.load('overlays\generic_ice_cube.png')
 
+class status_layer(pygame.sprite.Group):
+    def __init__(self, subject,  *args):
+        super().__init__(*args)
+        self.subject = subject
+
 class ice_sprite(spritelings.overlay):
     def __init__(self, subject):
         super().__init__(ice_cube, subject.rect.center)
@@ -115,8 +120,8 @@ class acid_sprite(spritelings.overlay):
 impacts = pygame.image.load('overlays\impacts.png').convert_alpha()
 standard_impact = impacts.subsurface((2,2), (128, 128))
 hot_impact = impacts.subsurface((130,1), (128, 128))
-chill_impact = impacts.subsurface((260, 1), (128, 128))
-splat_impact = impacts.subsurface((390, 1), (128, 128))
+chill_impact = impacts.subsurface((261, 1), (128, 128))
+splat_impact = impacts.subsurface((392, 1), (128, 128))
 
 class impact(spritelings.overlay):
     def __init__(self, img,  pos, variance = 8):

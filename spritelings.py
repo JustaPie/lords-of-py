@@ -19,7 +19,7 @@ class cond_queue(object):
             self.size += 1
 
     def __call__(self):
-        print('calling cond_queue on: ', self.internals)
+        #print('calling cond_queue on: ', self.internals)
         for eff in self.internals:
             print('eff = ', eff, type(eff))
             result = eff(self.subject)
@@ -46,6 +46,7 @@ class entity(pygame.sprite.Sprite):
         self.rect.center = pos
         self.hitbox = self.rect
         self.effects = []
+        self.hitboxes = [self.hitbox]
 
         self.velocity = (0,0)
         self.knockback = (0,0)

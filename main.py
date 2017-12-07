@@ -8,7 +8,7 @@ green = (0, 255, 0)
 plyr_loc = (100, 100)
 nme1_loc = (500, 500)
 fps = 128
-screen_size = (1600, 1100)
+screen_size = (1500, 800)
 
 pygame.init()
 
@@ -21,13 +21,13 @@ import room
 import enemies
 import overlays
 
-size = (16, 10)
+size = (12, 8)
 seed = 124
 theme = room.theme()
 dif = 1
 
 
-test_room = room.room(size, seed, theme, dif)
+test_room = room.room(disp, size, seed, theme, dif)
 
 pc = player.player(plyr_loc)
 HUD = overlays.hud(pc, disp)
@@ -64,50 +64,12 @@ while (running):
         elif event.type == pygame.KEYDOWN:
             pass
 
-    disp.blit(test_room.fSurf, (0,0))
-
     test_room.update()
-
-    test_room.player.update(test_room)
-    test_room.playerProjectiles.update(test_room)
-
-    test_room.enemies.update(test_room)
-    test_room.enemyProjectiles.update(test_room)
-
-    test_room.allSprites.draw(disp)
-    test_room.allProjectiles.draw(disp)
-
-    test_room.inactivePlayerProjectiles.update(test_room)
-    test_room.inactivePlayerProjectiles.draw(disp)
-
-    test_room.playerProjectiles.draw(disp)
-    test_room.nme_overlays.draw(disp)
-
-    test_room.overlays.draw(disp)
-    test_room.overlays.update(test_room)
-
+    test_room.draw_contents(disp)
+    test_room.draw_boxes(disp)
     HUD.update(test_room)
     HUD.draw(disp)
 
-    #player_hud.update()
-    #player_hud.show(disp)
-
-    for x in test_room.player:
-        pygame.draw.rect(disp, green, x.rect, 4)
-    for x in test_room.player:
-        pygame.draw.rect(disp, red, x.hitbox, 4)
-
-    for y in test_room.enemies:
-        pygame.draw.rect(disp, blue, y.rect, 8)
-    for y in test_room.enemies:
-        pygame.draw.rect(disp, red, y.hitbox, 4)
-        #for z in y.hitboxes:
-            #pygame.draw.rect(disp, green, z, 5)
-
-    for z in test_room.allProjectiles:
-        pygame.draw.rect(disp, red, z.rect, 7)
-    for z in test_room.allProjectiles:
-        pygame.draw.rect(disp, green, z.hitbox, 4)
 
 
     #test_room.update()

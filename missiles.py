@@ -63,6 +63,7 @@ class missile(spritelings.entity):
         self.hitbox = self.rect.inflate(-(self.rect.width*0.5), -(self.rect.height * 0.5))
         self.hitbox.center = self.rect.center
         self.impact = overlays.generic_impact
+        self.contact = False
 
     class burn(object):
         def __init__(self, ignite_chance):
@@ -171,6 +172,11 @@ class missile(spritelings.entity):
                         dir[1] * self.velocity_mult)
         self.caster = self
         team.add(self)
+
+    def hit(self):
+        if not self.contact:
+            self.overlays.add(self.impact(self.rect.center, 32))
+            self.contact = True
 
 ########################
 #####   BOLTS   ########

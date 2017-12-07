@@ -1,11 +1,14 @@
 
 import pygame
-import os
-import player
-import spritelings
+
 import enemies
+import missiles
+import spritelings
 
 tile_scalar = 100
+red = (255, 0, 0)
+blue = (0, 0, 255)
+green = (0, 255, 0)
 
 class wall(spritelings.block):
     def __init__(self, facing,  *args):
@@ -13,49 +16,61 @@ class wall(spritelings.block):
         #hitbox_lookup = {'up': , 'down': , 'left': ,'right': }
         self.facing = facing
         if facing == 'up':
-            self.hitbox = self.rect.inflate(0, -(self.rect.height*.5))
+            self.hitbox = self.rect.inflate(0, -(self.rect.height*.65))
             self.hitbox.top = self.rect.top
         elif facing == 'down':
-            self.hitbox = self.rect.inflate(0, -(self.rect.height * .5))
+            self.hitbox = self.rect.inflate(0, -(self.rect.height * .65))
             self.hitbox.bottom = self.rect.bottom
         elif facing == 'left':
-            self.hitbox = self.rect.inflate(-(self.rect.width*05.), 0)
+            self.hitbox = self.rect.inflate(-(self.rect.width*0.65), 0)
             self.hitbox.left = self.rect.left
         elif facing == 'right':
-            self.hitbox = self.rect.inflate(-(self.rect.width*05.), 0)
+            self.hitbox = self.rect.inflate(-(self.rect.width*0.65), 0)
             self.hitbox.right = self.rect.right
+        self.hitboxes = [self.hitbox]
 
-    def act(self, target):
+    def act(self, targets):
         facing = self.facing
-        if facing == 'up':
-            target.hitbox.top = self.hitbox.bottom
-            #target.hitbox.bottom = self.hitbox.top
-            #target.hitbox.left = self.hitbox.right
-            #target.hitbox.right = self.hitbox.left
-            target.rect.center = target.hitbox.center
-        elif facing == 'down':
-            #target.hitbox.top = self.hitbox.bottom
-            target.hitbox.bottom = self.hitbox.top
-            #target.hitbox.left = self.hitbox.right
-            #target.hitbox.right = self.hitbox.left
-            target.rect.center = target.hitbox.center
-        elif facing == 'left':
-            #target.hitbox.top = self.hitbox.bottom
-            #target.hitbox.bottom = self.hitbox.top
-            target.hitbox.left = self.hitbox.right
-            #target.hitbox.right = self.hitbox.left
-            target.rect.center = target.hitbox.center
-        elif facing == 'right':
-            #target.hitbox.top = self.hitbox.bottom
-            #target.hitbox.bottom = self.hitbox.top
-            #target.hitbox.left = self.hitbox.right
-            target.hitbox.right = self.hitbox.left
-            target.rect.center = target.hitbox.center
+        for target in targets:
+            if isinstance(target, missiles.missile):
+                self.overlays.add(target.impact(target.rect.center))
+                if not target.contact:
+                    target.hit()
+                    target.contact = True
+                else:
+                    target.kill()
+            else:
+                if facing == 'up':
+                    target.hitbox.top = self.hitbox.bottom
+                    #target.hitbox.bottom = self.hitbox.top
+                    #target.hitbox.left = self.hitbox.right
+                    #target.hitbox.right = self.hitbox.left
+                    target.rect.center = target.hitbox.center
+                elif facing == 'down':
+                    #target.hitbox.top = self.hitbox.bottom
+                    target.hitbox.bottom = self.hitbox.top
+                    #target.hitbox.left = self.hitbox.right
+                    #target.hitbox.right = self.hitbox.left
+                    target.rect.center = target.hitbox.center
+                elif facing == 'left':
+                    #target.hitbox.top = self.hitbox.bottom
+                    #target.hitbox.bottom = self.hitbox.top
+                    target.hitbox.left = self.hitbox.right
+                    #target.hitbox.right = self.hitbox.left
+                    target.rect.center = target.hitbox.center
+                elif facing == 'right':
+                    #target.hitbox.top = self.hitbox.bottom
+                    #target.hitbox.bottom = self.hitbox.top
+                    #target.hitbox.left = self.hitbox.right
+                    target.hitbox.right = self.hitbox.left
+                    target.rect.center = target.hitbox.center
+
+
 
 class corner(spritelings.block):
     def __init__(self, facing, *args):
         super().__init__(*args)
-        self.hitbox = self.rect.inflate(-(self.rect.width * 05.), -(self.rect.height*0.5))
+        self.hitbox = self.rect.inflate(-(self.rect.width * 0.5), -(self.rect.height*0.5))
         if facing == 'top_left':
             self.hitbox.top = self.rect.top
             #self.hitbox.bottom = self.rect.bottom
@@ -80,6 +95,10 @@ class corner(spritelings.block):
 
 class fence(wall):
     pass
+
+class floor(spritelings.block):
+    def __init__(self, *args):
+        super().__init__(*args)
 
 #finish writing door
 class door(spritelings.block):
@@ -109,19 +128,20 @@ class theme(object):
     def populate(self, seed):
         return self.enemy_lookup['basic_baddy'](70, 70)
 
-    def build(self, size):
+    def build(self, border):
         all_walls = pygame.sprite.Group()
-        for i in range(0, size[0]*100, tile_scalar):
-            all_walls.add(wall('up', self.image_lookup['tw'], (i, 0)))
+        for i in range(border.left, border.right, tile_scalar):
+            all_walls.add(wall('up', self.image_lookup['tw'], (i+50, border.top)))
+            all_walls.add(wall('down', self.image_lookup['bw'], (i+50, border.bottom)))
+        for j in range(border.top, border.bottom, tile_scalar):
+            all_walls.add(wall('left', self.image_lookup['lw'], (border.left, j+50)))
+            all_walls.add(wall('right', self.image_lookup['rw'], (border.right, j+50)))
 
-        for j in range(0, size[1]*100, tile_scalar):
-            all_walls.add(wall('right', self.image_lookup['rw'], (i, j)))
+        all_walls.add(corner('top_left', self.image_lookup['tlc'], border.topleft))
+        all_walls.add(corner('bottom_left', self.image_lookup['blc'], border.bottomleft))
+        all_walls.add(corner('top_right', self.image_lookup['trc'], border.topright))
+        all_walls.add(corner('bottom_right', self.image_lookup['brc'], border.bottomright))
 
-        for i in range(0, size[0]*100, tile_scalar):
-            all_walls.add(wall('bottom', self.image_lookup['bw'], (i, j)))
-
-        for j in range(0, size[1]*100, tile_scalar):
-            all_walls.add(wall('left', self.image_lookup['lw'], (i, 0)))
 
         return all_walls
 
@@ -138,8 +158,9 @@ size_limit = (16, 11)
 
 
 #finsih room
-class room(object):
-    def __init__(self, size, seed, theme,  difficulty, player_spawn= (100, 100), hub = False):
+class room(pygame.sprite.Sprite):
+    def __init__(self, screen, size, seed, theme,  difficulty, player_spawn= (100, 100), hub = False):
+        super(room, self).__init__()
         if hub:
             pass
         else:
@@ -157,13 +178,15 @@ class room(object):
                 for x in range(0, int(self.sizeX)):
                         self.floorSurf.blit(self.theme.image_lookup['f'], (x * tile_scalar, y * tile_scalar))
 
-        self.fSurf = self.floorSurf
-        self.rect = self.fSurf.get_rect()
+        self.image = self.floorSurf
+        self.rect = self.image.get_rect()
+        self.rect.center = screen.get_rect().center
+        self.floor = pygame.sprite.Group(floor(self.image, self.rect.center))
 
         self.allSprites = pygame.sprite.Group()
         self.allProjectiles = pygame.sprite.Group()
 
-        self.walls = theme.build(size)
+        self.walls = theme.build(self.rect)
 
         self.player = pygame.sprite.GroupSingle()
         self.playerProjectiles = pygame.sprite.Group()
@@ -175,13 +198,16 @@ class room(object):
         self.nme_overlays = pygame.sprite.Group()
 
         self.overlays = pygame.sprite.Group()
+        self.allActors= pygame.sprite.Group()
+
+
 
 
 
     def cleanup(self):
         for x in self.allProjectiles:
             if not self.rect.contains(x.rect):
-                #print('deleted a spell')
+                x.hit()
                 x.kill()
                 x = None
                 #if x:
@@ -191,19 +217,53 @@ class room(object):
     def addPlayer(self, player):
         self.allSprites.add(player)
         self.player.add(player)
+        if not self.rect.contains(player.rect):
+            player.rect.top = self.rect.top
+            player.rect.left = self.rect.left
 
     #supposed to be one of the primary interface methods between sprites/room and level. currently it only adds
     #stuff to allSprites
     def update(self):
-        self.allSprites.add(self.enemies, self.player)
-        self.allProjectiles.add(self.playerProjectiles, self.enemyProjectiles)
-        self.cleanup()
+        self.allSprites.add(self.player,
+                            self.enemies,
+                            self.nme_overlays,
+                            self.overlays
+                            )
+        self.allActors.add(self.player, self.enemies)
+        self.allProjectiles.add(self.playerProjectiles,
+                                self.inactivePlayerProjectiles,
+                                self.enemyProjectiles
+                                )
+        self.allSprites.update(self)
+        self.allProjectiles.update(self)
+
+        #self.cleanup()
         self.check_collision()
 
-    def draw(self, disp):
-        pass
+    def draw_contents(self, disp):
+        self.floor.draw(disp)
+        self.walls.draw(disp)
+        self.enemies.draw(disp)
+        self.nme_overlays.draw(disp)
+        self.player.draw(disp)
+        self.inactivePlayerProjectiles.draw(disp)
+        self.overlays.draw(disp)
+        self.enemyProjectiles.draw(disp)
+        self.playerProjectiles.draw(disp)
+
 
     def check_collision(self):
+        wall_bumps = pygame.sprite.groupcollide(self.walls, self.allActors, 0, 0, spritelings.collide_hitbox)
+        if wall_bumps:
+            print(wall_bumps)
+            for manatee in wall_bumps:
+                manatee.act(wall_bumps[manatee])
+
+        wall_shots = pygame.sprite.groupcollide(self.walls, self.allProjectiles, 0, 0, spritelings.collide_hitbox)
+        if wall_shots:
+            for misses in wall_shots:
+                misses.act(wall_shots[misses])
+
         player_hitlist_proj = pygame.sprite.groupcollide(self.enemyProjectiles, self.player, 0, 0, spritelings.collide_hitbox)
         if player_hitlist_proj:
             #print(player_hitlist_proj)
@@ -221,3 +281,21 @@ class room(object):
             #print(enemy_hitlist)
             for bullet in enemy_hitlist:
                 bullet.act(enemy_hitlist[bullet])
+
+    def draw_boxes(self, disp):
+        test_room = self
+        for w in test_room.walls:
+            pygame.draw.rect(disp, green, w.rect, 4)
+            pygame.draw.rect(disp, red, w.hitbox, 4)
+
+        for x in test_room.player:
+            pygame.draw.rect(disp, green, x.rect, 4)
+            pygame.draw.rect(disp, red, x.hitbox, 4)
+
+        for y in test_room.enemies:
+            pygame.draw.rect(disp, blue, y.rect, 8)
+            pygame.draw.rect(disp, red, y.hitbox, 4)
+
+        for z in test_room.allProjectiles:
+            pygame.draw.rect(disp, red, z.rect, 7)
+            pygame.draw.rect(disp, green, z.hitbox, 4)
