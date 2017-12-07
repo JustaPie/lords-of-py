@@ -14,12 +14,16 @@ bottom_left = pygame.transform.flip(bottom_right, 1, 0)
 down = spritesheet.subsurface((257,0), (38,126))
 top = spritesheet.subsurface((299, 0), (38,126))
 
-
+shot = pygame.mixer.Sound("audio/burst_laser.wav")
+died = pygame.mixer.Sound("audio/player_death.wav")
+ow = pygame.mixer.Sound("audio/ow.wav")
+swap = pygame.mixer.Sound("audio/spell_swap.wav")
+died.set_volume(1)
 class player(spritelings.actor):
     def __init__(self, pos, original = None):
         super().__init__(spritesheet, pos)
 
-        self.hp = 300
+        self.hp = 100
         self.max_focus = 150
         self.focus = 0
         self.charge_level = 1
@@ -50,6 +54,8 @@ class player(spritelings.actor):
         if self.hp <= 0:
             self.spell.kill()
             self.kill()
+            died.play()
+
 
         self.controller.update(room)
         self.check_state()
@@ -66,16 +72,19 @@ class player(spritelings.actor):
             self.spell.kill()
             self.page += 1
             self.spell = self.spellbook[self.page](self)
+            swap.play()
 
     def prev_spell(self):
         if self.page > 1:
             self.spell.kill()
             self.page -= 1
             self.spell = self.spellbook[self.page](self)
+            swap.play()
 
     def cast(self, room):
         self.spell.fire(self.facing, room.playerProjectiles)
         self.spell = self.spellbook[self.page](self)
+        shot.play()
 
     def anim(self):
         pass
@@ -84,6 +93,7 @@ class player(spritelings.actor):
         print(type(bastard))
         self.rect.move_ip(bastard.knockback)
         self.hp -= bastard.damage
+        ow.play()
         self.spell.kill()
         if isinstance(bastard, missiles.missile):
             bastard.kill()

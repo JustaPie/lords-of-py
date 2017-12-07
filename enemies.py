@@ -243,6 +243,7 @@ blue_bouncer_img = bouncer_sheet.subsurface((185, 1), (181, 181))
 black_bouncer_img = bouncer_sheet.subsurface((373, 1),(181, 181))
 blind_bouncer_img = bouncer_sheet.subsurface((558, 0), (181, 181))
 baby_bouncer_img = pygame.transform.scale(basic_bouncer_img, (64, 64))
+ow = pygame.mixer.Sound("audio/ow.wav")
 
 #standard version; bounces off walls and bullets, flying away from them on contact
 class bouncer(enemy):
@@ -283,6 +284,7 @@ class bouncer(enemy):
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
+            ow.play()
             self.velocity = (self.velocity[0]*weapon.stopping_power, self.velocity[1]*weapon.stopping_power)
     #so I'm handling missile penetration a bit weirdly here. All bullets travel at a given velocity, when it strikes a
     #enemy, the enemy slows the bullet, when velocity drops to a certain point, the bullet stops dealing damage
