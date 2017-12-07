@@ -218,6 +218,7 @@ class acid_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, melt_bolt)
         self.effects.append(self.melt(10))
+        self.impact = overlays.acid_impact
 
 
 ###########################

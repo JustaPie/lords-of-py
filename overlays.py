@@ -116,6 +116,7 @@ impacts = pygame.image.load('overlays\impacts.png').convert_alpha()
 standard_impact = impacts.subsurface((2,2), (128, 128))
 hot_impact = impacts.subsurface((130,1), (128, 128))
 chill_impact = impacts.subsurface((260, 1), (128, 128))
+splat_impact = impacts.subsurface((390, 1), (128, 128))
 
 class impact(spritelings.overlay):
     def __init__(self, img,  pos, variance = 8):
@@ -149,3 +150,8 @@ class cold_impact(impact):
         if self.timer >= 16:
             self.kill()
         self.image = pygame.transform.scale(chill_impact, (self.rect.width+self.timer, self.rect.height+self.timer))
+
+class acid_impact(impact):
+    def __init__(self, pos, size=8):
+        super().__init__(pygame.transform.scale(splat_impact, (size, size)), pos)
+        self.timer = 16
