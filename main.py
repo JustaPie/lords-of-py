@@ -9,11 +9,15 @@ green = (0, 255, 0)
 plyr_loc = (100, 100)
 nme1_loc = (500, 500)
 fps = 128
+<<<<<<< HEAD
 xsize = 1440
 ysize = 800
 screen_size = (xsize, ysize)
 
 pygame.mixer.pre_init(44100, 16, 2, 4096)
+=======
+screen_size = (1500, 800)
+>>>>>>> 5fd37743673fe686066d28113c92c47d6b3a32ea
 
 pygame.init()
 
@@ -25,10 +29,9 @@ pygame.mixer.pre_init(44100, 16, 2, 4096)
 pygame.mixer.music.load("audio/worms.ogg")
 import player
 import room
-import missiles
-import enemies
 import overlays
 
+<<<<<<< HEAD
 class Particle():
     def __init__(self, startx, starty, col, pause):
         self.x = startx
@@ -69,9 +72,15 @@ test_room_code = ['ffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
                   'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
                   'fffffffffffffffff','fffffffffffffffff','fffffffffffffffff',
                   'fffffffffffffffff', 'fffffffffffffffff']
+=======
+size = (12, 8)
+seed = 124
+theme = room.theme()
+dif = 1
+>>>>>>> 5fd37743673fe686066d28113c92c47d6b3a32ea
 
 
-test_room = room.room(test_room_code)
+test_room = room.room(disp, size, seed, theme, dif)
 
 pc = player.player(plyr_loc)
 HUD = overlays.hud(pc, disp)
@@ -79,6 +88,7 @@ hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
 
+<<<<<<< HEAD
 bumper = enemies.bouncer((600, 600))
 bumper.set_target(pc)
 test_room.enemies.add(bumper)
@@ -173,6 +183,8 @@ while True:
         continue
     break
 #########################################
+=======
+>>>>>>> 5fd37743673fe686066d28113c92c47d6b3a32ea
 
 running = True
 while (running):
@@ -182,47 +194,16 @@ while (running):
         elif event.type == pygame.KEYDOWN:
             pass
 
-    disp.blit(test_room.fSurf, (0,0))
-
-    test_room.player.update(test_room)
-    test_room.playerProjectiles.update(test_room)
-
-    test_room.enemies.update(test_room)
-    test_room.enemyProjectiles.update(test_room)
-
-    test_room.allSprites.draw(disp)
-    test_room.allProjectiles.draw(disp)
-
-    test_room.inactivePlayerProjectiles.update(test_room)
-    test_room.inactivePlayerProjectiles.draw(disp)
-
-    test_room.nme_overlays.draw(disp)
-
+    test_room.update()
+    test_room.draw_contents(disp)
+    test_room.draw_boxes(disp)
     HUD.update(test_room)
     HUD.draw(disp)
 
-    #player_hud.update()
-    #player_hud.show(disp)
-
-    for x in test_room.player:
-        pygame.draw.rect(disp, green, x.rect, 4)
-    for x in test_room.player:
-        pygame.draw.rect(disp, red, x.hitbox, 4)
-
-    for y in test_room.enemies:
-        pygame.draw.rect(disp, blue, y.rect, 8)
-    for y in test_room.enemies:
-        pygame.draw.rect(disp, red, y.hitbox, 4)
-        for z in y.hitboxes:
-            pygame.draw.rect(disp, green, z, 5)
-
-    for z in test_room.allProjectiles:
-        pygame.draw.rect(disp, red, z.rect, 7)
-    for z in test_room.allProjectiles:
-        pygame.draw.rect(disp, green, z.hitbox, 4)
 
 
-    test_room.update()
+    #test_room.update()
+    #test_room.draw(disp)
 
 
     clock = pygame.time.Clock()

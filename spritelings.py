@@ -7,22 +7,7 @@ def collide_hitbox(spriteA, spriteB):
                 return True
     else:
         return False
-'''
-def burn(me, magnitude, duration):
-    pass
 
-def melt(me, magnitude, duration):
-    pass
-
-def freeze(me, magnitude, duration):
-    pass
-
-def flash(me, duration):
-    pass
-
-def stagger(me, duration):
-    pass
-'''
 
 class cond_queue(object):
     def __init__(self, subject, *args):
@@ -34,17 +19,24 @@ class cond_queue(object):
             self.size += 1
 
     def __call__(self):
-        #print('calling cond_queue')
+        #print('calling cond_queue on: ', self.internals)
         for eff in self.internals:
             print('eff = ', eff, type(eff))
+            result = eff(self.subject)
+            if not result:
+                self.internals.remove(eff)
 
-    def pop(self):
-        temp = self.internals[0]
-        self.internals.remove(self.internals[0])
+    def add(self, cond):
+        print('adding condition')
+        matched = False
+        for curr in self.internals:
+           if curr.match == cond.match:
+               curr.extend(cond)
+               matched = True
+        if not matched:
+            self.internals.append(cond)
 
-    def apply(self, *args):
-        print('applying ', *args)
-        self.internals.append(args)
+
 
 class entity(pygame.sprite.Sprite):
     def __init__(self, img, pos):
@@ -53,13 +45,11 @@ class entity(pygame.sprite.Sprite):
         self.rect = img.get_rect()
         self.rect.center = pos
         self.hitbox = self.rect
-
+        self.effects = []
+        self.hitboxes = [self.hitbox]
 
         self.velocity = (0,0)
         self.knockback = (0,0)
-
-        self.state = 'normal'
-
         #eventual replacement for the state variable. this will contain a list of functions/functors that will be performed on the sprite during the update
         self.condition = cond_queue(self)
         self.overlays = pygame.sprite.Group()
@@ -70,6 +60,12 @@ class entity(pygame.sprite.Sprite):
     #resistance is how well the subject resists being pierced by projectiles. Every frame, the subject subtracts this value from
     # the velocity of any hostile projectile in contact with it.
         self.resistance = (1, 1)
+
+        self.skip = False
+
+    def apply(self, *args):
+        for arg in args:
+            self.condition.add(arg)
 
     def set_size(self, size):
         pass
@@ -83,28 +79,9 @@ class entity(pygame.sprite.Sprite):
     def update(self, room):
         pass
 
-    #to be phased out and replaced with the conditions  mechanic
-    def check_state(self):
-        if self.temp < 0:
-            self.temp += 1
-            if self.temp < self.max_cold:
-                print(self, 'is frozen')
-                self.state = 'frozen'
-                self.velocity = (0,0)
-        elif self.temp > 0:
-            self.temp -= 1
-            if self.temp > self.max_heat:
-                print(self, 'is burning')
-                self.state = 'burning'
-
-        if self.state == 'frozen':
-            self.velocity = (0, 0)
-            if self.temp >=0:
-                self.state = 'normal'
-
-        if self.state == 'burning':
-            self.hp -= 15
-
+class blank(pygame.sprite.Sprite):
+    def __init__(self, *args):
+        pass
 
 class actor(entity):
     def __init__(self, img, pos):
@@ -112,6 +89,11 @@ class actor(entity):
         self.facing = (0,0)
         self.cast_from = self.rect.center
         self.damage = 0
+        self.flashing = 0
+        self.fire_sprite = blank
+        self.ice_sprite = blank
+        self.acid_sprite = blank
+
 
     #simple, inheritable function designed to allow both the player and enemies to auto-track a target
     def track(self, target):
@@ -136,90 +118,53 @@ class actor(entity):
     def cast(self, room):
         self.spell.fire(self.facing, room)
 
-#im trying to do these as nested classes so we can re-define them for individual classes of enemies. That way, we can
-# get different behaviors for different enemies
-###new/alt plan: nested classes in missiles/projectiles
-    class burn(object):
-        def __init__(self, subject, ignite_chance):
-            print('doin a burn')
-            self.ignite = ignite_chance
-            self.duration = 128 * 3
-            self.subject = subject
+    class burning(object):
+        def __init__(self, duration):
+            #super().__init__()
+            self.match = 'burning'
+            self.duration = duration
+            self.ignited = False
+            self.layer = None
 
-        def __call__(self, room):
-            print('callin a freeze')
-            subject = self.subject
-            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
-            print(freeze_factor)
-            if freeze_factor >= 1:
-                print("I should be frozen")
-                subject.velocity = 0
-                room.overlays.add(subject.frozen())
-            x = subject.velocity[0]
-            y = subject.velocity[1]
-            x = x * freeze_factor
-            y = y * freeze_factor
-            subject.velocity = (x, y)
-            self.duration = 128 * 10
-
+        def __call__(self, target):
+            from random import  randint
+            if not self.ignited:
+                self.layer = target.fire_sprite(target)
+                target.overlays.add(self.layer)
+                self.ignited = True
+            target.hp -= randint(0, 1)
             self.duration -= 1
             if self.duration <= 0:
-                self.magnitude = 0
+                target.overlays.remove(self.layer)
                 return False
-            return True
+            else:
+                return True
 
-        def extend(self, mag):
-            self.magnitude += mag
-            if self.duration < 128 * 3:
-                self.duration = 128 * 3
+        def extend(self, blah):
+            pass
 
-    class melt(object):
-        pass
+    class frozen(object):
+        def __init__(self, duration):
+            self.duration = duration
+            self.cubed = False
+            self.match = 'frozen'
+            self.layer = None
 
-    class freeze(object):
-        def __init__(self, subject, magnitude):
-            print('doin a freeze')
-            self.magnitude = magnitude
-            self.duration = 128*3
-            self.subject = subject
-
-        def __call__(self, room):
-            print('callin a freeze')
-            subject = self.subject
-            freeze_factor = (abs(subject.max_cold) - self.magnitude) / abs(subject.max_cold)
-            print(freeze_factor)
-            if freeze_factor >=1:
-                print("I should be frozen")
-                subject.velocity = 0
-                room.overlays.add(subject.frozen())
-            x = subject.velocity[0]
-            y = subject.velocity[1]
-            x = x*freeze_factor
-            y = y*freeze_factor
-            subject.velocity = (x, y)
-            self.duration = 128*10
-
-
-            self.duration -= 1
+        def __call__(self, target):
+            if not self.cubed:
+                self.layer = target.ice_sprite(target)
+                target.overlays.add(self.layer)
+                self.cubed = True
+            target.skip = True
+            self.duration -=1
             if self.duration <= 0:
-                self.magnitude = 0
+                target.overlays.remove(self.layer)
                 return False
-            return True
+            else:
+                return True
 
-        def extend(self, mag):
-            self.magnitude += mag
-            if self.duration< 128*3:
-                self.duration = 128*3
-
-
-    class flash(object):
-        pass
-
-    class stagger(object):
-        pass
-
-    def affect(self, cond):
-        self.condition.apply(cond)
+        def extend(self, blah):
+            pass
 
 class player(actor):
     def __init__(self, img, pos):
