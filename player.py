@@ -1,58 +1,106 @@
 
 import pygame
-import sys
+import spritelings
+import controllers
+import missiles
 
-class player(pygame.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
-        self.name = 'PC'
+spritesheet = pygame.image.load('people\smol_silvia.png').convert_alpha()
+neutral = spritesheet.subsurface((0,0), (59,126))
+right = spritesheet.subsurface((60,0), (67,126))
+top_right = spritesheet.subsurface((128, 0), (58, 126))
+bottom_right = spritesheet.subsurface((187,0), (67,126))
+left = pygame.transform.flip(right, 1, 0)
+top_left = pygame.transform.flip(top_right, 1, 0)
+bottom_left = pygame.transform.flip(bottom_right, 1, 0)
+down = spritesheet.subsurface((257,0), (38,126))
+top = spritesheet.subsurface((299, 0), (38,126))
 
-        self.left =  pygame.image.load('p_arr_lt.png').convert_alpha()
-        self.right = pygame.image.load('p_arr_rt.png').convert_alpha()
-        self.up = pygame.image.load('p_arr_up.png').convert_alpha()
-        self.down = pygame.image.load('p_arr_dn.png').convert_alpha()
-        self.image = self.up
+shot = pygame.mixer.Sound("audio/burst_laser.wav")
+died = pygame.mixer.Sound("audio/player_death.wav")
+ow = pygame.mixer.Sound("audio/ow.wav")
+swap = pygame.mixer.Sound("audio/spell_swap.wav")
+died.set_volume(1)
+heros_death = pygame.USEREVENT + 1
+player_death_event = pygame.event.Event(heros_death)
+
+class player(spritelings.actor):
+    def __init__(self, pos, original = None):
+        super().__init__(spritesheet, pos)
+
+        self.hp = 20
+        self.max_focus = 150
+        self.focus = 0
+        self.charge_level = 1
+
+        self.torso = {(0,0):neutral, (1,0):right, (1,-1):top_right, (1,1):bottom_right, (0,-1):top,
+                      (0,1):down, (-1,0):left, (-1,-1):top_left, (-1,1):bottom_left}
+
+        self.image = neutral
         self.rect = self.image.get_rect()
-        print(self.rect)
-        self.xPos = pos[0]
-        self.yPos = pos[1]
 
-    def move(self):
-        key = pygame.key.get_pressed()
-        if key[pygame.K_w]:
-            self.image = self.up
-            self.yPos-=1
-            self.rect = self.rect.move(0, -1)
-
-        if key[pygame.K_a]:
-            self.image = self.left
-            self.xPos-=1
-            self.rect = self.rect.move(-1, 0)
-
-        if key[pygame.K_s]:
-            self.image = self.down
-            self.yPos+=1
-            self.rect = self.rect.move(0, 1)
-
-        if key[pygame.K_d]:
-            self.image = self.right
-            self.xPos+=1
-            self.rect = self.rect.move(1, 0)
-
-        print(self.rect)
-        return (self.xPos,self.yPos)
+        center = self.rect.center
+        self.hitbox = self.rect.inflate(-20, -39)
+        self.hitbox.center = center
+        self.hitboxes = [self.hitbox]
 
 
-class baddy(pygame.sprite.Sprite):
-    def __init__(self, pos):
-        super().__init__()
+        self.facing = (0,0)
+        self.velocity = (0,0)
+        self.speed = 8
 
-        self.image = pygame.image.load('debug_enemy.png').convert_alpha()
-        self.rect = self.image.get_rect()
-        self.xPos = pos[0]
-        self.yPos = pos[1]
-        self.image = self.image
-        self.rect = self.rect.move(self.xPos,self.yPos)
+        self.controller = controllers.auto(self)
 
-    def move(self):
-        return (self.xPos, self.yPos)
+        self.spellbook = {1:missiles.atomic_burst, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.kinetic_splitter}
+        self.page = 1
+        self.spell = self.spellbook[1](self)
+
+    def update(self, room):
+        if self.hp <= 0:
+            self.spell.kill()
+            self.kill()
+            died.play()
+            pygame.event.post(player_death_event)
+
+        self.controller.update(room)
+        self.check_state()
+        room.inactivePlayerProjectiles.add(self.spell)
+
+        self.image = self.torso[self.facing]
+
+        self.rect.move_ip(self.velocity)
+        self.hitbox.center = self.rect.center
+        self.spell.rect.center = self.rect.center
+
+    def next_spell(self):
+        if self.page < len(self.spellbook):
+            self.spell.kill()
+            self.page += 1
+            self.spell = self.spellbook[self.page](self)
+            swap.play()
+
+    def prev_spell(self):
+        if self.page > 1:
+            self.spell.kill()
+            self.page -= 1
+            self.spell = self.spellbook[self.page](self)
+            swap.play()
+
+    def cast(self, room):
+        self.spell.fire(self.facing, room.playerProjectiles)
+        self.spell = self.spellbook[self.page](self)
+        shot.play()
+
+    def anim(self):
+        pass
+
+    def react(self, bastard):
+        print(type(bastard))
+        self.rect.move_ip(bastard.knockback)
+        self.hp -= bastard.damage
+        ow.play()
+        self.spell.kill()
+        if isinstance(bastard, missiles.missile):
+            bastard.kill()
+
+
+
