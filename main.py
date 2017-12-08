@@ -7,6 +7,7 @@ red = (255, 0, 0)
 blue = (0, 0, 255)
 green = (0, 255, 0)
 
+
 plyr_loc = (100, 100)
 nme1_loc = (500, 500)
 fps = 128
@@ -24,6 +25,8 @@ pygame.init()
 print('correct test')
 
 disp = pygame.display.set_mode(screen_size)
+
+
 
 pygame.mixer.pre_init(44100, 16, 2, 4096)
 pygame.mixer.music.load("audio/worms.ogg")
@@ -109,7 +112,7 @@ intro = True
 pygame.mixer.music.set_volume(1)
 pygame.mixer.music.play(-1)
 
-while intro :
+while intro:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -180,21 +183,18 @@ while True:
             if counter == 1:
                 message1.update()
             elif counter == 2:
-                message1.update()
                 message2.update()
             elif counter == 3:
-                message1.update()
-                message2.update()
                 message3.update()
 
     else:
         disp.fill(pygame.color.Color('black'))
-        if counter ==1:
+        if counter == 1:
             message1.draw(disp)
-        if counter ==2:
+        if counter == 2:
             message1.draw(disp)
             message2.draw(disp)
-        if counter ==3:
+        if counter == 3:
             message1.draw(disp)
             message2.draw(disp)
             message3.draw(disp)
@@ -207,6 +207,8 @@ while True:
         continue
     break
 #########################################
+bkgd = pygame.image.load("Fog.png").convert_alpha()#for fog
+scroll = 0 #for fog
 
 running = True
 while (running):
@@ -266,6 +268,15 @@ while (running):
 
     clock = pygame.time.Clock()
     msElapsed = clock.tick(fps)
+
+    #####fog
+    rel = scroll % bkgd.get_rect().width
+    disp.blit(bkgd, (rel - bkgd.get_rect().width, 0))
+
+    if rel < 1600:
+        disp.blit(bkgd, (rel, 0))
+
+    scroll += 2
 
     pygame.display.update()
 

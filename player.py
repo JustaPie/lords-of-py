@@ -15,7 +15,9 @@ bottom_left = pygame.transform.flip(bottom_right, 1, 0)
 down = spritesheet.subsurface((257,0), (38,126))
 top = spritesheet.subsurface((299, 0), (38,126))
 
+
 shot = pygame.mixer.Sound("audio/burst_laser.wav")
+spell_list = [shot, ]
 died = pygame.mixer.Sound("audio/player_death.wav")
 ow = pygame.mixer.Sound("audio/ow.wav")
 swap = pygame.mixer.Sound("audio/spell_swap.wav")
