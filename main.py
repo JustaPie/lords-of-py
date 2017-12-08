@@ -55,7 +55,7 @@ while (running):
 
     pygame.event.pump()
 
-    #if test_room.enemies():
-        #player.hp = 600
-        #dif += 1
-        #test_room.next_level(dif)
+    if not test_room.enemies.has():
+        player.hp = 600
+        dif += 1
+        test_room.next_level(dif)

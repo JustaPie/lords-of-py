@@ -205,14 +205,14 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 class fleye(enemy):
     def __init__(self, pos, level = 1):
         #
-        super().__init__(pygame.transform.scale(feyenal_fleye, (level * 100, level * 80)), pos)
-        self.rect = self.image.get_rect()
-        self.eye_size = int(level*60*0.226)
+        super().__init__(pygame.transform.scale(feyenal_fleye, (level * 90, level * 45)), pos)
+        #self.rect = self.image.get_rect()
+        self.eye_size = int(level*60)
 
         self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
         self.hitbox.center = self.rect.center
-        self.hp = 60+20*level
-        self.damage = 4+3*level
+        self.hp = 60*level
+        self.damage = 4+2*level
         self.dest = self.rect.center
         self.acc = .2
         self.timer = 128*20
@@ -224,9 +224,9 @@ class fleye(enemy):
         self.challenge = 2 + 1*level
 
     def update(self, room):
-        #if self.hp <= 0:
-            #self.eye.kill()
-            #self.kill()
+        if self.hp <= 0:
+            self.eye.kill()
+            self.kill()
 
         if not self.eye:
             self.eye = overlays.eyeball(self, room, self.eye_size)
@@ -286,6 +286,7 @@ class bouncer(enemy):
         self.timer = 0
         self.spell = missiles.ice_bolt
         self.core = self.rect.inflate(-size*.51, -size*0.51)
+        self.hitbox = self.core
         self.top = pygame.Rect(*self.rect.center, size/4, size/4)
 
         self.bottom = pygame.Rect(*self.rect.center, size/4, size/4)

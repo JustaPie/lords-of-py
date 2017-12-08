@@ -70,7 +70,7 @@ bottom_right = eye_chart.subsurface((128, 128), (65, 65))
 
 class eyeball(spritelings.overlay):
     def __init__(self, subject, room, scale=64):
-        super().__init__(neutral, subject.rect.center)
+        super().__init__(neutral, subject.hitbox.center)
         self.subject = subject
         size = (int(scale*.35), int(scale*.35))
         fix = pygame.transform.scale
