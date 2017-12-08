@@ -22,7 +22,7 @@ import overlays
 size = (12, 8)
 seed = 124
 theme = room.theme()
-dif = 10
+dif = 1
 
 
 test_room = room.room(disp, size, seed, theme, dif)
@@ -32,23 +32,6 @@ HUD = overlays.hud(pc, disp)
 hp = overlays.healthbar(pc, HUD)
 
 test_room.addPlayer(pc)
-
-#test_room.overlays.add(hp)
-
-'''
-fleye1 = enemies.fleye((500, 500))
-test_room.enemies.add(fleye1)
-fleye1.set_target(pc)
-
-''''''
-fleye2 = enemies.fleye((400, 400))
-test_room.enemies.add(fleye2)
-fleye2.set_target(pc)
-
-fleye3 = enemies.fleye((600, 600))
-test_room.enemies.add(fleye3)
-fleye3.set_target(pc)
-'''
 
 running = True
 while (running):
@@ -64,15 +47,14 @@ while (running):
     HUD.update(test_room)
     HUD.draw(disp)
 
-
-
-    #test_room.update()
-    #test_room.draw(disp)
-
-
     clock = pygame.time.Clock()
     msElapsed = clock.tick(fps)
 
     pygame.display.update()
 
     pygame.event.pump()
+
+    if test_room.enemies.empty():
+        player.hp = 600
+        dif += 1
+        test_room.next_level(dif)

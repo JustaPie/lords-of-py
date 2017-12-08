@@ -129,14 +129,19 @@ class theme(object):
                              3:enemies.blind_bouncer, 4:enemies.fleye, 5:enemies.lugg,
                              6:enemies.sneyeper, 7:enemies.blue_sneyeper, 8:enemies.green_sneyeper}
 
-    def populate(self, space, budget, predef):
+    def populate(self, space, budget, predef = None):
         from random import randint
         difficulty = 0
         pop = pygame.sprite.Group()
         while difficulty<budget:
             species = randint(0, 8)
-            level = budget/10
-            pop.add()
+            level = budget/2
+            x = randint(space.left, space.right)
+            y = randint(space.top, space.bottom)
+            newb = self.enemy_lookup[species]((x,y), randint(1,level))
+            pop.add(newb)
+            difficulty+= newb.assess()
+        return pop
 
 
     def build(self, border):
@@ -314,3 +319,6 @@ class room(pygame.sprite.Sprite):
         for z in test_room.allProjectiles:
             pygame.draw.rect(disp, red, z.rect, 7)
             pygame.draw.rect(disp, green, z.hitbox, 4)
+
+    def next_level(self, difficulty):
+        self.enemies.add(self.theme.populate(self.theme.populate(self.rect, difficulty*10)))

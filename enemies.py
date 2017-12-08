@@ -203,12 +203,14 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 
 #just sorta flies around the player at semi-ridiculous speeds.
 class fleye(enemy):
-    def __init__(self, pos, level = 2):
-        super().__init__(feyenal_fleye, pos)
+    def __init__(self, pos, level = 1):
+
+        super().__init__(pygame.transform.scale(feyenal_fleye, (level*60, level*20)), pos)
+        self.eye_size = int(level*60*0.226)
         self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
         self.hitbox.center = self.rect.center
-        self.hp = 30
-        self.damage = 10
+        self.hp = 60*level
+        self.damage = 4+3*level
         self.dest = self.rect.center
         self.acc = .2
         self.timer = 128*20
@@ -225,7 +227,7 @@ class fleye(enemy):
             self.kill()
 
         if not self.eye:
-            self.eye = overlays.eyeball(self, room)
+            self.eye = overlays.eyeball(self, room, self.eye_size)
         self.eye.update(room)
 
         self.timer -= 1
@@ -466,7 +468,7 @@ class sneyeper(enemy):
         self.eye_size = 20*level
         super().__init__(pygame.transform.scale(sneyeper_red, (self.size,self.size)), pos)
         self.spell = missiles.fire_bolt
-        self.eye = overlays.eyeball(self.rect.center, self.eye_size)
+        self.eye = None
         self.challenge = level
         self.timer = 0
         if level > 4:
@@ -476,7 +478,7 @@ class sneyeper(enemy):
     def update(self, room):
         super().update(room)
         if not self.eye:
-            self.eye = overlays.eyeball(self, room)
+            self.eye = overlays.eyeball(self, room, self.eye_size)
         self.eye.update(room)
         if self.timer > 0:
             self.timer -= 1
@@ -486,7 +488,7 @@ class sneyeper(enemy):
             self.timer = 356
 
 
-class blue_sneyeper(enemy):
+class blue_sneyeper(sneyeper):
     def __init__(self, pos, level = 2):
         super().__init__(pos, level)
         self.spell = missiles.ice_bolt
@@ -495,7 +497,7 @@ class blue_sneyeper(enemy):
             self.spell = missiles.freezing_burst
 
 
-class green_sneyeper(enemy):
+class green_sneyeper(sneyeper):
     def __init__(self, pos, level = 2):
         super().__init__(pos, level)
         self.spell = missiles.acid_bolt

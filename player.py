@@ -2,6 +2,7 @@ import pygame
 
 import controllers
 import missiles
+import overlays
 import spritelings
 
 spritesheet = pygame.image.load('people\smol_silvia.png').convert_alpha()
@@ -51,6 +52,7 @@ class player(spritelings.actor):
         self.spellbook = {1:missiles.acid_bolt, 2:missiles.freezing_burst, 3:missiles.fire_bolt, 4:missiles.ice_bolt, 5:missiles.lava_burst, 6:missiles.atomic_burst}
         self.page = 1
         self.spell = self.spellbook[1](self)
+        self.fire_sprite = overlays.fire_sprite_cluster
 
     def update(self, room):
         if self.hp <= 0:
