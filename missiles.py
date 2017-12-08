@@ -207,7 +207,7 @@ class kinetic_bolt(bolt):
 class fire_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, hot_bolt)
-        self.damage = 2
+        self.damage = 6
         self.effects.append(self.burn(15))
         self.impact = overlays.fiery_impact
 
@@ -215,7 +215,7 @@ class fire_bolt(bolt):
 class ice_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, cold_bolt)
-        self.damage = 2
+        self.damage = 5
         self.effects.append(self.freeze(15))
         self.impact = overlays.cold_impact
 
@@ -223,6 +223,7 @@ class ice_bolt(bolt):
 class acid_bolt(bolt):
     def __init__(self, caster):
         super().__init__(caster, melt_bolt)
+        self.damage = 2
         self.effects.append(self.melt(10))
         self.impact = overlays.acid_impact
 
@@ -278,7 +279,7 @@ class lava_burst(burst):
         self.fragment = ember
         self.effects.append(self.burn(7))
         self.impact = overlays.fiery_impact
-        self.damage = 2
+        self.damage = 5
 
 class ember(fragment):
     def __init__(self, *args):
@@ -340,7 +341,7 @@ class acid_bubble(fragment):
         super().react(bastard)
         self.timer = 0
     def act(self, *args):
-        super().act(*args)
+        #super().act(*args)
         self.timer = 0
 
 
@@ -353,7 +354,7 @@ class freezing_burst(burst):
         self.fragment = COLD_THING
         self.effects.append(self.freeze(12))
         self.impact = overlays.cold_impact
-        self.damage = 3
+        self.damage = 4
 
 class COLD_THING(fragment):
     def __init__(self, *args):
@@ -401,17 +402,28 @@ class cloud(missile):
     def __init__(self, size,  *args):
         super().__init__(*args, pygame.transform.scale(idle_cloud, (size, size)))
         self.effects.append(self.melt(6))
-        self.damage = 2
+        self.damage = 1
         self.duration = 36 * size/8
         print("my caster is: ", self.caster, "my center is: ", self.rect.center)
         self.velocity = (0,0)
 
-    def update(self, *args):
-
+    def update(self, room):
+        self.velocity = (0,0)
         self.hitbox.center = self.rect.center
         self.duration-= 1
         if self.duration <= 0:
             self.kill()
+        room.overlays.add(self.overlays)
+
+    def act(self, targets):
+        self.knockback = (0,0)
+        self.duration -= 1
+        for target in targets:
+            target.hp-=1
+            for effect in self.effects:
+                effect(target)
+        self.overlays.add(self.impact(self.rect.center))
+
 
 class flame(missile):
     def __init__(self, *args):

@@ -31,7 +31,9 @@ class enemy(spritelings.actor):
 
     def update(self, room):
         if self.hp<=0:
+            self.eye.kill()
             self.kill()
+            self.overlays.empty()
         if not self.flashing:
             pass
         if self.target:
@@ -180,7 +182,7 @@ loognoog = pygame.image.load('baddies\loogloog.png').convert_alpha()
 class lugg(enemy):
     def __init__(self, pos, level = 1):
         super().__init__(pygame.transform.scale(loognoog, (300,200)), pos)
-        self.hp = 100000
+        self.hp = 10000
         self.challenge = 1
 
 
@@ -204,10 +206,9 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 #just sorta flies around the player at semi-ridiculous speeds.
 class fleye(enemy):
     def __init__(self, pos, level = 1):
-        #
+
         super().__init__(pygame.transform.scale(feyenal_fleye, (level * 90, level * 45)), pos)
-        #self.rect = self.image.get_rect()
-        self.eye_size = int(level*60)
+        self.eye_size = int(level*20)
 
         self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
         self.hitbox.center = self.rect.center
@@ -276,27 +277,27 @@ ow = pygame.mixer.Sound("audio/ow.wav")
 #standard version; bounces off walls and bullets, flying away from them on contact
 class bouncer(enemy):
     def __init__(self, pos, level = 3):
-        size = 60*level
+        self.size = int(60*level)
 
-        super().__init__(pygame.transform.scale(basic_bouncer_img, (size,size)), pos)
+        super().__init__(pygame.transform.scale(basic_bouncer_img, (self.size,self.size)), pos)
         self.speed = max(20 / level, 4)
         self.armor = 0.07 + (0.05 * level)
-        self.damage = 2 + (level)
+        self.damage = 2 + level
+        self.hp = 100+(level*50)
         self.eye = None
         self.timer = 0
         self.spell = missiles.ice_bolt
-        self.core = self.rect.inflate(-size*.51, -size*0.51)
-        self.hitbox = self.core
-        self.top = pygame.Rect(*self.rect.center, size/4, size/4)
+        self.core = self.rect.inflate(-self.size*.51, -self.size*0.51)
+        self.hitbox = self.rect
+        self.top = pygame.Rect(*self.rect.center, self.size/4, self.size/4)
 
-        self.bottom = pygame.Rect(*self.rect.center, size/4, size/4)
+        self.bottom = pygame.Rect(*self.rect.center, self.size/4, self.size/4)
 
-        self.left = pygame.Rect(*self.rect.center, size/4, size/4)
+        self.left = pygame.Rect(*self.rect.center, self.size/4, self.size/4)
 
-        self.right = pygame.Rect(*self.rect.center, size/4, size/4)
+        self.right = pygame.Rect(*self.rect.center, self.size/4, self.size/4)
 
         self.hitboxes = [self.core, self.top, self.bottom, self.left, self.right]
-        self.size = size
         self.challenge = 1*level+1
 
     def update(self, room):
@@ -308,7 +309,7 @@ class bouncer(enemy):
         self.core.center = self.rect.center
 
         if not self.eye:
-            self.eye = overlays.eyeball(self, room, self.size)
+            self.eye = overlays.eyeball(self, room, self.size*0.35)
         self.eye.update(room)
 
         if self.timer > 0:
@@ -351,7 +352,7 @@ class bouncer(enemy):
 class blue_bouncer(bouncer):
     def __init__(self, pos, level = 3):
         super().__init__(pos, level)
-        self.image = blue_bouncer_img
+        self.image = pygame.transform.scale(blue_bouncer_img, (self.size,self.size))
         self.challenge = 1*level+2
 
     def react(self, weapon):
@@ -390,23 +391,24 @@ class blue_bouncer(bouncer):
 class black_bouncer(bouncer):
     def __init__(self, pos, level = 3):
         super().__init__(pos, level)
-        self.image = black_bouncer_img
+        self.image = pygame.transform.scale(black_bouncer_img, (self.size,self.size))
         self.reflected = pygame.sprite.Group()
         self.challenge = 1*level+3
 
     def react(self, weapon):
-        if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
-            weapon.velocity = (-weapon.velocity[0], 10)
-            self.reflected.add(weapon)
-        elif pygame.Rect.colliderect(self.left, weapon.hitbox):
-            weapon.velocity = (-10, -weapon.velocity[1])
-            self.reflected.add(weapon)
-        elif pygame.Rect.colliderect(self.top, weapon.hitbox):
-            weapon.velocity = (-weapon.velocity[0], -10)
-            self.reflected.add(weapon)
-        elif pygame.Rect.colliderect(self.right, weapon.hitbox):
-            weapon.velocity = (10, -weapon.velocity[1])
-            self.reflected.add(weapon)
+        if isinstance(weapon, missiles.missile):
+            if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
+                weapon.velocity = (-weapon.velocity[0], 10)
+                self.reflected.add(weapon)
+            elif pygame.Rect.colliderect(self.left, weapon.hitbox):
+                weapon.velocity = (-10, -weapon.velocity[1])
+                self.reflected.add(weapon)
+            elif pygame.Rect.colliderect(self.top, weapon.hitbox):
+                weapon.velocity = (-weapon.velocity[0], -10)
+                self.reflected.add(weapon)
+            elif pygame.Rect.colliderect(self.right, weapon.hitbox):
+                weapon.velocity = (10, -weapon.velocity[1])
+                self.reflected.add(weapon)
 
         elif pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
@@ -427,6 +429,7 @@ class blind_bouncer(bouncer):
         self.image = pygame.transform.scale(blind_bouncer_img, (self.size, self.size))
         self.eye = None
         self.challenge = level
+        self.hp = 200 + (level*60)
 
     def update(self, room):
         #super().update(room)
@@ -467,9 +470,11 @@ sneyeper_green = sneyeper_sheet.subsurface((109*2,0),(108, 108))
 
 class sneyeper(enemy):
     def __init__(self,pos, level = 2):
-        self.size = 60 * level
+        self.size = int(60 * level)
         self.eye_size = 20*level
+        self.hp = 100+level*100
         super().__init__(pygame.transform.scale(sneyeper_red, (self.size,self.size)), pos)
+        self.hitbox = self.rect.inflate(-20*level, -20*level)
         self.spell = missiles.fire_bolt
         self.eye = None
         self.challenge = level

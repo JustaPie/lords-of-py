@@ -18,10 +18,9 @@ disp = pygame.display.set_mode(screen_size)
 import player
 import room
 import overlays
-import enemies
 
 size = (12, 8)
-seed = enemies.fleye((500, 500))
+seed = None #enemies.fleye((500, 500))
 theme = room.theme()
 dif = 1
 
@@ -55,7 +54,7 @@ while (running):
 
     pygame.event.pump()
 
-    if not test_room.enemies.has():
+    if len(test_room.enemies)==0:
         player.hp = 600
         dif += 1
-        test_room.next_level(dif)
+        test_room.next_level(pc, dif)

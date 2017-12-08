@@ -127,7 +127,7 @@ class theme(object):
                    'rw': rgtWall, 'lw': lftWall}
         self.enemy_lookup = {0:enemies.bouncer, 1:enemies.black_bouncer, 2:enemies.blue_bouncer,
                              3:enemies.blind_bouncer, 4:enemies.fleye, 5:enemies.lugg,
-                             6:enemies.sneyeper, 7:enemies.blue_sneyeper, 8:enemies.green_sneyeper}
+                             6:enemies.sneyeper, 7:enemies.blue_sneyeper}
 
     def populate(self, space, budget, predef = None):
         from random import randint
@@ -136,11 +136,11 @@ class theme(object):
         if predef:
             return predef
         while difficulty<budget:
-            species = randint(0, 8)
-            level = budget/2
+            species = randint(0, 7)
+            level = randint(1, 5)
             x = randint(space.left, space.right)
             y = randint(space.top, space.bottom)
-            newb = self.enemy_lookup[species]((x,y))
+            newb = self.enemy_lookup[species]((x,y), level)
             pop.add(newb)
             difficulty+= newb.assess()
         return pop
@@ -323,5 +323,7 @@ class room(pygame.sprite.Sprite):
             pygame.draw.rect(disp, red, z.rect, 7)
             pygame.draw.rect(disp, green, z.hitbox, 4)
 
-    def next_level(self, difficulty):
-        self.enemies.add(self.theme.populate(self.theme.populate(self.rect, difficulty*10)))
+    def next_level(self,player,  difficulty):
+        self.enemies.add(self.theme.populate(self.rect, (difficulty*10)))
+        for each in self.enemies:
+            each.set_target(player)

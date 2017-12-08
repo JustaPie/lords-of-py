@@ -72,7 +72,7 @@ class eyeball(spritelings.overlay):
     def __init__(self, subject, room, scale=64):
         super().__init__(neutral, subject.hitbox.center)
         self.subject = subject
-        size = (int(scale*.35), int(scale*.35))
+        size = (int(scale), int(scale))
         fix = pygame.transform.scale
         self.eye_lookup = {(0, 0): fix(neutral, size), (1, 0): fix(right, size), (1, -1): fix(top_right, size),
                            (1, 1): fix(bottom_right, size),(0, -1): fix(top, size), (0, 1): fix(bottom, size),
@@ -83,6 +83,7 @@ class eyeball(spritelings.overlay):
 
     def update(self, room):
         self.image = self.eye_lookup[self.subject.facing]
+        self.rect = self.image.get_rect()
         self.rect.center = self.subject.rect.center
 
 ice_cube = pygame.image.load('overlays\generic_ice_cube.png')
@@ -123,17 +124,19 @@ class fire_sprite(spritelings.overlay):
         self.count = randint(0,4)
         self.image = self.image_lookup[self.count]
         self.rect = self.image.get_rect()
-        self.rect.center = (randint(0, subject.rect.width, randint(0, subject.rect.height)))
+        self.offset = (randint(subject.rect.left, subject.rect.right), randint(subject.rect.top, subject.rect.bottom))
+        self.rect.center = subject.rect.center
+        self.rect.move_ip(self.offset)
 
     def update(self, room):
-        center = self.rect.center
         if self.count < 4:
             self.count+=1
         elif self.count == 4:
             self.count = 0
         self.image = self.image_lookup[self.count]
         self.rect = self.image.get_rect()
-        self.rect.center = center
+        self.rect.center = self.subject.rect.center
+        self.rect.move_ip(self.offset)
 
 
 class acid_sprite(spritelings.overlay):
