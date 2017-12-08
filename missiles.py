@@ -291,12 +291,15 @@ class atomic_burst(burst):
         super().__init__(*args, acid_balls)
         self.velocity_mult = 40
         self.knockback_mult = 0
+        #self.effects.append(self.melt(10))
         self.fragment = acid_bubble
         self.impact = overlays.generic_impact
+        self.team = None
 
     def fire(self, dir, room):
         self.cast_from = self.rect.center
         sprd = randint(0, 4)
+        self.team = room
         if not dir[1]:
             self.split(room, dir, (dir[0]*sprd, dir[1]), (dir[0], -1), (dir[0], 1), (dir[0]*sprd, -1), (dir[0]*sprd, 1))
         elif dir[0] and dir[1]:
@@ -309,16 +312,20 @@ class acid_bubble(fragment):
         super().__init__(*args, pygame.transform.scale(acid_ball, (20, 20)))
         self.timer = 128*5
         self.size = 24
+        self.damage = 5
+        #self.effects.append(self.melt(6))
         print("my caster is: ", self.caster, "my center is: ", self.rect.center)
 
     def update(self, room):
+        if not self.team:
+            self.team = room.playerProjectiles
         self.timer -=1
         self.velocity = (self.velocity[0] * .8, self.velocity[1] * .8)
         self.rect.move_ip(self.velocity)
         center = self.rect.center
         if self.timer <= 0:
             print("exploding at: ", self.rect.center)
-            room.playerProjectiles.add(cloud(int(self.size*1.2), self))
+            self.team.add(cloud(int(self.size*1.2), self))
             self.kill()
         if self.timer % 8 == 0:
 
@@ -393,7 +400,8 @@ class trail(missile):
 class cloud(missile):
     def __init__(self, size,  *args):
         super().__init__(*args, pygame.transform.scale(idle_cloud, (size, size)))
-        self.acidity = 15
+        self.effects.append(self.melt(6))
+        self.damage = 2
         self.duration = 36 * size/8
         print("my caster is: ", self.caster, "my center is: ", self.rect.center)
         self.velocity = (0,0)
@@ -408,10 +416,11 @@ class cloud(missile):
 class flame(missile):
     def __init__(self, *args):
         super().__init__(*args, idle_flame)
-        self.temp = 15
-
-    def react(self, *args):
-        super().react(args)
+        self.image_lookup = {0: missile_sheet.subsurface((54,69), (11,35)),
+                             1:missile_sheet.subsurface((43, 76), (9,27)),
+                             2:missile_sheet.subsurface((29,71), (11,33)),
+                             3:missile_sheet.subsurface((16,77), (11,26)),
+                             4:missile_sheet.subsurface((4,71), (9,32))}
 
 class snowflake(missile):
     def __init__(self, *args):

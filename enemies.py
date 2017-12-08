@@ -22,17 +22,18 @@ class enemy(spritelings.actor):
         self.armor = .15
         self.hitboxes = [self.hitbox]
         #self.flash_image = overlays.generic_flash
-        self.fire_sprite = overlays.fire_sprite
+        self.fire_sprite = overlays.fire_sprite_cluster
         self.ice_sprite = overlays.ice_sprite
         self.acid_sprite = overlays.acid_sprite
 
+    def assess(self):
+        return self.challenge
 
     def update(self, room):
         if self.hp<=0:
             self.kill()
         if not self.flashing:
             pass
-
         if self.target:
             self.facing = self.track(self.target)
         self.condition()
@@ -177,9 +178,10 @@ class enemy(spritelings.actor):
 loognoog = pygame.image.load('baddies\loogloog.png').convert_alpha()
 
 class lugg(enemy):
-    def __init__(self, pos):
+    def __init__(self, pos, level = 1):
         super().__init__(pygame.transform.scale(loognoog, (300,200)), pos)
         self.hp = 100000
+        self.challenge = 1
 
 
 #####################################################
@@ -201,12 +203,14 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 
 #just sorta flies around the player at semi-ridiculous speeds.
 class fleye(enemy):
-    def __init__(self, pos):
-        super().__init__(feyenal_fleye, pos)
+    def __init__(self, pos, level = 1):
+
+        super().__init__(pygame.transform.scale(feyenal_fleye, (level*60, level*20)), pos)
+        self.eye_size = int(level*60*0.226)
         self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
         self.hitbox.center = self.rect.center
-        self.hp = 30
-        self.damage = 10
+        self.hp = 60*level
+        self.damage = 4+3*level
         self.dest = self.rect.center
         self.acc = .2
         self.timer = 128*20
@@ -215,6 +219,7 @@ class fleye(enemy):
         self.roosting = 0
         self.eye = None
         self.hitboxes = [self.hitbox]
+        self.challenge = 2 + 1*level
 
     def update(self, room):
         if self.hp <= 0:
@@ -222,7 +227,7 @@ class fleye(enemy):
             self.kill()
 
         if not self.eye:
-            self.eye = overlays.eyeball(self, room)
+            self.eye = overlays.eyeball(self, room, self.eye_size)
         self.eye.update(room)
 
         self.timer -= 1
@@ -268,7 +273,7 @@ ow = pygame.mixer.Sound("audio/ow.wav")
 
 #standard version; bounces off walls and bullets, flying away from them on contact
 class bouncer(enemy):
-    def __init__(self, pos, level = 2):
+    def __init__(self, pos, level = 3):
         size = 60*level
 
         super().__init__(pygame.transform.scale(basic_bouncer_img, (size,size)), pos)
@@ -289,6 +294,7 @@ class bouncer(enemy):
 
         self.hitboxes = [self.core, self.top, self.bottom, self.left, self.right]
         self.size = size
+        self.challenge = 1*level+1
 
     def update(self, room):
         super().update(room)
@@ -299,7 +305,7 @@ class bouncer(enemy):
         self.core.center = self.rect.center
 
         if not self.eye:
-            self.eye = overlays.eyeball(self, room, self.core)
+            self.eye = overlays.eyeball(self, room, self.size)
         self.eye.update(room)
 
         if self.timer > 0:
@@ -312,11 +318,6 @@ class bouncer(enemy):
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
-<<<<<<< HEAD
-            ow.play()
-            self.velocity = (self.velocity[0]*weapon.stopping_power, self.velocity[1]*weapon.stopping_power)
-=======
->>>>>>> 5fd37743673fe686066d28113c92c47d6b3a32ea
     #so I'm handling missile penetration a bit weirdly here. All bullets travel at a given velocity, when it strikes a
     #enemy, the enemy slows the bullet, when velocity drops to a certain point, the bullet stops dealing damage
             if isinstance(weapon, missiles.missile):
@@ -345,9 +346,10 @@ class bouncer(enemy):
 
 #reacts to incoming fire by bouncing towards it
 class blue_bouncer(bouncer):
-    def __init__(self, pos, level = 2):
+    def __init__(self, pos, level = 3):
         super().__init__(pos, level)
         self.image = blue_bouncer_img
+        self.challenge = 1*level+2
 
     def react(self, weapon):
         if pygame.Rect.colliderect(self.core, weapon.hitbox):
@@ -383,10 +385,11 @@ class blue_bouncer(bouncer):
 
 #bounces incoming missiles back towards their origin
 class black_bouncer(bouncer):
-    def __init__(self, pos):
-        super().__init__(pos)
+    def __init__(self, pos, level = 3):
+        super().__init__(pos, level)
         self.image = black_bouncer_img
         self.reflected = pygame.sprite.Group()
+        self.challenge = 1*level+3
 
     def react(self, weapon):
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
@@ -416,10 +419,11 @@ class black_bouncer(bouncer):
 
 #nearly the same as the basic bouncer, except it doesn't shoot
 class blind_bouncer(bouncer):
-    def __init__(self, pos):
-        super().__init__(pos)
-        self.image = blind_bouncer_img
+    def __init__(self, pos, level = 3):
+        super().__init__(pos, level)
+        self.image = pygame.transform.scale(blind_bouncer_img, (self.size, self.size))
         self.eye = None
+        self.challenge = level
 
     def update(self, room):
         #super().update(room)
@@ -453,3 +457,50 @@ class baby_bouncer(bouncer):
             if pygame.Rect.colliderect(self.right, victim.hitbox):
                 self.velocity = (-10, self.velocity[1])'''
 
+sneyeper_sheet = pygame.image.load('baddies\sneyeper.png').convert_alpha()
+sneyeper_red = sneyeper_sheet.subsurface((0,0),(108, 108))
+sneyeper_blue = sneyeper_sheet.subsurface((109,0),(108, 108))
+sneyeper_green = sneyeper_sheet.subsurface((109*2,0),(108, 108))
+
+class sneyeper(enemy):
+    def __init__(self,pos, level = 2):
+        self.size = 60 * level
+        self.eye_size = 20*level
+        super().__init__(pygame.transform.scale(sneyeper_red, (self.size,self.size)), pos)
+        self.spell = missiles.fire_bolt
+        self.eye = None
+        self.challenge = level
+        self.timer = 0
+        if level > 4:
+            self.spell = missiles.lava_burst
+
+
+    def update(self, room):
+        super().update(room)
+        if not self.eye:
+            self.eye = overlays.eyeball(self, room, self.eye_size)
+        self.eye.update(room)
+        if self.timer > 0:
+            self.timer -= 1
+        else:
+            #sound effect
+            self.spell.fire(self.spell(self), self.facing, room.enemyProjectiles)
+            self.timer = 356
+
+
+class blue_sneyeper(sneyeper):
+    def __init__(self, pos, level = 2):
+        super().__init__(pos, level)
+        self.spell = missiles.ice_bolt
+        self.image = pygame.transform.scale(sneyeper_blue, (self.size,self.size))
+        if level > 4:
+            self.spell = missiles.freezing_burst
+
+
+class green_sneyeper(sneyeper):
+    def __init__(self, pos, level = 2):
+        super().__init__(pos, level)
+        self.spell = missiles.acid_bolt
+        self.image = pygame.transform.scale(sneyeper_green, (self.size,self.size))
+        if level > 4:
+            self.spell = missiles.atomic_burst

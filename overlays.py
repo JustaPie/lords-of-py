@@ -69,12 +69,14 @@ bottom_left = eye_chart.subsurface((0,128), (65, 65))
 bottom_right = eye_chart.subsurface((128, 128), (65, 65))
 
 class eyeball(spritelings.overlay):
-    def __init__(self, subject, room, size):
+    def __init__(self, subject, room, scale=64):
         super().__init__(neutral, subject.rect.center)
         self.subject = subject
+        size = (int(scale*.35), int(scale*.35))
         fix = pygame.transform.scale
-        self.eye_lookup = {(0, 0): fix(neutral, size), (1, 0): right, (1, -1): top_right, (1, 1): bottom_right,
-         (0, -1): top, (0, 1): bottom, (-1, 0): left, (-1, -1): top_left, (-1, 1): bottom_left}
+        self.eye_lookup = {(0, 0): fix(neutral, size), (1, 0): fix(right, size), (1, -1): fix(top_right, size),
+                           (1, 1): fix(bottom_right, size),(0, -1): fix(top, size), (0, 1): fix(bottom, size),
+                           (-1, 0): fix(left, size), (-1, -1): fix(top_left, size), (-1, 1): fix(bottom_left, size)}
         self.rect.center = self.subject.rect.center
         self.image = self.eye_lookup[self.subject.facing]
         room.nme_overlays.add(self)
@@ -84,6 +86,7 @@ class eyeball(spritelings.overlay):
         self.rect.center = self.subject.rect.center
 
 ice_cube = pygame.image.load('overlays\generic_ice_cube.png')
+idle_flame = pygame.image.load('projectiles\simple_missiles.png').convert_alpha()
 
 class status_layer(pygame.sprite.Group):
     def __init__(self, subject,  *args):
@@ -100,14 +103,38 @@ class ice_sprite(spritelings.overlay):
         self.rect.center = self.subject.rect.center
         #room.overlays.add(self)
 
+class fire_sprite_cluster(pygame.sprite.Group):
+    def __init__(self, subject, *args):
+        super().__init__(*args)
+        self.subject = subject
+        for x in range(5):
+            self.add(fire_sprite(self.subject))
+
 class fire_sprite(spritelings.overlay):
     def __init__(self, subject):
-        super().__init__(pygame.transform.scale(ice_cube, (subject.rect.width, subject.rect.height)), subject.rect.center)
+        super().__init__(idle_flame, subject.rect.center)
+        self.image_lookup = {0: idle_flame.subsurface((54, 69), (11, 35)),
+                             1: idle_flame.subsurface((43, 76), (9, 27)),
+                             2: idle_flame.subsurface((29, 71), (11, 33)),
+                             3: idle_flame.subsurface((16, 77), (11, 26)),
+                             4: idle_flame.subsurface((4, 71), (9, 32))}
         self.subject = subject
+        from random import randint
+        self.count = randint(0,4)
+        self.image = self.image_lookup[self.count]
+        self.rect = self.image.get_rect()
+        self.rect.center = (randint(0, subject.rect.width, randint(0, subject.rect.height)))
 
     def update(self, room):
-        self.rect.center = self.subject.rect.center
-        #room.overlays.add(self)
+        center = self.rect.center
+        if self.count < 4:
+            self.count+=1
+        elif self.count == 4:
+            self.count = 0
+        self.image = self.image_lookup[self.count]
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+
 
 class acid_sprite(spritelings.overlay):
     def __init__(self, subject):
