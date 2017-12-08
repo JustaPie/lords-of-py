@@ -133,16 +133,16 @@ class theme(object):
         from random import randint
         difficulty = 0
         pop = pygame.sprite.Group()
+        if predef:
+            return predef
         while difficulty<budget:
             species = randint(0, 8)
             level = budget/2
             x = randint(space.left, space.right)
             y = randint(space.top, space.bottom)
-            newb = self.enemy_lookup[species]((x,y), randint(1,level))
+            newb = self.enemy_lookup[species]((x,y))
             pop.add(newb)
             difficulty+= newb.assess()
-        if predef:
-            return predef
         return pop
 
 
@@ -254,6 +254,7 @@ class room(pygame.sprite.Sprite):
                                 self.inactivePlayerProjectiles,
                                 self.enemyProjectiles
                                 )
+        print(self.enemies)
         self.allSprites.update(self)
         self.allProjectiles.update(self)
 
