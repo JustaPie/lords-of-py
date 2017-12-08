@@ -127,7 +127,7 @@ class actor(entity):
             self.layer = None
 
         def __call__(self, target):
-            from random import  randint
+            from random import randint
             if not self.ignited:
                 self.layer = target.fire_sprite(target)
                 target.overlays.add(self.layer)

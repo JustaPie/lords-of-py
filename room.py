@@ -254,7 +254,6 @@ class room(pygame.sprite.Sprite):
                                 self.inactivePlayerProjectiles,
                                 self.enemyProjectiles
                                 )
-        print(self.enemies)
         self.allSprites.update(self)
         self.allProjectiles.update(self)
 
@@ -323,7 +322,7 @@ class room(pygame.sprite.Sprite):
             pygame.draw.rect(disp, red, z.rect, 7)
             pygame.draw.rect(disp, green, z.hitbox, 4)
 
-    def next_level(self,player,  difficulty):
+    def next_level(self, player,  difficulty):
         self.enemies.add(self.theme.populate(self.rect, (difficulty*10)))
         for each in self.enemies:
             each.set_target(player)

@@ -79,6 +79,7 @@ class missile(spritelings.entity):
             ignite_on = randint(0, 1000)
             ignite = self.ignite_chance >= ignite_on
             if ignite:
+                print("something is on fire")
                 subject.apply(subject.burning(self.duration))
                 return False
             elif self.duration <= 1:
@@ -88,6 +89,7 @@ class missile(spritelings.entity):
                 return True
 
         def extend(self, burn):
+            print('prolonging a burn')
             self.duration += burn.duration
             self.ignite_chance = max(self.ignite_chance, burn.ignite_chance)
 
@@ -112,7 +114,7 @@ class missile(spritelings.entity):
         def __call__(self, subject):
             print('callin a freeze')
             freeze_factor = (self.magnitude - abs(subject.max_cold) )/ abs(subject.max_cold)
-            print(freeze_factor)
+            print(freeze_factor, self.magnitude, self.duration)
             if freeze_factor >=1:
                 self.duration = 128 * 10
                 subject.apply(subject.frozen(self.duration))
