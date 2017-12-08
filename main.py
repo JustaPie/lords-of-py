@@ -67,7 +67,7 @@ particles = []
 A=300#num particles
 B=800#y value start
 for part in range(1, 300):
-    if part % 2 > 0: col = white
+    if part % 2 > 0: col = red
     else: col = grey
     particles.append( Particle(100, 800, col, round(B*part/A)) )
     particles.append(Particle(1340, 800, col,round(B*part/A)) )
@@ -165,11 +165,31 @@ class DynamicText(object):
         disp.blit(self.rendered, self.pos)
 
 
+#########################################################################################
 
 #very long winded way to display dialogue....there has to be a better way.
-message1 = DynamicText(font, "???: Wake up Evaline....", (200, 200), autoreset=False)
-message2 = DynamicText(font, "???: Yes, yes, wake up!", (200, 225), autoreset=False)
-message3 = DynamicText(font, "???: .......", (200, 250), autoreset=False)
+message1 = DynamicText(font, "???: “Wake up Evaline.”", (200, 200), autoreset=False)
+message2 = DynamicText(font, "???: “Yes, yes, wake up!”", (200, 225), autoreset=False)
+message3 = DynamicText(font, "???: “.......”", (200, 250), autoreset=False)
+
+message4 = DynamicText(font, "???: “Do you remember us from your dreams, Evaline?”", (200, 200), autoreset=False)
+message5 = DynamicText(font, "???: “You didn't forget about me now did you? That would hurt my feelings!”", (200, 225), autoreset=False)
+message6 = DynamicText(font, "???: “.......”", (200, 250), autoreset=False)
+
+message7 = DynamicText(font, "???: “You do remember, don’t you? You can’t recall why, yet you feel something.”", (200, 200), autoreset=False)
+message8 = DynamicText(font, "???: “Enough with the silence, say something already!”", (200, 225), autoreset=False)
+message9 = DynamicText(font, "???: “.......”", (200, 250), autoreset=False)
+
+message10 = DynamicText(font, "???: “I want to help you. You’ve been in the void for a while now. It’s time someone completed you.”", (200, 200), autoreset=False)
+message11 = DynamicText(font, "???: “You’re just a tool, let’s be honest. But potentially a very useful tool. The more you can do, the more useful you will be to me.”", (200, 225), autoreset=False)
+message12 = DynamicText(font, "???: “.......”", (200, 250), autoreset=False)
+
+message13 = DynamicText(font, "???: “Are you ready to take the next step? To see what you can become?”", (200, 200), autoreset=False)
+message14 = DynamicText(font, "???: “So, what are you? Will you continue to be a lifeless doll? Or do you desire power and purpose? I can give you what you seek…. for a price.”", (200, 225), autoreset=False)
+message15 = DynamicText(font, "???: “.......”", (200, 250), autoreset=False)
+
+message16 = DynamicText(font, "[I'm ready.]", (200, 250), autoreset=False)
+
 
 counter = 1
 while True:
@@ -186,6 +206,32 @@ while True:
                 message2.update()
             elif counter == 3:
                 message3.update()
+            elif counter == 4:
+                message4.update()
+            elif counter == 5:
+                message5.update()
+            elif counter == 6:
+                message6.update()
+            elif counter == 7:
+                message7.update()
+            elif counter == 8:
+                message8.update()
+            elif counter == 9:
+                message9.update()
+            elif counter == 10:
+                message10.update()
+            elif counter == 11:
+                message11.update()
+            elif counter == 12:
+                message12.update()
+            elif counter == 13:
+                message13.update()
+            elif counter == 14:
+                message14.update()
+            elif counter == 15:
+                message15.update()
+            elif counter == 16:
+                message16.update()
 
     else:
         disp.fill(pygame.color.Color('black'))
@@ -198,10 +244,75 @@ while True:
             message1.draw(disp)
             message2.draw(disp)
             message3.draw(disp)
+        if counter == 4:
+            message4.draw(disp)
+        if counter == 5:
+            message4.draw(disp)
+            message5.draw(disp)
+        if counter == 6:
+            message4.draw(disp)
+            message5.draw(disp)
+            message6.draw(disp)
+        if counter == 7:
+            message7.draw(disp)
+        if counter == 8:
+            message7.draw(disp)
+            message8.draw(disp)
+        if counter == 9:
+            message7.draw(disp)
+            message8.draw(disp)
+            message9.draw(disp)
+        if counter == 10:
+            message10.draw(disp)
+        if counter == 11:
+            message10.draw(disp)
+            message11.draw(disp)
+        if counter == 12:
+            message10.draw(disp)
+            message11.draw(disp)
+            message12.draw(disp)
+        if counter == 13:
+            message13.draw(disp)
+        if counter == 14:
+            message13.draw(disp)
+            message14.draw(disp)
+        if counter == 15:
+            message13.draw(disp)
+            message14.draw(disp)
+            message15.draw(disp)
+        if counter == 16:
+            message16.draw(disp)
+
         if message1.done:
             counter = 2
         if message2.done:
             counter = 3
+        if message3.done:
+            counter = 4
+        if message4.done:
+            counter = 5
+        if message5.done:
+            counter = 6
+        if message6.done:
+            counter = 7
+        if message7.done:
+            counter = 8
+        if message8.done:
+            counter = 9
+        if message9.done:
+            counter = 10
+        if message10.done:
+            counter = 11
+        if message11.done:
+            counter = 12
+        if message12.done:
+            counter = 13
+        if message13.done:
+            counter = 14
+        if message14.done:
+            counter = 15
+        if message15.done:
+            counter = 16
         pygame.display.flip()
         clock.tick(60)
         continue
