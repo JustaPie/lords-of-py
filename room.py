@@ -141,6 +141,8 @@ class theme(object):
             newb = self.enemy_lookup[species]((x,y), randint(1,level))
             pop.add(newb)
             difficulty+= newb.assess()
+        if predef:
+            return predef
         return pop
 
 

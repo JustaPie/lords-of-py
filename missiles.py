@@ -313,7 +313,7 @@ class acid_bubble(fragment):
         self.timer = 128*5
         self.size = 24
         self.damage = 5
-        #self.effects.append(self.melt(6))
+        self.team = None
         print("my caster is: ", self.caster, "my center is: ", self.rect.center)
 
     def update(self, room):

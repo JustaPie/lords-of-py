@@ -204,8 +204,8 @@ feyenal_fleye = pygame.image.load("baddies\\feyenal_fleye.png").convert_alpha()
 #just sorta flies around the player at semi-ridiculous speeds.
 class fleye(enemy):
     def __init__(self, pos, level = 1):
-
-        super().__init__(pygame.transform.scale(feyenal_fleye, (level*60, level*20)), pos)
+        #pygame.transform.scale(feyenal_fleye, (level * 60, level * 20))
+        super().__init__(feyenal_fleye, pos)
         self.eye_size = int(level*60*0.226)
         self.hitbox = self.rect.inflate(-(self.rect.width*0.7), -(self.rect.height*0.5))
         self.hitbox.center = self.rect.center

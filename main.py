@@ -18,9 +18,10 @@ disp = pygame.display.set_mode(screen_size)
 import player
 import room
 import overlays
+import enemies
 
 size = (12, 8)
-seed = 124
+seed = enemies.fleye((100, 100))
 theme = room.theme()
 dif = 1
 
