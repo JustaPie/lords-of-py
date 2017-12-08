@@ -31,7 +31,6 @@ class enemy(spritelings.actor):
 
     def update(self, room):
         if self.hp<=0:
-            self.eye.kill()
             self.kill()
             self.overlays.empty()
         if not self.flashing:
@@ -310,6 +309,7 @@ class bouncer(enemy):
 
         if not self.eye:
             self.eye = overlays.eyeball(self, room, self.size*0.35)
+            self.overlays.add(self.eye)
         self.eye.update(room)
 
         if self.timer > 0:
@@ -331,15 +331,19 @@ class bouncer(enemy):
         if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
             self.velocity = (self.velocity[0], -self.speed)
             weapon.velocity = (0,0)
+            self.hp -= weapon.damage/2
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
             self.velocity = (self.speed, self.velocity[1])
             weapon.velocity = (0, 0)
+            self.hp -= weapon.damage/2
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
             self.velocity = (self.velocity[0], self.speed)
             weapon.velocity = (0, 0)
+            self.hp -= weapon.damage / 2
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
             self.velocity = (-self.speed, self.velocity[1])
             weapon.velocity = (0, 0)
+            self.hp -= weapon.damage / 2
 
     def act(self, victims):
         for victim in victims:
@@ -367,24 +371,28 @@ class blue_bouncer(bouncer):
             else:
                 self.velocity = (self.velocity[0], self.speed)
                 weapon.velocity = (0, 0)
+                self.hp -= weapon.damage / 2
         if pygame.Rect.colliderect(self.left, weapon.hitbox):
             if isinstance(weapon, room.wall):
                 self.velocity = (self.speed, self.velocity[1])
             else:
                 self.velocity = (-self.speed, self.velocity[1])
                 weapon.velocity = (0, 0)
+                self.hp -= weapon.damage / 2
         if pygame.Rect.colliderect(self.top, weapon.hitbox):
             if isinstance(weapon, room.wall):
                 self.velocity = (self.velocity[0], self.speed)
             else:
                 self.velocity = (self.velocity[0], -self.speed)
                 weapon.velocity = (0, 0)
+                self.hp -= weapon.damage / 2
         if pygame.Rect.colliderect(self.right, weapon.hitbox):
             if isinstance(weapon, room.wall):
                 self.velocity = (-self.speed, self.velocity[1])
             else:
                 self.velocity = (self.speed, self.velocity[1])
                 weapon.velocity = (0, 0)
+                self.hp -= weapon.damage / 2
 
 
 #bounces incoming missiles back towards their origin
@@ -400,15 +408,19 @@ class black_bouncer(bouncer):
             if pygame.Rect.colliderect(self.bottom, weapon.hitbox):
                 weapon.velocity = (-weapon.velocity[0], 10)
                 self.reflected.add(weapon)
+                self.hp -= weapon.damage / 3
             elif pygame.Rect.colliderect(self.left, weapon.hitbox):
                 weapon.velocity = (-10, -weapon.velocity[1])
                 self.reflected.add(weapon)
+                self.hp -= weapon.damage / 3
             elif pygame.Rect.colliderect(self.top, weapon.hitbox):
                 weapon.velocity = (-weapon.velocity[0], -10)
                 self.reflected.add(weapon)
+                self.hp -= weapon.damage / 3
             elif pygame.Rect.colliderect(self.right, weapon.hitbox):
                 weapon.velocity = (10, -weapon.velocity[1])
                 self.reflected.add(weapon)
+                self.hp -= weapon.damage / 3
 
         elif pygame.Rect.colliderect(self.core, weapon.hitbox):
             self.hp -= weapon.damage
@@ -487,6 +499,7 @@ class sneyeper(enemy):
         super().update(room)
         if not self.eye:
             self.eye = overlays.eyeball(self, room, self.eye_size)
+            self.overlays.add(self.eye)
         self.eye.update(room)
         if self.timer > 0:
             self.timer -= 1

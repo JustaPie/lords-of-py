@@ -185,7 +185,7 @@ class bolt(missile):
     def __init__(self, caster, img):
         super().__init__(caster, pygame.transform.scale(img, (24, 24)))
         self.knockback_mult = 1/4
-        self.velocity_mult = 12
+        self.velocity_mult = 16
         self.damage = 4
         self.base_img = img
 
